@@ -1,9 +1,9 @@
-import { Accessibility } from "@mui/icons-material";
+import { Accessibility, Inventory, Login, NoMeals } from "@mui/icons-material";
 import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useCallback, useState } from "react";
 import { getAllProducts, postProduct } from "../../services/product";
-import { getAllRestrictions } from "../../services/restriction";
+import { getAllRestrictions, getRestrictionByCod } from "../../services/restriction";
 
 const Home = () => {
     const [username, setUsername] = useState('')
@@ -23,6 +23,11 @@ const Home = () => {
         console.log(allRestrictions);
     }
 
+    async function getRestrictionCod(){
+        const restriction = await getRestrictionByCod(2);
+        console.log(restriction);
+    }
+
     async function logIn(){
         
     }
@@ -32,28 +37,35 @@ const Home = () => {
             <h1>Home</h1>
             <Button 
                 variant="contained"
-                startIcon={<Accessibility/>}
+                startIcon={<Inventory/>}
                 onClick={() => getProducts()}
             >
                 Get products
             </Button>
             <Button 
                 variant="contained"
-                startIcon={<Accessibility/>}
+                startIcon={<Inventory/>}
                 onClick={() => postProducts()}
             >
                 Post product
             </Button>
             <Button 
                 variant="contained"
-                startIcon={<Accessibility/>}
+                startIcon={<NoMeals/>}
                 onClick={() => getRestrictions()}
             >
                 Get restrictions
             </Button>
             <Button 
                 variant="contained"
-                startIcon={<Accessibility/>}
+                startIcon={<NoMeals/>}
+                onClick={() => getRestrictionCod()}
+            >
+                Get restriction by cod
+            </Button>
+            <Button 
+                variant="contained"
+                startIcon={<Login/>}
                 onClick={() => logIn()}
             >
                 Login

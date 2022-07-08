@@ -9,6 +9,16 @@ const getAllRestrictions = async () => {
     }
 }
 
+const getRestrictionByCod = async (cod_restriction) => {
+    try {
+        const restriction = await backend_connection.get(`/restriction/cod/${cod_restriction}`);
+        return restriction;
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
 export {
     getAllRestrictions,
+    getRestrictionByCod,
 }
