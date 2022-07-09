@@ -12,6 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { useState } from 'react';
+import { createUser } from '../../services/auth';
+import { useSnack } from '../../hooks/useSnack';
+import { useEffect } from 'react';
 
 function Copyright(props) {
   return (
@@ -29,14 +34,26 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [userType, setUserType] = useState(1);
+  const handleSubmit = async (event) => {
+    try{
+
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      
+      let email = data.get('email');
+      let password = data.get('password');
+      let userName = data.get('firstName');
+      
+      const { response } = await createUser(email, password, userName, userType);
+    }catch(e){
+
+    }
   };
+
+  const handleUserType = (event) => {
+    setUserType(event.target.value);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,6 +97,22 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Tipo de usuário"
+                    value={userType}
+                    onChange={handleUserType}
+                  >
+                    <MenuItem value={1}>Usuário</MenuItem>
+                    <MenuItem value={2}>Fornecedor</MenuItem>
+                    <MenuItem value={3}>Administrador</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -88,23 +121,6 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirme a senha"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
