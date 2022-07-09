@@ -12,19 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../Components/Copyright';
 
 const theme = createTheme();
 
@@ -102,9 +90,10 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <Link to='terms'>Termos de Contrato</Link>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="Li e aceito os termos de contrato de uso e privacidade."
                 />
               </Grid>
             </Grid>
@@ -114,12 +103,12 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Criar Cadastro
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                  Já tem conta? Entre aqui
                 </Link>
               </Grid>
             </Grid>
