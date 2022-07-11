@@ -26,10 +26,6 @@ function App() {
       </IconButton>
     </React.Fragment>
   );
-
-  useEffect(() => {
-    console.log(snack);
-  })
   
   return (
     <div className="App">
