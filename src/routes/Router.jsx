@@ -1,8 +1,10 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import About from "../pages/About/About";
 import Home from '../pages/Home/Home'
 import LogIn from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import NotFound from "../pages/NotFound";
+import Product from "../pages/Product";
 
 const RouterConfig = () => {
     return (
@@ -11,7 +13,8 @@ const RouterConfig = () => {
             <Route path="about" element={<About/>} />
             <Route path="login" element={<LogIn/>} />
             <Route path="signup" element={<SignUp/>} />
-            <Route path="*" element={<Navigate to="/" replace={true} />}/>
+            <Route path="*" element={<NotFound/>}/>
+            <Route path="product" element={<Product/>}/>
         </Routes>
     )
 };

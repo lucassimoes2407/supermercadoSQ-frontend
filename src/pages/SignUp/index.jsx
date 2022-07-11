@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -15,41 +13,27 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 import { createUser } from '../../services/auth';
-import { useSnack } from '../../hooks/useSnack';
-import { useEffect } from 'react';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../../components/Copyright';
 
 const theme = createTheme();
 
 export default function SignUp() {
   const [userType, setUserType] = useState(1);
   const handleSubmit = async (event) => {
-    try{
+    try {
 
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-      
+
       let email = data.get('email');
       let password = data.get('password');
       let userName = data.get('firstName');
-      
+
       const { response } = await createUser(email, password, userName, userType);
-    }catch(e){
+    } catch (e) {
 
     }
-  };
+  }; 
 
   const handleUserType = (event) => {
     setUserType(event.target.value);
@@ -130,12 +114,12 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Criar Cadastro
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                  Já tem conta? Entre aqui
                 </Link>
               </Grid>
             </Grid>
