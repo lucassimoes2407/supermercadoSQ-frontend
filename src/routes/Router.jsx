@@ -5,6 +5,7 @@ import LogIn from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import NotFound from "../pages/NotFound";
 import Product from "../pages/Product";
+import CreateProduct from "../pages/CreateProduct";
 
 const RouterConfig = () => {
     return (
@@ -15,6 +16,7 @@ const RouterConfig = () => {
             <Route path="signup" element={<SignUp/>} />
             <Route path="*" element={<NotFound/>}/>
             <Route path="product" element={<Product/>}/>
+            <Route path="create-product" element={<CreateProduct/>}/>
         </Routes>
     )
 };
