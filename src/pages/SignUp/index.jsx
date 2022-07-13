@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
-import { createUser } from '../../services/auth';
+import { createUser } from '../../services/users';
 import Copyright from '../../components/Copyright';
 
 const theme = createTheme();
@@ -28,10 +28,11 @@ export default function SignUp() {
       let email = data.get('email');
       let password = data.get('password');
       let userName = data.get('firstName');
-
-      const { response } = await createUser(email, password, userName, userType);
+      console.log(process.env);
+      const { response } = await createUser(userName, email, password, userType);
+      console.log(response);
     } catch (e) {
-
+      console.log(e);
     }
   }; 
 

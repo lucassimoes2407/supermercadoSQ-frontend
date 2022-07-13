@@ -1,3 +1,4 @@
+import { Alert } from "@mui/material";
 import { createContext, useCallback, useContext, useState } from "react";
 
 
@@ -14,8 +15,10 @@ export function SnackProvider({ children }) {
     });
 
     const handleSnackOpen = useCallback(() => {
-        setSnack((prevSnack) => { return { ...prevSnack, open: !snack.open } })
-    }, [snack]);
+        setSnack((prevSnack) => {
+            return { ...prevSnack, open: !prevSnack.open }
+        })
+    }, []);
 
     const handleSnackState = useCallback((snackChange) => {
         setSnack(snackChange);
@@ -28,6 +31,22 @@ export function SnackProvider({ children }) {
             {children}
         </SnackContext.Provider>
     );
+}
+
+/**
+ * @function SnackChild
+ * @param {() => void} onClose - Function that closes the snack
+ * @param {String} message - The message to display on the snack 
+ * @param {"success" | "error" | "warning" | "info"} severity - The severity of the snack.
+ * @returns {JSX.Element} Alert component for Snackbar
+ */
+
+export const SnackChild = (onClose, severity, message) => {
+    return (
+        <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
+            {message}
+        </Alert>
+    )
 }
 
 export function useSnack() {

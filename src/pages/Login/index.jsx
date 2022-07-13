@@ -10,19 +10,43 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { login } from '../../services/users';
 import Copyright from '../../components/Copyright';
+import {useNavigate} from 'react-router-dom'
 
 const theme = createTheme();
 
 export default function LogIn() {
-  const handleSubmit = (event) => {
+
+  const navigate = useNavigate();
+  const handleLogin = async (username, senha) => {
+    try {
+      const response = await login(username, senha);
+      console.log(response);
+      if(response.status === 200){
+        navigate('/')
+      }
+    }catch(e){
+      console.log(e);
+      console.log("Algo deu errado no login");
+    }
+  } 
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    let username = data.get('username');
+    let senha = data.get('senha');
+    try{
+      const responseLogin = await handleLogin(username, senha);
+
+    }catch(e){
+
+    }
   };
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,21 +71,21 @@ export default function LogIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Endereço de e-mail"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Digite seu nome"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="senha"
               label="Senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              type="senha"
+              id="senha"
+              autoComplete="current-senha"
             />
             <Button
               type="submit"

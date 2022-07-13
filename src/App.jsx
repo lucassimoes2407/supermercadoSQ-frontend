@@ -1,9 +1,9 @@
 import './App.css';
 import { Link, useNavigate } from 'react-router-dom'
 import RouterConfig from './routes/Router';
-import { Button, IconButton, Snackbar } from '@mui/material';
+import { Alert, Button, IconButton, Snackbar } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import { useSnack } from './hooks/useSnack';
+import { SnackChild, useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
 
@@ -15,8 +15,12 @@ function App() {
 
   const action = (
     <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleSnackOpen}>
-        UNDO
+      <Button
+        color="success"
+        size="small"
+        onClick={() => { navigate("/login") }}
+      >
+        Login
       </Button>
       <IconButton
         size="small"
@@ -52,18 +56,22 @@ function App() {
         <Link to='/signup'>Cadastro</Link>
       </div>
       <hr />
-      <button onClick={() => handleSnackState({ ...snack, open: true, action })}>
-        teste
+      <button onClick={() => handleSnackState(
+        { ...snack, 
+          open: true})}>
+        
       </button>
       <RouterConfig />
       <Snackbar
         {...snack}
         onClose={handleSnackOpen}
         key={'app__snack'}
-      />
+      >
+      {/* {(!!snack.children && snack.children) || ""} */}
+      </Snackbar>
     </div>
   )
-}
+} 
 
 
 export default App;

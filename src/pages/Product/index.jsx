@@ -23,7 +23,7 @@ const Product = (props) => {
                 <h1 className="product__h1__nome">{nome}</h1>
                 <p className="product__p" >{marca}</p>
 
-                <h3 className="product__h3">Comtém:</h3>
+                <h3 className="product__h3">Contém:</h3>
 
                 <h3 className="product__h3">Ingredientes:</h3>
                 <p>{ingredientes}</p>
