@@ -56,11 +56,6 @@ function App() {
         <Link to='/signup'>Cadastro</Link>
       </div>
       <hr />
-      <button onClick={() => handleSnackState(
-        { ...snack, 
-          open: true})}>
-        
-      </button>
       <RouterConfig />
       <Snackbar
         {...snack}

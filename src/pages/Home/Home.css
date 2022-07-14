@@ -1,0 +1,13 @@
+
+
+.product__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.product__list > * {
+    margin: 1rem;
+}

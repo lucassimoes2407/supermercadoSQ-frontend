@@ -30,7 +30,7 @@ export default function LogIn() {
       console.log(e);
       console.log("Algo deu errado no login");
     }
-  } 
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
