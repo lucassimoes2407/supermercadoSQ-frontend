@@ -1,6 +1,6 @@
 import React from "react";
 import NotFoundImg from "../../assets/NotFound.png"
-import Copyright from "../Components/Copyright";
+import Copyright from "../../components/Copyright";
 import "./index.css"
 
 const NotFound = () => {

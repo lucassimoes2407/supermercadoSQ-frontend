@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,19 +10,35 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../Components/Copyright';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { useState } from 'react';
+import { createUser } from '../../services/users';
+import Copyright from '../../components/Copyright';
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const [userType, setUserType] = useState(1);
+  const handleSubmit = async (event) => {
+    try {
+
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+
+      let email = data.get('email');
+      let password = data.get('password');
+      let userName = data.get('firstName');
+      console.log(process.env);
+      const { response } = await createUser(userName, email, password, userType);
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }; 
+
+  const handleUserType = (event) => {
+    setUserType(event.target.value);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -68,6 +82,22 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Tipo de usuário"
+                    value={userType}
+                    onChange={handleUserType}
+                  >
+                    <MenuItem value={1}>Usuário</MenuItem>
+                    <MenuItem value={2}>Fornecedor</MenuItem>
+                    <MenuItem value={3}>Administrador</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -76,24 +106,6 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirme a senha"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Link to='terms'>Termos de Contrato</Link>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="Li e aceito os termos de contrato de uso e privacidade."
                 />
               </Grid>
             </Grid>

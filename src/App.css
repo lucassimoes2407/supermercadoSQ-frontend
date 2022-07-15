@@ -1,7 +1,19 @@
 .App {
+  --primary-main: #12788c;
+  --primary-light: #3C828E;
+
+  --secondary-main: #e60050;
+
+  --error-main: #ff3d00;
+
+  --warning-main: #ea9814;
+
+  --divider-main: #12788c;
+
   text-align: center;
 }
-.product__header{
+
+.product__header {
   display: flex;
   justify-content: space-between;
   background-color: teal;
