@@ -7,11 +7,15 @@ import { postProduct } from '../../services/product'
 import { ThemeProvider } from 'styled-components';
 import CopyrightDevHub from '../../components/CopyrightDevHub';
 import { useSnack } from '../../hooks/useSnack';
+import { useNavigate } from 'react-router-dom';
 
-const theme = createTheme();
 
 const CreateProduct = () => {
+
+	const navigate = useNavigate();
+	const theme = createTheme();
 	const { snack, handleSnackOpen, handleSnackState } = useSnack();
+	
 	const handleSubmit = async (event) => {
 		try {
 			event.preventDefault();
@@ -34,6 +38,8 @@ const CreateProduct = () => {
 					}
 				)
 			}
+			navigate('/');
+
 		} catch (e) {
 			console.log(e);
 			handleSnackState(
