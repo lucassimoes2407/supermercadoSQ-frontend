@@ -1,6 +1,6 @@
 import React from "react";
 import NotFoundImg from "../../assets/NotFound.png"
-import Copyright from "../../components/Copyright";
+import CopyrightDevHub from '../../components/CopyrightDevHub';
 import "./index.css"
 
 const NotFound = () => {
@@ -11,7 +11,7 @@ const NotFound = () => {
 
             <img className="notfound__img" src={NotFoundImg} alt="Ops! Algo deu errado, a página não existe!" />
 
-            <Copyright/>
+            <CopyrightDevHub/>
         </div>
 
 )}

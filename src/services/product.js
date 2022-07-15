@@ -11,10 +11,11 @@ const getAllProducts = async () => {
 
 const postProduct = async (nome, marca, ingredientes, img_produto, cod_usuario) => {
     try{
-        const allProducts = await backend_connection.post('/products/', {nome, marca, ingredientes, img_produto, cod_usuario});
-        return allProducts;
+        console.log(nome)
+        const postProduct = await backend_connection.post('/products/', {nome, marca, ingredientes, img_produto, cod_usuario});
+        return postProduct;
     }catch(e){
-        console.log(e.message);
+        console.log(e);
     }
 }
 

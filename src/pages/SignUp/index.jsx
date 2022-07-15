@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 import { createUser } from '../../services/users';
-import Copyright from '../../components/Copyright';
+import CopyrightDevHub from '../../components/CopyrightDevHub';
 
 const theme = createTheme();
 
@@ -126,7 +126,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <CopyrightDevHub sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

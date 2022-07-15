@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Link } from "@mui/material";
 
-const Copyright = (props) => {
+const CopyrightDevHub = (props) => {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Atlântico Academy Bootcamp '}
@@ -14,4 +14,4 @@ const Copyright = (props) => {
   );
 }
 
-export default Copyright
+export default CopyrightDevHub;

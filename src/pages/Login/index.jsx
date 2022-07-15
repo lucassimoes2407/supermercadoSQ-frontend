@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { login } from '../../services/users';
-import Copyright from '../../components/Copyright';
+import CopyrightDevHub from '../../components/CopyrightDevHub';
 import {useNavigate} from 'react-router-dom'
 
 const theme = createTheme();
@@ -109,7 +109,7 @@ export default function LogIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <CopyrightDevHub sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
