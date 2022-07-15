@@ -1,9 +1,9 @@
 import './App.css';
 import { Link, useNavigate } from 'react-router-dom'
 import RouterConfig from './routes/Router';
-import { Alert, Button, IconButton, Snackbar } from '@mui/material';
+import { Button, IconButton, Snackbar } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import { SnackChild, useSnack } from './hooks/useSnack';
+import { useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
 

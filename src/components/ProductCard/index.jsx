@@ -14,6 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,9 +35,9 @@ const ExpandMore = styled((props) => {
  * @returns Card component with data displayed.
  */
 
-export default function RecipeReviewCard(props) {
+export default function ProductCard(props) {
   const {nome, marca, ingredientes} = props;
-  console.log(nome, marca, ingredientes)
+  
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -48,7 +49,7 @@ export default function RecipeReviewCard(props) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            <RestaurantIcon />
           </Avatar>
         }
         action={

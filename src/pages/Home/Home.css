@@ -1,11 +1,19 @@
-
+.home__div {
+    display: flex;
+    justify-content: center;
+}
 
 .product__list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    margin: 1rem;
+
+
+
+    border-radius: 30px;
+    background-color: var(--primary-light);
 }
 
 .product__list > * {
