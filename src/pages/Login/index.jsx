@@ -104,7 +104,7 @@ export default function LogIn() {
               <Grid item>
                 <Link href="#" variant="body2">
                   {"Não tem conta? Cadastre-se"}
-                </Link>uct?
+                </Link>
               </Grid>
             </Grid>
           </Box>
