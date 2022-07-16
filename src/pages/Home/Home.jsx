@@ -12,6 +12,7 @@ import FilterInput from "../../components/FilterInput";
 
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
   const [productsDisplayed, setProductsDisplayed] = useState([]);
   const [restrictions, setRestrictions] = useState([]);
   const [restrictionsSelected, setRestrictionsSelected] = useState([]);
@@ -42,6 +43,10 @@ const Home = () => {
   //   );
   // };
 
+  const fetchProducts = async () => {
+    let getProductResponse = await getAllProducts();
+    setProductsDisplayed(getProductResponse.data.productList);
+  }
 
   useEffect(() => {
     (async () => {
@@ -100,9 +105,18 @@ const Home = () => {
 
           </div>
         </Box>
-        
+
         <div className="product__list">
           {productsDisplayed.length > 0 && productsDisplayed.map((product) => {
+            let conditionRemove = product.restrictions.some(element => {
+              return restrictionsSelected.includes(element.nome_restricao)
+            });
+            
+            let conditionInclude2 = restrictionsIncluded.length > 0 && !product.restrictions.some(element => {
+              return restrictionsIncluded.includes(element.nome_restricao);
+            });
+
+            if (conditionRemove || conditionInclude2) return <></>;
             return (
               <ProductCard
                 key={`${product.productInfo.cod_produto}`}
