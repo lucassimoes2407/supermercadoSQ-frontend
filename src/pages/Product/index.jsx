@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { getProductByCod } from "../../services/product";
 import ImageIcon from '@mui/icons-material/Image';
 import "./index.css"
-import { getUserByUserId } from "../../services/users";
 
 const Product = () => {
     const [product, setProduct] = useState({productInfo: {}, user: {}, restrictions: []});

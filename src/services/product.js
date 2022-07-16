@@ -39,9 +39,17 @@ const postProduct = async (nome, marca, ingredientes, img_produto, cod_usuario) 
 
 const getProductByUserCod = async (cod_usuario) => {
     try{
-        const postProduct = await backend_connection.get(`/products/user/${cod_usuario}`);
+        const getProductByUserCod = await backend_connection.get(`/products/user/${cod_usuario}`);
 
-        console.log(postProduct);
+        return getProductByUserCod;
+    }catch(e){
+        console.log(e);
+    }
+}
+
+const putProduct = async (cod_produto, nome, marca, ingredientes, img_produto = null, cod_usuario) => {
+    try{
+        const postProduct = await backend_connection.put(`/products/`, {cod_produto, nome, marca, ingredientes, img_produto, cod_usuario});
 
         return postProduct;
     }catch(e){
@@ -56,4 +64,5 @@ export {
     getProductByCod,
     getProductByUserCod,
     getProductByName,
+    putProduct,
 }
