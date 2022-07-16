@@ -38,7 +38,7 @@ const getAllUsers = async () => {
 
 const getUserByUserName = async(username) => {
     try {
-        const responseGetUserByUserName = await backend_connection.get('/users/username/:username', {username});
+        const responseGetUserByUserName = await backend_connection.get(`/users/username/${username}`);
         return responseGetUserByUserName;
     }catch(err){
         throw err;
@@ -47,7 +47,7 @@ const getUserByUserName = async(username) => {
 
 const getUserByUserId = async(id) => {
     try {
-        const responseGetUserByUserId = await backend_connection.get('/users/id/:id', {id});
+        const responseGetUserByUserId = await backend_connection.get(`/users/id/${id}`);
         return responseGetUserByUserId;
     }catch(err){
         throw err;
@@ -70,17 +70,18 @@ const getUsersInactive = async() => {
     }
 }
 
-const updateUser = async(username,email,id) => {
+const updateUser = async(username,email,id, pass) => {
     try {
-        const responseUpdateUser = await backend_connection.put('/users/:id', {username, email, id});
+        const responseUpdateUser = await backend_connection.put(`/users/${id}`, {username, email, pass});
         return responseUpdateUser;
     }catch(err){
         throw err;
     }
 }
 const setUserActiveAttribute = async(id) => {
+    
     try {
-        const responseSetUserActiveAttribute = await backend_connection.put('/users/setUserActiveAttribute/:id', {id});
+        const responseSetUserActiveAttribute = await backend_connection.put(`/users/setUserActiveAttribute/${id}`);
         return responseSetUserActiveAttribute;
     }catch(err){
         throw err;
@@ -88,15 +89,15 @@ const setUserActiveAttribute = async(id) => {
 }
 const deleteUserByUserName = async(username) => {
     try {
-        const responseDeleteUserByUserName = await backend_connection.delete('/users/:username', {username});
+        const responseDeleteUserByUserName = await backend_connection.delete(`/users/${username}`);
         return responseDeleteUserByUserName;
     }catch(err){
         throw err;
     }
 }
-const deleteUserById = async(id) => {
+const deleteUserById = async(cod_usuario) => {
     try {
-        const responseDeleteUserById = await backend_connection.delete('/users/id/:id', {id});
+        const responseDeleteUserById = await backend_connection.delete(`/users/id/${cod_usuario}`);
         return responseDeleteUserById;
     }catch(err){
         throw err;
