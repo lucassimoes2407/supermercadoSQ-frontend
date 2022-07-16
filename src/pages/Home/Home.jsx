@@ -4,7 +4,7 @@ import { ExpandMore } from '@mui/icons-material'
 
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts, getProductByName } from "../../services/product";
+import { getAllProducts, getProductByName, getProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
 import { useNavigate } from "react-router-dom";
@@ -63,10 +63,12 @@ const Home = () => {
     })();
   }, []);
   
-  // useEffect(() => {
-  //   (async () => {
-  //   })()
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const response = await getProductFiltered('a', ['goiaba'], ['leite', 'apenas']);
+      console.log(response);
+    })()
+  }, []);
 
   const handleNomeProdutoChange = async (event) => {
     try{

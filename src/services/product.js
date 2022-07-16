@@ -47,6 +47,17 @@ const getProductByUserCod = async (cod_usuario) => {
     }
 }
 
+const getProductFiltered = async (search, include_ingredients, exclude_ingredients) => {
+    console.log(search, include_ingredients, exclude_ingredients);
+    try{
+        const getProductByUserCod = await backend_connection.get(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
+        console.log(getProductByUserCod);
+        return getProductByUserCod;
+    }catch(e){
+        console.log(e);
+    }
+}
+
 const putProduct = async (cod_produto, nome, marca, ingredientes, img_produto = null, cod_usuario) => {
     try{
         const postProduct = await backend_connection.put(`/products/`, {cod_produto, nome, marca, ingredientes, img_produto, cod_usuario});
@@ -65,4 +76,5 @@ export {
     getProductByUserCod,
     getProductByName,
     putProduct,
+    getProductFiltered,
 }
