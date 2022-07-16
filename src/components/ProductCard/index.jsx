@@ -36,15 +36,9 @@ const ExpandMore = styled((props) => {
  */
 
 export default function ProductCard(props) {
-  const {nome, marca, ingredientes, cod_produto} = props.product;
-  
-  const [expanded, setExpanded] = React.useState(false);
+  const {productInfo} = props.product;
   
   const navigate = useNavigate();
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card sx={{ maxWidth: 258, minWidth: 200, minHeight: 200}}>
@@ -59,8 +53,8 @@ export default function ProductCard(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={nome}
-        subheader={marca}
+        title={productInfo.nome}
+        subheader={productInfo.marca}
 
       />
       {/* <CardMedia
@@ -71,11 +65,11 @@ export default function ProductCard(props) {
       /> */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {ingredientes}
+          {productInfo.ingredientes}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => {navigate(`/product/${cod_produto}`)}} size="small" color="primary">
+        <Button onClick={() => {navigate(`/product/${productInfo.cod_produto}`)}} size="small" color="primary">
           Ver mais
         </Button>
       </CardActions>

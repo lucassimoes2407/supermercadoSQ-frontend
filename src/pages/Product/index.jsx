@@ -6,7 +6,7 @@ import "./index.css"
 import { getUserByUserId } from "../../services/users";
 
 const Product = () => {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState({productInfo: {}, user: {}, restrictions: []});
 
     const params = useParams();
 
@@ -14,11 +14,10 @@ const Product = () => {
         try {
             (async () => {
                 const getProduct = await getProductByCod(params.cod);
-                const product = getProduct.data[0];
-
-                const getUser = await getUserByUserId(product.cod_usuario);
-                const user = getUser.data[0];
-                setProduct({...product, user})
+                const {product} = getProduct.data;
+                console.log(product);
+                console.log(product.productInfo.nome);
+                setProduct(product)
             })();
         }catch(e){
             console.log(e);
@@ -36,16 +35,16 @@ const Product = () => {
             }
             
             <div className="product__div__content">
-                <h1 className="product__h1__nome">{product.nome}</h1>
-                <p className="product__p" >{product.marca}</p>
+                <p className="product__p" >{product.productInfo.marca || 'marca'}</p>
+                <h1 className="product__h1__nome">{(product.productInfo && product.productInfo.nome) || 'nome'}</h1>
 
                 <h3 className="product__h3">Contém:</h3>
 
                 <h3 className="product__h3">Ingredientes:</h3>
-                <p>{product.ingredientes}</p>
+                <p>{product.productInfo.ingredientes || 'ingredientes'}</p>
 
                 <h3 className="product__h3">Autor:</h3>
-                <p>{product.user.username}</p>
+                <p>{product.user.username || 'nome usuário'}</p>
             </div>
         </div>
     )

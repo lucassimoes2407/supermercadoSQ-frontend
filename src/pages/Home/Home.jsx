@@ -50,7 +50,6 @@ const Home = () => {
     const handleSubmit = (event) => {
         console.log("Submit");
     }
-    const [personName, setPersonName] = useState([]);
 
     const handleChange = (event) => {
         const {
@@ -65,7 +64,8 @@ const Home = () => {
     useEffect(() => {
         (async () => {
             let getProductResponse = await getAllProducts();
-            setProductsDisplayed(getProductResponse.data);
+            console.log(getProductResponse);
+            setProductsDisplayed(getProductResponse.data.productList);
         })();
     }, []);
 
@@ -134,7 +134,7 @@ const Home = () => {
                     {productsDisplayed.length > 0 && productsDisplayed.map((product) => {
                         return (
                             <ProductCard
-                                key={`${product.cod_produto}`}
+                                key={`${product.productInfo.cod_produto}`}
                                 product={product}
                             />
                         )
