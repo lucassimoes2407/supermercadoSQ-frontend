@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { SnackProvider } from './hooks/useSnack';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+root.render( 
   <React.StrictMode>
     <BrowserRouter>
       <SnackProvider >

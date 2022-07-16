@@ -53,6 +53,7 @@ const getUserByUserId = async(id) => {
         throw err;
     }
 }
+
 const getUsersActive = async() => {
     try {
         const responseGetUsersActive = await backend_connection.get('/users/findUsersActive');
