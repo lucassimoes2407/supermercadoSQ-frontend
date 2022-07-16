@@ -28,9 +28,22 @@ const postProduct = async (nome, marca, ingredientes, img_produto, cod_usuario) 
     }
 }
 
+const getProductByUserCod = async (cod_usuario) => {
+    try{
+        const postProduct = await backend_connection.get(`/products/user/${cod_usuario}`);
+
+        console.log(postProduct);
+
+        return postProduct;
+    }catch(e){
+        console.log(e);
+    }
+}
+
 
 export {
     getAllProducts,
     postProduct,
     getProductByCod,
+    getProductByUserCod,
 }
