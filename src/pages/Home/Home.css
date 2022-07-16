@@ -19,3 +19,9 @@
 .product__list > * {
     margin: 1rem;
 }
+
+.add-product__div {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}

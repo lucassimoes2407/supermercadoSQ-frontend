@@ -1,4 +1,4 @@
-import { Box, Checkbox, Chip, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
+import { Box, Button, Checkbox, Chip, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 import { useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import ProductCard from "../../components/ProductCard";
 import { getAllProducts } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
@@ -46,6 +47,8 @@ const Home = () => {
         'Virginia Andrews',
         'Kelly Snyder'
     ];
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         console.log("Submit");
@@ -142,6 +145,16 @@ const Home = () => {
                     }
                 </div>
             </Box>
+            <div className="add-product__div">
+                <Button 
+                    variant="contained" 
+                    endIcon={<AddIcon />}
+                    onClick={() => navigate('/create-product')}
+                    color="secondary"
+                >
+                    Adicionar Produto
+                </Button>
+            </div>
         </div>
     )
 };
