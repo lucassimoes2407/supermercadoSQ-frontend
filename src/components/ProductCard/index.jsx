@@ -15,6 +15,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -29,16 +31,16 @@ const ExpandMore = styled((props) => {
 
 /**
  * 
- * @param {string} nome 
- * @param {string} marca 
- * @param {string} ingredientes 
+ * @param {Object} product
  * @returns Card component with data displayed.
  */
 
 export default function ProductCard(props) {
-  const {nome, marca, ingredientes} = props;
+  const {nome, marca, ingredientes, cod_produto} = props.product;
   
   const [expanded, setExpanded] = React.useState(false);
+  
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -72,33 +74,11 @@ export default function ProductCard(props) {
           {ingredientes}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+      <CardActions>
+        <Button onClick={() => {navigate(`/product/${cod_produto}`)}} size="small" color="primary">
+          Ver mais
+        </Button>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>test0</Typography>
-          <Typography paragraph>
-            teste1
-          </Typography>
-          <Typography paragraph>
-            test2
-          </Typography>
-          <Typography paragraph>
-            test3
-          </Typography>
-          <Typography>
-            test4
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }

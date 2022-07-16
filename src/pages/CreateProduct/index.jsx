@@ -25,12 +25,12 @@ const CreateProduct = () => {
 			let brand = data.get('brand');
 			let ingredients = data.get('ingredients');
 			let img = data.get('img');
-			let codUser = 5; // adicionar cod_usuario logado
+			let codUser = 5; //FIXME[epic=login] adicionar cod_usuario logado
 			
 			const response = await postProduct(product, brand, ingredients, img, codUser);
 			console.log(response);
 			
-			if(response.status == 200){
+			if(response.status === 200){
 				handleSnackState(
 					{...snack,
 						open: true,

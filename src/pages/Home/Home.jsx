@@ -135,9 +135,7 @@ const Home = () => {
                         return (
                             <ProductCard
                                 key={`${product.cod_produto}`}
-                                nome={product.nome}
-                                marca={product.marca}
-                                ingredientes={product.ingredientes}
+                                product={product}
                             />
                         )
                     })

@@ -47,12 +47,13 @@ const getUserByUserName = async(username) => {
 
 const getUserByUserId = async(id) => {
     try {
-        const responseGetUserByUserId = await backend_connection.get('/users/id/:id', {id});
+        const responseGetUserByUserId = await backend_connection.get(`/users/id/${id}`);
         return responseGetUserByUserId;
     }catch(err){
         throw err;
     }
 }
+
 const getUsersActive = async() => {
     try {
         const responseGetUsersActive = await backend_connection.get('/users/findUsersActive');

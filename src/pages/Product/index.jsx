@@ -1,35 +1,51 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getProductByCod } from "../../services/product";
+import ImageIcon from '@mui/icons-material/Image';
 import "./index.css"
+import { getUserByUserId } from "../../services/users";
 
-const propsTest = [
-	{
-		"nome": "BISCOITO COM RECHEIO DE CHOCOLATE AMORI 140G",
-		"marca": "RICHESTER",
-		"ingredientes": "Farinha de trigo enriquecida com ferro e ácido fólico, açúcares, gordura vegetal, cacau, amido, sal, fermentos químicos: bicarbonato de amônio, pirofosfato ácido de sódio e bicarbonato de sódio, corante caramelo IV, emulsificante lecitina de soja e aromatizante.",
-		"img_produto": "https://images-americanas.b2w.io/produtos/2891627607/imagens/biscoito-recheado-choc-amori-140g-richester/2891627607_1_large.jpg",
-		"cod_usuario": 4,
-		"cod_produto": 43
-	}
-]
-;
+const Product = () => {
+    const [product, setProduct] = useState({});
 
-const Product = (props) => {
-    const {nome, marca, ingredientes, img_produto, cod_produto, cod_usuario} = propsTest[0];
+    const params = useParams();
+
+    useEffect(() => {
+        try {
+            (async () => {
+                const getProduct = await getProductByCod(params.cod);
+                const product = getProduct.data[0];
+
+                const getUser = await getUserByUserId(product.cod_usuario);
+                const user = getUser.data[0];
+                setProduct({...product, user})
+            })();
+        }catch(e){
+            console.log(e);
+        }
+    }, [params]);
 
     return(
         <div className="product__div">
-            <img className="product__img" src={img_produto} alt="" />
+            {(product.img_produto && 
+                <img className="product__img" src={product.img_produto} alt="" />)
+                || <div className="image__div--not-found">
+                    <ImageIcon sx={{ fontSize: 120 }} /> 
+                    Imagem não encontrada
+                    </div>
+            }
             
             <div className="product__div__content">
-                <h1 className="product__h1__nome">{nome}</h1>
-                <p className="product__p" >{marca}</p>
+                <h1 className="product__h1__nome">{product.nome}</h1>
+                <p className="product__p" >{product.marca}</p>
 
                 <h3 className="product__h3">Contém:</h3>
 
                 <h3 className="product__h3">Ingredientes:</h3>
-                <p>{ingredientes}</p>
+                <p>{product.ingredientes}</p>
 
                 <h3 className="product__h3">Autor:</h3>
-                <p>{cod_usuario}</p>
+                <p>{product.user.username}</p>
             </div>
         </div>
     )

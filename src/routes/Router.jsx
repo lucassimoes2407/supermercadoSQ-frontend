@@ -15,7 +15,7 @@ const RouterConfig = () => {
             <Route path="login" element={<LogIn/>} />
             <Route path="signup" element={<SignUp/>} />
             <Route path="*" element={<NotFound/>}/>
-            <Route path="product" element={<Product/>}/>
+            <Route path="product/:cod" element={<Product/>}/>
             <Route path="create-product" element={<CreateProduct/>}/>
         </Routes>
     )
