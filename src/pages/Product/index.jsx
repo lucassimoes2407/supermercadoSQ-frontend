@@ -14,7 +14,7 @@ const Product = () => {
         try {
             (async () => {
                 const getProduct = await getProductByCod(params.cod);
-                const {product} = getProduct.data;
+                const product = getProduct.data;
                 console.log(product);
                 console.log(product.productInfo.nome);
                 setProduct(product)
