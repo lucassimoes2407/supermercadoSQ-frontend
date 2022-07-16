@@ -18,6 +18,15 @@ const getProductByCod = async (cod_produto) => {
     }
 }
 
+const getProductByName = async (nome_produto) => {
+    try{
+        const allProducts = await backend_connection.get(`/products/name/${nome_produto}`);
+        return allProducts;
+    }catch(e){
+        console.log(e.message);
+    }
+}
+
 const postProduct = async (nome, marca, ingredientes, img_produto, cod_usuario) => {
     try{ 
         console.log(nome)
@@ -46,4 +55,5 @@ export {
     postProduct,
     getProductByCod,
     getProductByUserCod,
+    getProductByName,
 }

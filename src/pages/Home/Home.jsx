@@ -4,7 +4,7 @@ import { ExpandMore } from '@mui/icons-material'
 
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts } from "../../services/product";
+import { getAllProducts, getProductByName } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
 import { useNavigate } from "react-router-dom";
@@ -55,16 +55,31 @@ const Home = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(restrictionsSelected)
-  }, [restrictionsSelected]);
-
+  
   useEffect(() => {
     (async () => {
       let getRestrictionResponse = await getAllRestrictions();
       setRestrictions(getRestrictionResponse.data.map(restriction => restriction.nome_restricao));
     })();
   }, []);
+  
+  // useEffect(() => {
+  //   (async () => {
+  //   })()
+  // }, []);
+
+  const handleNomeProdutoChange = async (event) => {
+    try{
+      if(!event.target.value) {
+        fetchProducts();
+        return
+      }
+      const responseProductByName = await getProductByName(event.target.value);
+      setProductsDisplayed(responseProductByName.data.productList)
+    }catch(e){
+      console.log(e);
+    }
+  }
 
   return (
     <div className="home__div">
@@ -77,6 +92,7 @@ const Home = () => {
         <Box sx={{ width: '90%' }}>
           <h1>Home</h1>
           <TextField
+            onChange={handleNomeProdutoChange}
             fullWidth
             required
             id="product_name"
@@ -111,7 +127,7 @@ const Home = () => {
             let conditionRemove = product.restrictions.some(element => {
               return restrictionsSelected.includes(element.nome_restricao)
             });
-            
+
             let conditionInclude2 = restrictionsIncluded.length > 0 && !product.restrictions.some(element => {
               return restrictionsIncluded.includes(element.nome_restricao);
             });

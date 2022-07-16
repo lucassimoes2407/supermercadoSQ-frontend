@@ -73,6 +73,8 @@ export default function ProductCard(props) {
         <Typography gutterBottom variant="h7" component="div">
           Restrições
         </Typography>
+        <div className="restriction__chip">
+
           {props.product && props.product.restrictions.map((element) => {
             return (
               <Chip
@@ -82,6 +84,7 @@ export default function ProductCard(props) {
               />
             )
           })}
+        </div>
       </CardContent>
       <CardActions>
         <Button onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">

@@ -9,7 +9,7 @@ import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
 
 
 function App() {
-  const { snack, handleSnackOpen, handleSnackState } = useSnack();
+  const { snack, handleSnackOpen } = useSnack();
 
   const navigate = useNavigate();
 

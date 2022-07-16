@@ -2,6 +2,7 @@ import { ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Chip, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, Typography } from "@mui/material"
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import './index.css'
 
 /**
  * 
@@ -83,16 +84,18 @@ const FilterInput = (props) => {
         <AccordionDetails>
           <Box sx={{ flexWrap: true }}>
 
-            {itemsSelected.map((element) => {
-              return (
-                <Chip
-                  key={element}
-                  onDelete={() => handleElementDelete(element)}
-                  label={element}
-                  color="primary"
-                />
-              )
-            })}
+            <div className="restriction__chip">
+              {itemsSelected.map((element) => {
+                return (
+                  <Chip
+                    key={element}
+                    onDelete={() => handleElementDelete(element)}
+                    label={element}
+                    color="primary"
+                  />
+                )
+              })}
+            </div>
           </Box>
         </AccordionDetails>
       </Accordion>
