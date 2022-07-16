@@ -8,46 +8,25 @@ import { getAllProducts } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
 import { useNavigate } from "react-router-dom";
+import FilterInput from "../../components/FilterInput";
 
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
   const [productsDisplayed, setProductsDisplayed] = useState([]);
+  const [restrictions, setRestrictions] = useState([]);
   const [restrictionsSelected, setRestrictionsSelected] = useState([]);
-  const [restrictions, setRestrictions] = useState([
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder'
-  ]);
+  const [restrictionsIncluded, setRestrictionsIncluded] = useState([]);
 
 
   const MenuProps = {
     PaperProps: {
       style: {
         maxHeight: 48 * 4.5 + 8,
-        width: 250,
+        width: 280,
       },
     },
   };
-
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder'
-  ];
 
   const navigate = useNavigate();
 
@@ -55,23 +34,30 @@ const Home = () => {
     console.log("Submit");
   }
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    console.log(value);
-    setRestrictionsSelected(
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+  // const handleChange = (event) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setRestrictionsSelected(
+  //     typeof value === 'string' ? value.split(',') : value,
+  //   );
+  // };
+
+  const fetchProducts = async () => {
+    let getProductResponse = await getAllProducts();
+    setProductsDisplayed(getProductResponse.data.productList);
+  }
 
   useEffect(() => {
     (async () => {
       let getProductResponse = await getAllProducts();
-      console.log(getProductResponse);
       setProductsDisplayed(getProductResponse.data.productList);
     })();
   }, []);
+
+  useEffect(() => {
+    console.log(restrictionsSelected)
+  }, [restrictionsSelected]);
 
   useEffect(() => {
     (async () => {
@@ -102,68 +88,35 @@ const Home = () => {
             variant="outlined"
             sx={{ margin: 1 }}
           />
-          {/* <div className=""> */}
 
-          <Grid
-            container
-            spacing={1}
-            flexDirection='column'
-            alignItems={'center'}
-            item xs={280}
-          >
-            <FormControl sx={{ m: 1, minWidth: 280 }} size="small">
-              <InputLabel id="demo-multiple-checkbox-label">Remover Restrições</InputLabel>
-              <Select
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                multiple
-                value={restrictionsSelected}
-                onChange={handleChange}
-                input={<OutlinedInput label="Remover Restrições" />}
-                renderValue={(selected) => selected.join(', ')}
-                MenuProps={MenuProps}
-                sx={{ width: '280px' }}
-              >
-                {restrictions.length > 0 && restrictions.map((nome_restricao) => (
-                  <MenuItem key={nome_restricao} value={nome_restricao}>
-                    <Checkbox checked={restrictionsSelected.indexOf(nome_restricao) > -1} />
-                    <ListItemText primary={nome_restricao} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <div className="home-filter__div">
+            <FilterInput
+              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
+              title={'Remover Restrições'}
+              acordeonTitle={'Restrições removidas'}
+              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
+            />
+            <FilterInput
+              items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
+              title={'Incluir restrições'}
+              acordeonTitle={'Restrições incluídas'}
+              updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
+            />
 
-            <div className="restriction__accepted">
-              <Accordion >
-                <AccordionSummary
-                  expandIcon={<ExpandMore />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Restrições excluidas</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    {restrictionsSelected.map((element) => {
-                      return (
-                        <div className="restriction__item">
-                          <Chip
-                            onDelete={() => { }}
-                            label={element}
-                            color="primary"
-                          />
-                        </div>
-                      )
-                    })}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </div>
-          </Grid>
-          {/* </div> */}
+          </div>
         </Box>
+
         <div className="product__list">
           {productsDisplayed.length > 0 && productsDisplayed.map((product) => {
+            let conditionRemove = product.restrictions.some(element => {
+              return restrictionsSelected.includes(element.nome_restricao)
+            });
+            
+            let conditionInclude2 = restrictionsIncluded.length > 0 && !product.restrictions.some(element => {
+              return restrictionsIncluded.includes(element.nome_restricao);
+            });
+
+            if (conditionRemove || conditionInclude2) return <></>;
             return (
               <ProductCard
                 key={`${product.productInfo.cod_produto}`}

@@ -3,11 +3,12 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import NotFoundImg from "../../assets/NotFound.png"
 import CopyrightDevHub from '../../components/CopyrightDevHub';
+import FilterInput from "../../components/FilterInput";
 import "./index.css"
 
 const NotFound = () => {
 	const theme = createTheme();
-	return (
+	return (<>
 		<ThemeProvider theme={theme}>
 			<Typography component="h1" variant="h4" color="primary" mt={8}>
 				<b>Ops! A página não existe!</b>
@@ -18,8 +19,7 @@ const NotFound = () => {
 			<img src={NotFoundImg} alt="404" width={400} />
 			<CopyrightDevHub mt={20}/>
 		</ThemeProvider>
-
-
+	</>
 	)
 }
 

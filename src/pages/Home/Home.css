@@ -25,3 +25,13 @@
     bottom: 1rem;
     right: 1rem;
 }
+
+.home-filter__div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.home-filter__div > * {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}

@@ -15,8 +15,10 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import { Button } from '@mui/material';
+import { Button, Chip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import './index.css';
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -31,17 +33,17 @@ const ExpandMore = styled((props) => {
 
 /**
  * 
- * @param {Object} product
+ * @param {Object} props.product
  * @returns Card component with data displayed.
  */
 
 export default function ProductCard(props) {
-  const {productInfo} = props.product;
-  
+  const { productInfo } = props.product;
+
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 258, minWidth: 200, minHeight: 200}}>
+    <Card sx={{ maxWidth: 258, minWidth: 200, minHeight: 200 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -67,9 +69,22 @@ export default function ProductCard(props) {
         <Typography variant="body2" color="text.secondary">
           {productInfo.ingredientes}
         </Typography>
+        <hr />
+        <Typography gutterBottom variant="h7" component="div">
+          Restrições
+        </Typography>
+          {props.product && props.product.restrictions.map((element) => {
+            return (
+              <Chip
+                key={element.nome_restricao}
+                label={element.nome_restricao}
+                color="primary"
+              />
+            )
+          })}
       </CardContent>
       <CardActions>
-        <Button onClick={() => {navigate(`/product/${productInfo.cod_produto}`)}} size="small" color="primary">
+        <Button onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
           Ver mais
         </Button>
       </CardActions>
