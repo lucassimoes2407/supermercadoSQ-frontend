@@ -5,8 +5,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import "./index.css"
 import { getUserByUserId } from "../../services/users";
 import { ThemeProvider } from "styled-components";
-import { Box, Container, createTheme, CssBaseline, Grid, Typography } from "@mui/material";
-import ProductCard from "../../components/ProductCard";
+import { Box, Chip, Container, createTheme, CssBaseline, Grid, Typography } from "@mui/material";
 
 const Product = () => {
 	const theme = createTheme();
@@ -45,13 +44,20 @@ const Product = () => {
 					<div className="product__div">
 						{(product.img_produto && <img className="product__img" src={product.img_produto} alt="" />)
 							|| <div className="image__div--not-found">
-								<ImageIcon sx={{ fontSize: 120 }} />
-								Imagem não encontrada
+								<ImageIcon color="primary" sx={{ fontSize: 120 }} />
+								<Typography
+									variant="h1"
+									fontSize={30}
+									color="primary"
+								>
+									Imagem não encontrada
+								</Typography>
 							</div>
 						}
 					</div>
 
 					<Typography
+						mt={2}
 						variant="h1"
 						fontSize={30}
 						color="primary"
@@ -76,19 +82,34 @@ const Product = () => {
 					>
 						<b>Contém:</b>
 					</Typography>
-						{product.restrictions.map((restriction) => {
-							return (restriction.nome_restricao)
-						})}
-					<Typography
+
+
+
+					<Box
+						sx={{
+							display: 'flex',
+							gap: 1,
+						}}
 						variant="body1"
 						color="primary"
 					>
-						Não existem Restrições associadas a este Produto
-					</Typography>
-
-
-
-
+						{product.restrictions.map((restriction) => {
+							return (
+								<Chip
+									key={restriction.nome_restricao}
+									label={restriction.nome_restricao}
+									color="primary"
+								/>)
+						})}
+						{product.restrictions.length < 1
+							&&
+							<Typography variant="body1"
+								fontSize={18}
+								color="primary"
+							>
+								Não existem Restrições associadas a este Produto
+							</Typography>}
+					</Box>
 
 					<Typography
 						mt={2}
@@ -101,12 +122,11 @@ const Product = () => {
 
 					<Typography
 						variant="body1"
+						fontSize={20}
 						color="primary"
 					>
 						{product.productInfo.ingredientes || 'ingredientes'}
 					</Typography>
-
-
 
 					<Typography
 						mt={2}
@@ -118,11 +138,13 @@ const Product = () => {
 					</Typography>
 
 					<Typography
+						fontSize={18}
 						variant="body1"
 						color="primary"
 					>
-						<b>{product.user.username || 'nome usuário'}</b>
+						{product.user.username || 'nome usuário'}
 					</Typography>
+
 				</Box>
 			</Container>
 		</ThemeProvider>

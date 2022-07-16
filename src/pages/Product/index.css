@@ -48,6 +48,6 @@
     height: 300px;
 
     background-color: var(--primary-lighter);
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 1rem;
 }
