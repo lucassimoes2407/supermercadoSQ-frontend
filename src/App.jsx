@@ -2,11 +2,15 @@ import './App.css';
 import { Link, useNavigate } from 'react-router-dom'
 import RouterConfig from './routes/Router';
 import { Button, IconButton, Snackbar } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Close, Copyright } from '@mui/icons-material';
 import { useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
+<<<<<<< HEAD
 import ResponsiveAppBar from './components/Header';
+=======
+import CopyrightDevHub from './components/CopyrightDevHub';
+>>>>>>> ccf06c92d4b489b4727d54582708b8d0ee805552
 
 
 function App() {
@@ -46,11 +50,12 @@ function App() {
         onClose={handleSnackOpen}
         key={'app__snack'}
       >
-      {/* {(!!snack.children && snack.children) || ""} */}
+        {/* {(!!snack.children && snack.children) || ""} */}
       </Snackbar>
+      <CopyrightDevHub sx={{mt: 10}}/>
     </div>
   )
-} 
+}
 
 
 export default App;

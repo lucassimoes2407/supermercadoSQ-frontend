@@ -127,7 +127,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <CopyrightDevHub sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

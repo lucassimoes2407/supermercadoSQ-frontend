@@ -110,7 +110,6 @@ export default function LogIn() {
             </Grid>
           </Box>
         </Box>
-        <CopyrightDevHub sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
