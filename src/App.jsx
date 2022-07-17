@@ -2,10 +2,11 @@ import './App.css';
 import { Link, useNavigate } from 'react-router-dom'
 import RouterConfig from './routes/Router';
 import { Button, IconButton, Snackbar } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Close, Copyright } from '@mui/icons-material';
 import { useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
+import CopyrightDevHub from './components/CopyrightDevHub';
 
 
 function App() {
@@ -62,11 +63,12 @@ function App() {
         onClose={handleSnackOpen}
         key={'app__snack'}
       >
-      {/* {(!!snack.children && snack.children) || ""} */}
+        {/* {(!!snack.children && snack.children) || ""} */}
       </Snackbar>
+      <CopyrightDevHub sx={{mt: 10}}/>
     </div>
   )
-} 
+}
 
 
 export default App;

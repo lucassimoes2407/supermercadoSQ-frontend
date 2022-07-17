@@ -63,12 +63,6 @@ const Home = () => {
     })();
   }, []);
   
-  useEffect(() => {
-    (async () => {
-      const response = await getProductFiltered('a', ['goiaba'], ['leite', 'apenas']);
-      console.log(response);
-    })()
-  }, []);
 
   const handleNomeProdutoChange = async (event) => {
     try{

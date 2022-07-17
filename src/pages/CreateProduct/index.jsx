@@ -128,7 +128,6 @@ const CreateProduct = () => {
 						</Button>
 					</Box>
 				</Box>
-				<CopyrightDevHub sx={{ mt: 5 }} />
 			</Container>
 		</ThemeProvider>
 	)

@@ -30,7 +30,6 @@ const getProductByName = async (nome_produto) => {
 
 const postProduct = async (nome, marca, ingredientes, img_produto, cod_usuario) => {
     try{ 
-        console.log(nome)
         const postProduct = await backend_connection.post('/products/', {nome, marca, ingredientes, img_produto, cod_usuario});
         return postProduct;
     }catch(e){
@@ -49,10 +48,8 @@ const getProductByUserCod = async (cod_usuario) => {
 }
 
 const getProductFiltered = async (search, include_ingredients, exclude_ingredients) => {
-    console.log(search, include_ingredients, exclude_ingredients);
     try{
-        const getProductByUserCod = await backend_connection.get(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
-        console.log(getProductByUserCod);
+        const getProductByUserCod = await backend_connection.post(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
         return getProductByUserCod;
     }catch(e){
         console.log(e);
