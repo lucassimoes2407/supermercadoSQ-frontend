@@ -4,7 +4,7 @@ import { ExpandMore } from '@mui/icons-material'
 
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts, getProductByName, getProductFiltered } from "../../services/product";
+import { getAllProducts, getProductByName, getProductFiltered, postProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
 import { useNavigate } from "react-router-dom";
@@ -12,36 +12,17 @@ import FilterInput from "../../components/FilterInput";
 
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
   const [productsDisplayed, setProductsDisplayed] = useState([]);
   const [restrictions, setRestrictions] = useState([]);
   const [restrictionsSelected, setRestrictionsSelected] = useState([]);
   const [restrictionsIncluded, setRestrictionsIncluded] = useState([]);
 
 
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 48 * 4.5 + 8,
-        width: 280,
-      },
-    },
-  };
-
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     console.log("Submit");
   }
-
-  // const handleChange = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setRestrictionsSelected(
-  //     typeof value === 'string' ? value.split(',') : value,
-  //   );
-  // };
 
   const fetchProducts = async () => {
     let getProductResponse = await getAllProducts();
@@ -50,7 +31,7 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      let getProductResponse = await getAllProducts();
+      let getProductResponse = await postProductFiltered('', [], []);
       setProductsDisplayed(getProductResponse.data.productList);
     })();
   }, []);

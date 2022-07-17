@@ -47,10 +47,10 @@ const getProductByUserCod = async (cod_usuario) => {
     }
 }
 
-const getProductFiltered = async (search, include_ingredients, exclude_ingredients) => {
+const postProductFiltered = async (search, include_ingredients, exclude_ingredients) => {
     try{
-        const getProductByUserCod = await backend_connection.post(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
-        return getProductByUserCod;
+        const postProductByUserCod = await backend_connection.post(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
+        return postProductByUserCod;
     }catch(e){
         console.log(e);
     }
@@ -84,6 +84,6 @@ export {
     getProductByUserCod,
     getProductByName,
     putProduct,
-    getProductFiltered,
+    postProductFiltered,
     deleteProduct,
 }
