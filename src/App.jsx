@@ -6,11 +6,8 @@ import { Close, Copyright } from '@mui/icons-material';
 import { useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
-<<<<<<< HEAD
 import ResponsiveAppBar from './components/Header';
-=======
 import CopyrightDevHub from './components/CopyrightDevHub';
->>>>>>> ccf06c92d4b489b4727d54582708b8d0ee805552
 
 
 function App() {
