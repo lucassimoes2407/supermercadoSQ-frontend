@@ -12,6 +12,7 @@ const getAllProducts = async () => {
 const getProductByCod = async (cod_produto) => {
     try{
         const allProducts = await backend_connection.get(`/products/${cod_produto}`);
+        console.log(allProducts)
         return allProducts;
     }catch(e){
         console.log(e.message);
@@ -68,6 +69,16 @@ const putProduct = async (cod_produto, nome, marca, ingredientes, img_produto = 
     }
 }
 
+const deleteProduct = async (cod_produto) => {
+    try{
+        const deleteProduct = await backend_connection.delete(`/products/${cod_produto}`);
+
+        return deleteProduct;
+    }catch(e){
+        console.log(e);
+    }
+}
+
 
 export {
     getAllProducts,
@@ -77,4 +88,5 @@ export {
     getProductByName,
     putProduct,
     getProductFiltered,
+    deleteProduct,
 }
