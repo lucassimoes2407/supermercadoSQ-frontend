@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import Product from "../pages/Product";
 import CreateProduct from "../pages/CreateProduct";
 import User from "../pages/User";
+import Admin from "../pages/Admin";
 
 const RouterConfig = () => {
     return (
@@ -19,6 +20,7 @@ const RouterConfig = () => {
             <Route path="*" element={<NotFound/>}/>
             <Route path="product/:cod" element={<Product/>}/>
             <Route path="create-product" element={<CreateProduct/>}/>
+            <Route path="admin" element={<Admin/>}/>
         </Routes>
     )
 };
