@@ -6,6 +6,7 @@ import { Close } from '@mui/icons-material';
 import { useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
+import ResponsiveAppBar from './components/Header';
 
 
 function App() {
@@ -36,25 +37,8 @@ function App() {
 
   return (
     <div className="App">
-      <header className="product__header">
-        <IconButton aria-label="back" onClick={() => { navigate(-1) }}>
-          <ArrowBack />
-        </IconButton>
-        <IconButton aria-label="home" onClick={() => { navigate("/") }}>
-          <Dashboard />
-        </IconButton>
-        <IconButton aria-label="settings">
-          <Settings />
-        </IconButton>
-      </header>
-
-      <h1>Supermercado SQ</h1>
-      <div className='link__div'>
-        <Link to='/'>Home</Link>
-        <Link to='/about'>About</Link>
-        <Link to='/login'>Entrar</Link>
-        <Link to='/signup'>Cadastro</Link>
-      </div>
+      <ResponsiveAppBar/>
+      
       <hr />
       <RouterConfig />
       <Snackbar
