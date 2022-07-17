@@ -9,7 +9,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from "styled-components";
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 import { createUser } from '../../services/users';
@@ -52,7 +53,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor:'primary.light' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -126,7 +127,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <CopyrightDevHub sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

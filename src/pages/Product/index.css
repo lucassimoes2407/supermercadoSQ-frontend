@@ -48,6 +48,36 @@
     height: 300px;
 
     background-color: var(--primary-lighter);
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 1rem;
+}
+
+.action-buttons__div {
+    display: flex;
+    justify-content: center;
+}
+
+.action-buttons__div > * {
+    margin: 4rem !important;
+}
+
+.modal-content__div {
+    position: 'absolute' as 'absolute';
+    top: '50%';
+    left: '50%';
+    transform: 'translate(-50%, -50%)';
+    width: 400;
+    background-color: 'background.paper';
+    border: '2px solid #000';
+    box-shadow: 24;
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal__buttons > * {
+    margin-top: 1rem !important;
+    margin-left: 1.2rem;
 }

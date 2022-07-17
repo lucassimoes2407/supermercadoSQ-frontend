@@ -1,19 +1,26 @@
+import { createTheme, Typography } from "@mui/material";
 import React from "react";
+import { ThemeProvider } from "styled-components";
 import NotFoundImg from "../../assets/NotFound.png"
 import CopyrightDevHub from '../../components/CopyrightDevHub';
+import FilterInput from "../../components/FilterInput";
 import "./index.css"
 
 const NotFound = () => {
-    return (
-        <div>
-            <h1 className="notfound__h1">Erro 404</h1>
-            <h2 className="notfound__h2">Ops! Algo deu errado, a página não existe!</h2>
-
-            <img className="notfound__img" src={NotFoundImg} alt="Ops! Algo deu errado, a página não existe!" />
-
-            <CopyrightDevHub/>
-        </div>
-
-)}
+	const theme = createTheme();
+	return (<>
+		<ThemeProvider theme={theme}>
+			<Typography component="h1" variant="h4" color="primary" mt={8}>
+				<b>Ops! A página não existe!</b>
+			</Typography>
+			<Typography component="h1" variant="h1" color="primary">
+				<b>Erro 404</b>
+			</Typography>
+			<img src={NotFoundImg} alt="404" width={400} />
+			<CopyrightDevHub mt={20}/>
+		</ThemeProvider>
+	</>
+	)
+}
 
 export default NotFound;

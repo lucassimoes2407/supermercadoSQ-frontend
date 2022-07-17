@@ -10,12 +10,26 @@
     justify-content: center;
     margin: 1rem;
 
-
-
     border-radius: 30px;
     background-color: var(--primary-light);
 }
 
 .product__list > * {
     margin: 1rem;
+}
+
+.add-product__div {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.home-filter__div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.home-filter__div > * {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
 }

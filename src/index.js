@@ -5,15 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { SnackProvider } from './hooks/useSnack';
+import { ThemeProvider } from '@mui/material';
+import { theme } from './styles/materialTheme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render( 
+root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <SnackProvider >
-        <App />
-      </SnackProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <SnackProvider >
+          <App />
+        </SnackProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

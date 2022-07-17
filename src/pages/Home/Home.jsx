@@ -1,149 +1,165 @@
-import { Box, Checkbox, Chip, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Chip, Container, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import { ExpandMore } from '@mui/icons-material'
 
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts } from "../../services/product";
+import { getAllProducts, getProductByName, getProductFiltered, postProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
+import { useNavigate } from "react-router-dom";
+import FilterInput from "../../components/FilterInput";
+import FilterInputText from "../../components/FilterInputText";
 
 
 const Home = () => {
-    const [productsDisplayed, setProductsDisplayed] = useState([]);
-    const [restrictionsSelected, setRestrictionsSelected] = useState([]);
-    const [restrictions, setRestrictions] = useState([
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder'
-    ]);
+  const [productsDisplayed, setProductsDisplayed] = useState([]);
+  const [restrictions, setRestrictions] = useState([]);
+  const [restrictionsSelected, setRestrictionsSelected] = useState([]);
+  const [restrictionsIncluded, setRestrictionsIncluded] = useState([]);
+  const [ingredientIncluded, setIngredientIncluded] = useState([]);
+  const [ingredientExcluded, setIngredientExcluded] = useState([]);
+  const [productName, setProductName] = useState('');
 
 
-    const MenuProps = {
-        PaperProps: {
-            style: {
-                maxHeight: 48 * 4.5 + 8,
-                width: 250,
-            },
-        },
-    };
+  const navigate = useNavigate();
 
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder'
-    ];
+  const handleSubmit = (event) => {
+    console.log("Submit");
+  }
 
-    const handleSubmit = (event) => {
-        console.log("Submit");
+  const fetchProducts = async () => {
+    let getProductResponse = await getAllProducts();
+    setProductsDisplayed(getProductResponse.data.productList);
+  }
+
+  useEffect(() => {
+    (async () => {
+      let getProductResponse = await postProductFiltered('', [], []);
+      setProductsDisplayed(getProductResponse.data.productList);
+    })();
+  }, []);
+
+  
+  useEffect(() => {
+    (async () => {
+      let getRestrictionResponse = await getAllRestrictions();
+      setRestrictions(getRestrictionResponse.data.map(restriction => restriction.nome_restricao));
+    })();
+  }, []);
+  
+  const sortProdutoByNome = (productList1, productList2) => {
+    if(productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
+    if(productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
+    if(productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
+  }
+  const handleNomeProdutoChange = async (event) => {
+    try{
+      if(!event.target.value) {
+        fetchProducts();
+        return
+      }
+      const responseProductByName = await postProductFiltered(event.target.value, [ingredientIncluded], [ingredientExcluded]);
+      console.log(responseProductByName.data.productList);
+      setProductName(event.target.value);
+      setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
+    }catch(e){
+      console.log(e);
     }
-    const [personName, setPersonName] = useState([]);
+  }
 
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        console.log(value);
-        setRestrictionsSelected(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
+  useEffect(() => {
+      (async () => {
+        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
+        setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
+      })()
+  }, [ingredientIncluded, ingredientExcluded]);
 
-    useEffect(() => {
-        (async () => {
-            let getProductResponse = await getAllProducts();
-            setProductsDisplayed(getProductResponse.data);
-        })();
-    }, []);
+  return (
+    <div className="home__div">
+      <Box justifyContent={'center'} component="form" onSubmit={handleSubmit} noValidate sx={{
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}>
+        <Box sx={{ width: '90%' }}>
+          <h1>Home</h1>
+          <TextField
+            onChange={handleNomeProdutoChange}
+            fullWidth
+            required
+            id="product_name"
+            label="Qual produto está procurando?"
+            name="product_name"
+            autoComplete="product_name"
+            autoFocus
+            hiddenLabel
+            variant="outlined"
+            sx={{ margin: 1 }}
+          />
 
-    useEffect(() => {
-        (async () => {
-            let getRestrictionResponse = await getAllRestrictions();
-            setRestrictions(getRestrictionResponse.data.map(restriction => restriction.nome_restricao));
-        })();
-    }, []);
+          <div className="home-filter__div">
+            <FilterInput
+              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
+              title={'Remover Restrições'}
+              acordeonTitle={'Restrições removidas'}
+              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
+            />
+            <FilterInput
+              items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
+              title={'Incluir restrições'}
+              acordeonTitle={'Restrições incluídas'}
+              updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
+            />
+            <FilterInputText 
+              title={'Incluir ingredientes'}
+              acordeonTitle={'ingredientes incluídos'}
+              updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
+            />
+            <FilterInputText 
+              title={'Excluir ingredientes'}
+              acordeonTitle={'Ingredientes excluir'}
+              updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
+            />
 
-    return (
-        <div className="home__div">
-            <Box justifyContent={'center'} component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                <h1>Home</h1>
-                <TextField
-                    size='medium'
-                    required
-                    id="product_name"
-                    label="Qual produto está procurando?"
-                    name="product_name"
-                    autoComplete="product_name"
-                    autoFocus
-                    hiddenLabel
-                    variant="outlined"
-                />
-                <FormControl sx={{ m: 1, width: 300 }}>
-                    <InputLabel id="demo-multiple-checkbox-label">Restrições</InputLabel>
-                    <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={restrictionsSelected}
-                        onChange={handleChange}
-                        input={<OutlinedInput label="Restrições" />}
-                        renderValue={(selected) => selected.join(', ')}
-                        MenuProps={MenuProps}
-                    >
-                        {restrictions.length > 0 && restrictions.map((nome_restricao) => (
-                            <MenuItem key={nome_restricao} value={nome_restricao}>
-                                <Checkbox checked={restrictionsSelected.indexOf(nome_restricao) > -1} />
-                                <ListItemText primary={nome_restricao} />
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <div className="restriction__accepted">
-                    <Grid container justifyContent={'center'} gap={1}>
-                        
-                        {restrictionsSelected.map((element) => {
-                            return (
-                                <div className="restriction__item">
-                                    <Chip
-                                        onDelete={() => {}} 
-                                        label={element}
-                                        color="primary"
-                                        />
-                                </div>
-                            )
-                        })}
-                    </Grid>
-                </div>
-                <div className="restriction__list">
+          </div>
+        </Box>
 
-                </div>
-                <div className="product__list">
-                    {productsDisplayed.length > 0 && productsDisplayed.map((product) => {
-                        return (
-                            <ProductCard
-                                key={`${product.cod_produto}`}
-                                product={product}
-                            />
-                        )
-                    })
-                    }
-                </div>
-            </Box>
+        <div className="product__list">
+          {productsDisplayed.length > 0 && productsDisplayed.map((product) => {
+            let conditionRemove = product.restrictions.some(element => {
+              return restrictionsSelected.includes(element.nome_restricao)
+            });
+
+            let conditionInclude2 = restrictionsIncluded.length > 0 && !product.restrictions.some(element => {
+              return restrictionsIncluded.includes(element.nome_restricao);
+            });
+
+            if (conditionRemove || conditionInclude2) return <></>;
+            return (
+              <ProductCard
+                key={`${product.productInfo.cod_produto}`}
+                product={product}
+              />
+            )
+          })
+          }
         </div>
-    )
+
+      </Box>
+      <div className="add-product__div">
+        <Button
+          variant="contained"
+          endIcon={<AddIcon />}
+          onClick={() => navigate('/create-product')}
+          color="secondary"
+        >
+          Adicionar Produto
+        </Button>
+      </div>
+    </div>
+  )
 };
 
 export default Home;
