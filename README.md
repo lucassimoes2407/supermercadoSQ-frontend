@@ -1,3 +1,72 @@
+
+<h1 align="center">Supermercado SQ</h1>
+<p align="center">Projeto desenvolvido durante o Academy Bootcamp do Instituto Atlântico</p>
+<!-- <h1 align="center">
+<img alt="Tela inicial da aplicação SupermercadoSQ" title="#SupermercadoSQ" src="" />
+</h1> -->
+<!-- <img src="https://img.shields.io/apm/l/vim-mode"/>
+<img src="https://img.shields.io/npm/types/typescript?color=blue&label=language"/> -->
+<hr>
+<h2>Tópicos</h2>
+
+* [Pre-requisitos](#pre-requisitos)
+* [Como instalar o projeto](#instalar-projeto)
+* [Funcionalidades](#funcionalidades)
+* [Tecnologias](#tecnologias)
+* [Novidades](#novidade)
+* [Créditos](#creditos)
+* [(Bonus) Configuração do Eslint](#eslint)
+
+<h2 id="pre-requisitos">Pre-requisitos</h2>
+
+* Node (v16^)
+* Git
+* Yarn
+
+<h2 id="instalar-projeto">Como instalar o projeto</h2>
+<h3>
+Baixar Projeto 
+</h3>
+
+```
+git clone https://github.com/lucassimoes2407/supermercadoSQ-frontend.git
+```
+<h3>
+Instalar as Dependências 
+</h3>
+
+```
+yarn
+```
+```
+npm install
+```
+<h3>
+Rodar 
+</h3>
+
+```
+npm run start
+```
+
+<h2 id="funcionalidades">Funcionalidades</h2>
+
+* Em andamento
+  - Em andamento
+
+<h2 id="tecnologias">Tecnologias</h2>
+
+* [React](https://pt-br.reactjs.org) 
+* [JavaScript]()
+* [CSS]()
+* [Material UI]()
+
+<h2 id="novidade">Novidade</h2>
+
+
+
+<h2 id="creditos">Créditos</h2>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
