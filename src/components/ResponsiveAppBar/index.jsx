@@ -11,10 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import Logo from '../../assets/logo.png';
 
-const pages = ['Entrar', 'About', 'Cadastro'];
-const settings = ['MyAccount', 'MyProducts','Logout'];
+const pages = ['Sobre'];
+const settings = ['Profile', 'Logout'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -39,7 +39,6 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +54,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            HOME
+            <img src={Logo} alt="Logo" draggable="false" height={50}/>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -94,7 +93,6 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -111,7 +109,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Home
+            <img src={Logo} alt="Logo" draggable="false" height={50}/>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -128,7 +126,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar/>
               </IconButton>
             </Tooltip>
             <Menu

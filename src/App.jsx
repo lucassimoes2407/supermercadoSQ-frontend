@@ -1,18 +1,18 @@
 import './App.css';
 import { Link, useNavigate } from 'react-router-dom'
 import RouterConfig from './routes/Router';
-import { Button, IconButton, Snackbar } from '@mui/material';
+import { Button, createTheme, IconButton, Snackbar } from '@mui/material';
 import { Close, Copyright } from '@mui/icons-material';
 import { useSnack } from './hooks/useSnack';
 import React from 'react';
 import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
-import ResponsiveAppBar from './components/Header';
 import CopyrightDevHub from './components/CopyrightDevHub';
-
+import ResponsiveAppBar from './components/ResponsiveAppBar'
+import { ThemeProvider } from "styled-components";
 
 function App() {
   const { snack, handleSnackOpen } = useSnack();
-
+  const theme = createTheme();
   const navigate = useNavigate();
 
   const action = (
@@ -37,20 +37,22 @@ function App() {
 
 
   return (
-    <div className="App">
-      <ResponsiveAppBar/>
-      
-      <hr />
-      <RouterConfig />
-      <Snackbar
-        {...snack}
-        onClose={handleSnackOpen}
-        key={'app__snack'}
-      >
-        {/* {(!!snack.children && snack.children) || ""} */}
-      </Snackbar>
-      <CopyrightDevHub sx={{mt: 10}}/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <ResponsiveAppBar />
+
+        <hr />
+        <RouterConfig />
+        <Snackbar
+          {...snack}
+          onClose={handleSnackOpen}
+          key={'app__snack'}
+        >
+          {/* {(!!snack.children && snack.children) || ""} */}
+        </Snackbar>
+        <CopyrightDevHub sx={{ mt: 10 }} />
+      </div>
+    </ThemeProvider>
   )
 }
 
