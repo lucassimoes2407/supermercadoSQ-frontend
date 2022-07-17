@@ -9,6 +9,7 @@ import { getAllRestrictions } from "../../services/restriction";
 import './Home.css';
 import { useNavigate } from "react-router-dom";
 import FilterInput from "../../components/FilterInput";
+import FilterInputText from "../../components/FilterInputText";
 
 
 const Home = () => {
@@ -44,15 +45,21 @@ const Home = () => {
     })();
   }, []);
   
-
+  const sortProdutoByNome = (productList1, productList2) => {
+    console.log(productList1, productList2);
+    if(productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
+    if(productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
+    if(productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
+  }
   const handleNomeProdutoChange = async (event) => {
     try{
       if(!event.target.value) {
         fetchProducts();
         return
       }
-      const responseProductByName = await getProductByName(event.target.value);
-      setProductsDisplayed(responseProductByName.data.productList)
+      const responseProductByName = await postProductFiltered(event.target.value, [], []);
+      console.log(responseProductByName.data.productList);
+      setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
     }catch(e){
       console.log(e);
     }
@@ -94,6 +101,16 @@ const Home = () => {
               title={'Incluir restrições'}
               acordeonTitle={'Restrições incluídas'}
               updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
+            />
+            <FilterInputText 
+              title={'Incluir ingredientes'}
+              acordeonTitle={'ingredientes incluídos'}
+              updateSelecteds={(selected) => { console.log(selected) }}
+            />
+            <FilterInputText 
+              title={'Excluir ingredientes'}
+              acordeonTitle={'Ingredientes excluir'}
+              updateSelecteds={(selected) => { console.log(selected) }}
             />
 
           </div>
