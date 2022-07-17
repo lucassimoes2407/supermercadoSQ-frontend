@@ -70,8 +70,7 @@ const Home = () => {
 
   useEffect(() => {
       (async () => {
-        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded)
-        console.log(responseFilter);
+        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
         setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
       })()
   }, [ingredientIncluded, ingredientExcluded]);
