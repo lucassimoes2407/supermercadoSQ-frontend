@@ -17,6 +17,9 @@ const Home = () => {
   const [restrictions, setRestrictions] = useState([]);
   const [restrictionsSelected, setRestrictionsSelected] = useState([]);
   const [restrictionsIncluded, setRestrictionsIncluded] = useState([]);
+  const [ingredientIncluded, setIngredientIncluded] = useState([]);
+  const [ingredientExcluded, setIngredientExcluded] = useState([]);
+  const [productName, setProductName] = useState('');
 
 
   const navigate = useNavigate();
@@ -46,7 +49,6 @@ const Home = () => {
   }, []);
   
   const sortProdutoByNome = (productList1, productList2) => {
-    console.log(productList1, productList2);
     if(productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
     if(productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
     if(productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
@@ -57,13 +59,22 @@ const Home = () => {
         fetchProducts();
         return
       }
-      const responseProductByName = await postProductFiltered(event.target.value, [], []);
+      const responseProductByName = await postProductFiltered(event.target.value, [ingredientIncluded], [ingredientExcluded]);
       console.log(responseProductByName.data.productList);
+      setProductName(event.target.value);
       setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
     }catch(e){
       console.log(e);
     }
   }
+
+  useEffect(() => {
+      (async () => {
+        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded)
+        console.log(responseFilter);
+        setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
+      })()
+  }, [ingredientIncluded, ingredientExcluded]);
 
   return (
     <div className="home__div">
@@ -105,12 +116,12 @@ const Home = () => {
             <FilterInputText 
               title={'Incluir ingredientes'}
               acordeonTitle={'ingredientes incluídos'}
-              updateSelecteds={(selected) => { console.log(selected) }}
+              updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
             />
             <FilterInputText 
               title={'Excluir ingredientes'}
               acordeonTitle={'Ingredientes excluir'}
-              updateSelecteds={(selected) => { console.log(selected) }}
+              updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
             />
 
           </div>
