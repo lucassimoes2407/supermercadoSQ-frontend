@@ -50,7 +50,7 @@ const getProductByUserCod = async (cod_usuario) => {
 const getProductFiltered = async (search, include_ingredients, exclude_ingredients) => {
     console.log(search, include_ingredients, exclude_ingredients);
     try{
-        const getProductByUserCod = await backend_connection.get(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
+        const getProductByUserCod = await backend_connection.post(`/products/filtered/`, {search, include_ingredients, exclude_ingredients});
         console.log(getProductByUserCod);
         return getProductByUserCod;
     }catch(e){
