@@ -1,0 +1,19 @@
+footer {
+    width: 100%;
+    padding: 2rem 1rem;
+    background-color: var(--primary-light);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    color: white;
+}
+
+img {
+    width: 8rem;
+}
+
+a {
+    color: white;
+}

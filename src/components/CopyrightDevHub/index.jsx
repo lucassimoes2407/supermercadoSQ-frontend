@@ -1,16 +1,22 @@
 import React from "react";
 import { Typography, Link } from "@mui/material";
+import './index.css'
+
+import imagemDevHub from "../../assets/logo-devhub-darkmode.png";
 
 const CopyrightDevHub = (props) => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Atlântico Academy Bootcamp '}
-      <Link color="inherit" href="https://github.com/lucassimoes2407/supermercadoSQ-frontend">
-        DevHub ©
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <footer>
+      <img src={imagemDevHub} alt="DevHub" />
+        <p>
+          {'Atlântico Academy Bootcamp - '}
+          <a color="inherit" href="https://github.com/lucassimoes2407/supermercadoSQ-frontend" target="_ablank">
+            Equipe DevHub 
+          </a>{' © '}
+          {new Date().getFullYear()}
+          {'.'}
+        </p>    
+    </footer>
   );
 }
 
