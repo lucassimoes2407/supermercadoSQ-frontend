@@ -1,8 +1,8 @@
-import {Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts, postProductFiltered } from "../../services/product";
+import { postProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import { useNavigate } from "react-router-dom";
 import FilterInput from "../../components/FilterInput";
@@ -26,9 +26,21 @@ const Home = () => {
     console.log("Submit");
   }
 
-  const fetchProducts = async () => {
-    let getProductResponse = await getAllProducts();
-    setProductsDisplayed(getProductResponse.data.productList);
+  const sortProdutoByNome = (productList1, productList2) => {
+    if (productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
+    if (productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
+    if (productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
+  }
+
+  const handleNomeProdutoChange = async (event) => {
+    try {
+      if (!event.target.value) {
+        return
+      }
+      setProductName(event.target.value);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   useEffect(() => {
@@ -38,40 +50,19 @@ const Home = () => {
     })();
   }, []);
 
-  
   useEffect(() => {
     (async () => {
       let getRestrictionResponse = await getAllRestrictions();
       setRestrictions(getRestrictionResponse.data.map(restriction => restriction.nome_restricao));
     })();
   }, []);
-  
-  const sortProdutoByNome = (productList1, productList2) => {
-    if(productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
-    if(productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
-    if(productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
-  }
-  const handleNomeProdutoChange = async (event) => {
-    try{
-      if(!event.target.value) {
-        fetchProducts();
-        return
-      }
-      const responseProductByName = await postProductFiltered(event.target.value, [ingredientIncluded], [ingredientExcluded]);
-      console.log(responseProductByName.data.productList);
-      setProductName(event.target.value);
-      setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
-    }catch(e){
-      console.log(e);
-    }
-  }
 
   useEffect(() => {
-      (async () => {
-        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
-        setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
-      })()
-  }, [ingredientIncluded, ingredientExcluded]);
+    (async () => {
+      const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
+      setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
+    })()
+  }, [ingredientIncluded, ingredientExcluded, productName]);
 
   return (
     <div className="home__div">
@@ -110,12 +101,12 @@ const Home = () => {
               acordeonTitle={'Restrições incluídas'}
               updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
             />
-            <FilterInputText 
+            <FilterInputText
               title={'Incluir ingredientes'}
               acordeonTitle={'ingredientes incluídos'}
               updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
             />
-            <FilterInputText 
+            <FilterInputText
               title={'Excluir ingredientes'}
               acordeonTitle={'Ingredientes excluir'}
               updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
