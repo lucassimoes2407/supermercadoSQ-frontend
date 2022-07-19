@@ -66,11 +66,11 @@ export default function ProductCard(props) {
         alt="Paella dish"
       /> */}
       <CardContent>
-        <div className='product-ingredients__div'>
+        {/* <div className='product-ingredients__div'>
           <Typography variant="body2" color="text.secondary">
             {productInfo.ingredientes}
           </Typography>
-        </div>
+        </div> */}
         <Typography gutterBottom variant="h7" component="div">
           Restrições
         </Typography>

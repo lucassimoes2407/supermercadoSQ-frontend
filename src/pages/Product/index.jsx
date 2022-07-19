@@ -75,10 +75,6 @@ const Product = () => {
     }
   }
 
-  useEffect(() => {
-    console.log("#test", product);
-  }, [product]);
-
   return (<>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

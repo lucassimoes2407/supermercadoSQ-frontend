@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import CopyrightDevHub from '../../components/CopyrightDevHub';
 import { useSnack } from '../../hooks/useSnack';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Edit } from '@mui/icons-material';
 
 
 const EditProduct = () => {
@@ -101,9 +102,9 @@ const EditProduct = () => {
                 >
 
                     <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
-                        <AddIcon />
+                        <Edit />
                     </Avatar>
-                    <Typography component="h1" variant="h5">Novo Produto</Typography>
+                    <Typography component="h1" variant="h5">Editar Produto {product.productInfo.nome}</Typography>
 
                     <Box
                         component="form"
@@ -118,7 +119,7 @@ const EditProduct = () => {
                                     name="product"
                                     id="product"
                                     label="Produto"
-                                    value={(product.productInfo && product.productInfo.nome) || 'nome'}
+                                    value={(product.productInfo && product.productInfo.nome) || ''}
                                     onChange={(event) => handleProductInfoChange(event, 'nome')}
                                     fullWidth
                                     required
@@ -131,7 +132,7 @@ const EditProduct = () => {
                                     name="brand"
                                     id="brand"
                                     label="Marca"
-                                    value={(product.productInfo && product.productInfo.marca) || 'marca'}
+                                    value={(product.productInfo && product.productInfo.marca) || ''}
                                     onChange={(event) => handleProductInfoChange(event, 'marca')}
                                     fullWidth
                                     required
@@ -143,7 +144,7 @@ const EditProduct = () => {
                                     name="ingredients"
                                     id="ingredients"
                                     label="Ingredientes"
-                                    value={(product.productInfo && product.productInfo.ingredientes) || 'ingredientes'}
+                                    value={(product.productInfo && product.productInfo.ingredientes) || ''}
                                     onChange={(event) => handleProductInfoChange(event, 'ingredientes')}
                                     fullWidth
                                     multiline

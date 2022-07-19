@@ -46,6 +46,8 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       let getProductResponse = await postProductFiltered('', [], []);
+
+      console.log(getProductResponse);
       setProductsDisplayed(getProductResponse.data.productList);
     })();
   }, []);
@@ -90,16 +92,16 @@ const Home = () => {
 
           <div className="home-filter__div">
             <FilterInput
-              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
-              title={'Remover Restrições'}
-              acordeonTitle={'Restrições removidas'}
-              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
-            />
-            <FilterInput
               items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
               title={'Incluir restrições'}
               acordeonTitle={'Restrições incluídas'}
               updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
+            />
+            <FilterInput
+              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
+              title={'Remover Restrições'}
+              acordeonTitle={'Restrições removidas'}
+              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
             />
             <FilterInputText
               title={'Incluir ingredientes'}
