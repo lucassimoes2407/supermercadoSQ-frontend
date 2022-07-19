@@ -1,5 +1,5 @@
 import { ManageAccountsRounded } from "@mui/icons-material";
-import { Avatar, Box, Button, Checkbox, Chip, Container, createTheme, CssBaseline, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography, } from "@mui/material";
+import { Avatar, Box, Button, Checkbox, Chip, Container, createTheme, CssBaseline, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography, } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -139,26 +139,27 @@ const User = () => {
 							</Grid>
 
 							<Grid item xs={12}>
-
-								<InputLabel id="demo-multiple-checkbox-label">Restrições</InputLabel>
-								<Select
-									fullWidth
-									labelId="demo-multiple-checkbox-label"
-									id="demo-multiple-checkbox"
-									multiple
-									value={restrictionsSelected}
-									onChange={handleChange}
-									input={<OutlinedInput label="Restrições" />}
-									renderValue={(selected) => selected.join(', ')}
-									MenuProps={MenuProps}
-								>
-									{restrictions.length > 0 && restrictions.map((nome_restricao) => (
-										<MenuItem key={nome_restricao} value={nome_restricao}>
-											<Checkbox checked={restrictionsSelected.indexOf(nome_restricao) > -1} />
-											<ListItemText primary={nome_restricao} />
-										</MenuItem>
-									))}
-								</Select>
+								<FormControl fullWidth={true}>
+									<InputLabel id="demo-multiple-checkbox-label">Restrições</InputLabel>
+									<Select
+										fullWidth
+										labelId="demo-multiple-checkbox-label"
+										id="demo-multiple-checkbox"
+										multiple
+										value={restrictionsSelected}
+										onChange={handleChange}
+										input={<OutlinedInput label="Restrições" />}
+										renderValue={(selected) => selected.join(', ')}
+										MenuProps={MenuProps}
+									>
+										{restrictions.length > 0 && restrictions.map((nome_restricao) => (
+											<MenuItem key={nome_restricao} value={nome_restricao}>
+												<Checkbox checked={restrictionsSelected.indexOf(nome_restricao) > -1} />
+												<ListItemText primary={nome_restricao} />
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
 							</Grid>
 							<Grid item xs={12} container justifyContent={'center'} gap={1}>
 
@@ -187,7 +188,7 @@ const User = () => {
 						</Button>
 					</Box>
 				</Box>
-				
+
 			</Container>
 		</ThemeProvider>
 

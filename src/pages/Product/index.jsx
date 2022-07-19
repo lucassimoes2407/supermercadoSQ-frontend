@@ -32,20 +32,18 @@ const Product = () => {
   const {snack, handleSnackState} = useSnack();
   const navigate = useNavigate();
   
-  // useEffect(() => {
-  //   try {
-  //     (async () => {
-  //       console.log(params);
-  //       const getProduct = await getProductByCod(params.cod);
-  //       console.log(typeof getProduct);
-  //       if(!getProduct) navigate('/');
-  //       const product = getProduct.data;
-  //       setProduct(product)
-  //     })();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      (async () => {
+        const getProduct = await getProductByCod(params.cod);
+        if(!getProduct || !getProduct.data) navigate('/notfound');
+        const product = getProduct.data;
+        setProduct(product)
+      })();
+    } catch (e) {
+      console.log(e);
+    }
+  }, [navigate, params.cod]);
 
   const handleModal = () => {
     setModalDelete(previousState => !previousState);
@@ -74,6 +72,10 @@ const Product = () => {
       // )
     }
   }
+
+  useEffect(() => {
+    console.log("#test", product);
+  }, [product]);
 
   return (<>
     <ThemeProvider theme={theme}>

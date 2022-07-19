@@ -15,6 +15,7 @@ const RouterConfig = () => {
             <Route path="/" exact element={<Home/>} />
             <Route path="about" element={<About/>} />
             <Route path="login" element={<LogIn/>} />
+            <Route path="notfound" element={<NotFound/>} />
             <Route path="user/:cod_usuario" element={<User />} />
             <Route path="signup" element={<SignUp/>} />
             <Route path="*" element={<NotFound/>}/>
