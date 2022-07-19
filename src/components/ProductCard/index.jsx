@@ -71,7 +71,6 @@ export default function ProductCard(props) {
             {productInfo.ingredientes}
           </Typography>
         </div>
-        <hr />
         <Typography gutterBottom variant="h7" component="div">
           Restrições
         </Typography>

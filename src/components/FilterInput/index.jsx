@@ -23,6 +23,7 @@ const MenuProps = {
 const FilterInput = (props) => {
   const [itemsSelected, setItemsSelected] = useState([]);
   const [items, setItems] = useState(props.items);
+  const [acordeonBoolean, setAcordeonBoolean] = useState(true);
 
   const handleChange = (event) => {
     const {
@@ -73,7 +74,8 @@ const FilterInput = (props) => {
           ))}
         </Select>
       </FormControl>
-      <Accordion >
+      <Accordion 
+        expanded={acordeonBoolean} onChange={() => setAcordeonBoolean((previousValue) => !previousValue)}>
         <AccordionSummary
           expandIcon={<ExpandMore />}
           aria-controls="panel1a-content"

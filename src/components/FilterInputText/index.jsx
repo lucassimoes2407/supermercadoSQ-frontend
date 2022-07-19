@@ -22,6 +22,7 @@ const MenuProps = {
 const FilterInputText = (props) => {
   const [items, setItems] = useState([]);
   const [textInput, setTextInput] = useState('');
+  const [acordeonBoolean, setAcordeonBoolean] = useState(true);
 
   const handleElementDelete = (element) => {
     console.log(element);
@@ -69,7 +70,9 @@ const FilterInputText = (props) => {
         </Button>
         
       </FormControl>
-      <Accordion >
+      <Accordion 
+      expanded={acordeonBoolean} onChange={() => setAcordeonBoolean((previousValue) => !previousValue)}
+      >
         <AccordionSummary
           expandIcon={<ExpandMore />}
           aria-controls="panel1a-content"

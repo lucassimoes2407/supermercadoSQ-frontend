@@ -1,15 +1,13 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Chip, Container, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography } from "@mui/material";
+import {Box, Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { ExpandMore } from '@mui/icons-material'
-
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts, getProductByName, getProductFiltered, postProductFiltered } from "../../services/product";
+import { getAllProducts, postProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
-import './Home.css';
 import { useNavigate } from "react-router-dom";
 import FilterInput from "../../components/FilterInput";
 import FilterInputText from "../../components/FilterInputText";
+import './Home.css';
 
 
 const Home = () => {
