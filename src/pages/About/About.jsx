@@ -1,5 +1,6 @@
 import React from "react";
 import './About.css';
+import Button from '@mui/material/Button';
 
 const About = () => {
 
@@ -25,7 +26,7 @@ const About = () => {
                 <br></br>
                 <br></br>
                 <p>
-                    Visite nossa página de <a href="./signup">cadastro</a> e insira seu nome, email, senha e o tipo de usuário e logo você terá permissão para adicionar e editar produtos você mesmo.
+                    Visite nossa página de <Button size="small" variant="contained" href="./signup">cadastro</Button> e insira seu nome, email, senha e o tipo de usuário e logo você terá permissão para adicionar e editar produtos você mesmo.
                 </p>
                 <br></br>
                 <br></br>
@@ -37,7 +38,7 @@ const About = () => {
                 <br></br>
                 <br></br>
                 <p>
-                    Cadastre um produto apertando no botão de <a href="./create-product">Adicionar Produtos</a> e insira o nome, a marca, os ingredientes e uma imagem do produto.
+                    Cadastre um produto apertando no botão de <Button size="small" variant="contained" href="./signup">Adicionar Produtos</Button> e insira o nome, a marca, os ingredientes e uma imagem do produto.
                 </p>
                 <br></br>
                 <br></br>
@@ -49,7 +50,7 @@ const About = () => {
                 <br></br>
                 <br></br>
                 <p>
-                    Na nossa <a href="./">página inicial</a> você pode pesquisar o produto pelo nome ou marca. Além disso, é possível escolher quais restrições alimentares e ingredientes você quer incluir ou excluir na pesquisa.
+                    Na nossa <Button size="small" variant="contained" href="./signup">página inicial</Button> você pode pesquisar o produto pelo nome ou marca. Além disso, é possível escolher quais restrições alimentares e ingredientes você quer incluir ou excluir na pesquisa.
                 </p>
                 <br></br>
                 <p>
