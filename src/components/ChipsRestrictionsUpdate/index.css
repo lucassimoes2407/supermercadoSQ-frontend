@@ -1,0 +1,9 @@
+.restriction__chip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.restriction__chip > * {
+    margin: 0.15rem !important;
+}
