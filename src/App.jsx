@@ -1,11 +1,10 @@
 import './App.css';
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import RouterConfig from './routes/Router';
 import { Button, createTheme, IconButton, Snackbar } from '@mui/material';
-import { Close, Copyright } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import { useSnack } from './hooks/useSnack';
 import React from 'react';
-import { ArrowBack, Dashboard, Settings } from '@mui/icons-material';
 import CopyrightDevHub from './components/CopyrightDevHub';
 import ResponsiveAppBar from './components/ResponsiveAppBar'
 import { ThemeProvider } from "styled-components";

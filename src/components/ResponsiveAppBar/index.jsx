@@ -12,13 +12,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { ArrowBackIos } from '@mui/icons-material';
 
-const pages = ['Sobre'];
+const pages = [
+  { name: 'Pesquisar', path: './' },
+  { name: 'Sobre', path: 'about' },
+];
 const settings = ['Profile', 'Logout'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,10 +42,25 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const handlePageButtonAction = (path) => {
+    navigate(`/${path}`);
+    handleCloseNavMenu();
+  }
+
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={() => navigate(-1)}
+            color="inherit"
+          >
+            <ArrowBackIos />
+          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -54,7 +76,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={Logo} alt="Logo" draggable="false" height={50}/>
+            <img src={Logo} alt="Logo" height={50} draggable="false" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -87,8 +109,11 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={() => handlePageButtonAction(page.path)}>
+
+                  <Typography textAlign="center"
+
+                  >{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -97,7 +122,7 @@ const ResponsiveAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -109,24 +134,24 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={Logo} alt="Logo" draggable="false" height={50}/>
+            <img src={Logo} alt="Logo" height={50} draggable="false" />
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.name}
+                onClick={() => handlePageButtonAction(page.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar/>
+                <Avatar />
               </IconButton>
             </Tooltip>
             <Menu

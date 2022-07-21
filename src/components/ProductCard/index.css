@@ -1,3 +1,14 @@
 .product-card__chip > * {
     margin: 0.1rem;
 }
+
+.product-ingredients__div {
+    color: black;
+    font-weight: 900;
+    width: 220px;
+    height: 100px;
+    padding: 0.5rem;
+    background-color: rgb(240, 240, 240);
+    border-radius: 4px;
+    overflow: auto;
+}

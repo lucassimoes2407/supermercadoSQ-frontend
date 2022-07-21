@@ -22,6 +22,7 @@ const MenuProps = {
 const FilterInputText = (props) => {
   const [items, setItems] = useState([]);
   const [textInput, setTextInput] = useState('');
+  const [acordeonBoolean, setAcordeonBoolean] = useState(true);
 
   const handleElementDelete = (element) => {
     console.log(element);
@@ -46,12 +47,12 @@ const FilterInputText = (props) => {
 
   return (
     <Box
-      maxWidth={280}
+      maxWidth={250}
       flexDirection='column'
       alignItems={'center'}
       justifyContent={'center'}
     >
-      <FormControl xs={12} sx={{ minWidth: 280, marginBottom: 1, flexDirection: 'row' }} size="small">
+      <FormControl xs={12} sx={{ minWidth: 250, marginBottom: 1, flexDirection: 'row' }} size="small">
         <TextField 
             id="outlined-basic"
             label={props.title}
@@ -69,7 +70,9 @@ const FilterInputText = (props) => {
         </Button>
         
       </FormControl>
-      <Accordion >
+      <Accordion 
+      expanded={acordeonBoolean} onChange={() => setAcordeonBoolean((previousValue) => !previousValue)}
+      >
         <AccordionSummary
           expandIcon={<ExpandMore />}
           aria-controls="panel1a-content"
@@ -84,7 +87,7 @@ const FilterInputText = (props) => {
               {items.map((element) => {
                 return (
                   <Chip
-                    key={element}
+                    key={element + `filterInputTextChip`}
                     onDelete={() => handleElementDelete(element)}
                     label={element}
                     color="primary"

@@ -1,15 +1,13 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Chip, Container, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, Fab, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { ExpandMore } from '@mui/icons-material'
-
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts, getProductByName, getProductFiltered, postProductFiltered } from "../../services/product";
+import { postProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
-import './Home.css';
 import { useNavigate } from "react-router-dom";
 import FilterInput from "../../components/FilterInput";
 import FilterInputText from "../../components/FilterInputText";
+import './Home.css';
 
 
 const Home = () => {
@@ -28,52 +26,46 @@ const Home = () => {
     console.log("Submit");
   }
 
-  const fetchProducts = async () => {
-    let getProductResponse = await getAllProducts();
-    setProductsDisplayed(getProductResponse.data.productList);
+  const sortProdutoByNome = (productList1, productList2) => {
+    if (productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
+    if (productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
+    if (productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
+  }
+
+  const handleNomeProdutoChange = async (event) => {
+    try {
+      if (!event.target.value) {
+        return
+      }
+      setProductName(event.target.value);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   useEffect(() => {
     (async () => {
       let getProductResponse = await postProductFiltered('', [], []);
+
+      console.log(getProductResponse);
       setProductsDisplayed(getProductResponse.data.productList);
     })();
   }, []);
 
-  
+
   useEffect(() => {
     (async () => {
       let getRestrictionResponse = await getAllRestrictions();
       setRestrictions(getRestrictionResponse.data.map(restriction => restriction.nome_restricao));
     })();
   }, []);
-  
-  const sortProdutoByNome = (productList1, productList2) => {
-    if(productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
-    if(productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
-    if(productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
-  }
-  const handleNomeProdutoChange = async (event) => {
-    try{
-      if(!event.target.value) {
-        fetchProducts();
-        return
-      }
-      const responseProductByName = await postProductFiltered(event.target.value, [ingredientIncluded], [ingredientExcluded]);
-      console.log(responseProductByName.data.productList);
-      setProductName(event.target.value);
-      setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
-    }catch(e){
-      console.log(e);
-    }
-  }
 
   useEffect(() => {
-      (async () => {
-        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
-        setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
-      })()
-  }, [ingredientIncluded, ingredientExcluded]);
+    (async () => {
+      const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
+      setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
+    })()
+  }, [ingredientIncluded, ingredientExcluded, productName]);
 
   return (
     <div className="home__div">
@@ -83,46 +75,105 @@ const Home = () => {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <Box sx={{ width: '90%' }}>
-          <h1>Home</h1>
-          <TextField
-            onChange={handleNomeProdutoChange}
-            fullWidth
-            required
-            id="product_name"
-            label="Qual produto está procurando?"
-            name="product_name"
-            autoComplete="product_name"
-            autoFocus
-            hiddenLabel
-            variant="outlined"
-            sx={{ margin: 1 }}
-          />
+        <Box flexDirection="column" alignItems="center">
+          <Typography
+            mt={6}
+            mb={6}
+            fontWeight={500}
+            variant="h1"
+            fontSize={65}
+            color="primary"
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            🤔 O que está procurando? 🤔
+          </Typography>
+
+          <Typography
+            mt={6}
+            mb={6}
+            fontWeight={500}
+            variant="h1"
+            fontSize={40}
+            color="primary"
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+            }}
+          >
+            O que está procurando? <br /> 🤔
+          </Typography>
+        </Box>
+
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box flexDirection="column" alignItems="center">
+            <TextField
+              onChange={handleNomeProdutoChange}
+              id="product_name"
+              label="Qual produto está procurando?"
+              name="product_name"
+              autoComplete="product_name"
+              autoFocus
+              hiddenLabel
+              sx={{
+                width: 550,
+                margin: 1,
+                display: { xs: 'flex', md: 'none' },
+              }}
+            />
+
+            <TextField
+              onChange={handleNomeProdutoChange}
+              id="product_name"
+              label="Qual produto está procurando?"
+              name="product_name"
+              autoComplete="product_name"
+              autoFocus
+              hiddenLabel
+              sx={{
+                width: 1100,
+                margin: 1,
+                display: { xs: 'none', md: 'flex' },
+              }}
+            />
+          </Box>
 
           <div className="home-filter__div">
-            <FilterInput
-              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
-              title={'Não contém'}
-              acordeonTitle={'Restrições selecionadas'}
-              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
-            />
-            <FilterInput
-              items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
-              title={'Contém'}
-              acordeonTitle={'Restrições incluídas'}
-              updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
-            />
-            <FilterInputText 
-              title={'Incluir ingredientes'}
-              acordeonTitle={'ingredientes incluídos'}
-              updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
-            />
-            <FilterInputText 
-              title={'Excluir ingredientes'}
-              acordeonTitle={'Ingredientes excluir'}
-              updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
-            />
+            <div className="home-filter__div--child">
 
+              <FilterInput
+                items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
+                title={'Contém'}
+                acordeonTitle={'Restrições incluídas'}
+                updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
+              />
+              <FilterInputText
+                title={'Incluir ingredientes'}
+                acordeonTitle={'ingredientes incluídos'}
+                updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
+              />
+
+            </div>
+            <div className="home-filter__div--child">
+
+              <FilterInput
+                items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
+                title={'Não contém'}
+                acordeonTitle={'Restrições selecionadas'}
+                updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
+              />
+              <FilterInputText
+                title={'Excluir ingredientes'}
+                acordeonTitle={'Ingredientes excluir'}
+                updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
+              />
+
+            </div>
           </div>
         </Box>
 
@@ -139,7 +190,7 @@ const Home = () => {
             if (conditionRemove || conditionInclude2) return <></>;
             return (
               <ProductCard
-                key={`${product.productInfo.cod_produto}`}
+                key={`${product.productInfo.cod_produto}_productCard`}
                 product={product}
               />
             )
@@ -148,16 +199,21 @@ const Home = () => {
         </div>
 
       </Box>
-      <div className="add-product__div">
-        <Button
-          variant="contained"
-          endIcon={<AddIcon />}
+      <Box
+        position="fixed"
+        bottom={50}
+        right={10}
+        zIndex={1}
+      >
+        <Fab
+          variant="extended"
           onClick={() => navigate('/create-product')}
           color="secondary"
         >
+          <AddIcon sx={{ mr: 1 }} />
           Adicionar Produto
-        </Button>
-      </div>
+        </Fab>
+      </Box>
     </div>
   )
 };
