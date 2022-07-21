@@ -1,9 +1,11 @@
 import { ManageAccountsRounded } from "@mui/icons-material";
 import { Avatar, Box, Button, Checkbox, Chip, Container, createTheme, CssBaseline, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography, } from "@mui/material";
+import SaveAsIcon from '@mui/icons-material/SaveAs';
+import RestoreIcon from '@mui/icons-material/Restore';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import ChipsRestrictionsUpdate from "../../components/ChipsRestrictionsUpdate";
+import FilterInputForEdit from "../../components/FilterInputForEdit";
 import { getProductByUserCod } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import { getUserByUserId } from "../../services/users";
@@ -80,6 +82,23 @@ const User = () => {
 		}
 	}, [params]);
 
+	const handleClear = () => {
+		// (async () => {
+		// 	const getProduct = await getProductByCod(params.cod);
+		// 	if (!getProduct || !getProduct.data) navigate('/notfound');
+		// 	const product = getProduct.data;
+		// 	let res = getProduct.data.restrictions;
+
+		// 	setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
+		// 	setProduct(product)
+		// })()
+		console.log("DESCARTAR ALTERAÇÕES")//TODO - DISCARD CHANGES ON PROFILE
+	}
+
+	const handleUpdateRestrictionsSelected = (selected) => {
+		setRestrictionsSelected(selected)
+	}
+
 	useEffect(() => {
 		console.log(user);
 	}, [user])
@@ -104,7 +123,7 @@ const User = () => {
 					<Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
 						<ManageAccountsRounded />
 					</Avatar>
-					<Typography component="h1" variant="h5">Olá <b>{user.username}</b>, edite seu perfil
+					<Typography component="h1" variant="h5">Olá <b>{user.username}</b>, <br/> gerencie seu perfil
 					</Typography>
 
 					<Box
@@ -143,24 +162,35 @@ const User = () => {
 							</Grid>
 
 							<Grid item xs={12} >
-								<ChipsRestrictionsUpdate items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
+								<FilterInputForEdit
+									selectedItems={restrictionsSelected || []}
+									items={restrictions.map(restriction => restriction.nome_restricao) || []}
 									title={'Suas Restrições'}
-									itemsSelected={restrictionsSelected}
-									updateSelecteds={(selected) => {
-										setRestrictionsSelected(selected);
-									}} />
+									updateSelecteds={handleUpdateRestrictionsSelected}
+								/>
 							</Grid>
 
+							<Grid item xs={12} container justifyContent="space-around">
+								<Button
+									variant="outlined"
+									color="secondary"
+									sx={{ mt: 3, mb: 2, width: 150 }}
+									onClick={handleClear}
+									endIcon={<RestoreIcon />}>
+									Desfazer
+								</Button>
+
+								<Button
+									type="submit"
+									variant="contained"
+									sx={{ mt: 3, mb: 2, width: 150 }}
+									endIcon={<SaveAsIcon />}
+								>
+									Salvar
+								</Button>
+							</Grid>
 						</Grid>
 
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
-							Salvar Alterações
-						</Button>
 					</Box>
 				</Box>
 
