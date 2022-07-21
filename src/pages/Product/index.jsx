@@ -89,24 +89,8 @@ const Product = () => {
             textAlign: 'left'
           }}
         >
-
-          <div className="product__div">
-            {(product.img_produto && <img className="product__img" src={product.img_produto} alt="" />)
-              || <div className="image__div--not-found">
-                <ImageIcon color="primary" sx={{ fontSize: 120 }} />
-                <Typography
-                  variant="h1"
-                  fontSize={30}
-                  color="primary"
-                >
-                  Imagem não encontrada
-                </Typography>
-              </div>
-            }
-          </div>
-
           <Typography
-            mt={2}
+            mt={6}
             variant="h1"
             fontSize={30}
             color="primary"
