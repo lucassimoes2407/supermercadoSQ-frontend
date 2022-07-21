@@ -18,6 +18,7 @@ const getRestrictionByCod = async (cod_restriction) => {
     }
 }
 
+
 export {
     getAllRestrictions,
     getRestrictionByCod,

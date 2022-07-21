@@ -1,16 +1,16 @@
-import react, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, Container, createTheme, CssBaseline, Grid, TextField, Typography } from "@mui/material";
+import { useCallback, useEffect, useState } from 'react';
+import { Avatar, Box, Button, Container, createTheme, CssBaseline, Grid, IconButton, TextField, Typography } from "@mui/material";
 import "./index.css";
-import UploadIcon from '@mui/icons-material/Upload';
-import AddIcon from '@mui/icons-material/Add';
-import { getProductByCod, postProduct, putProduct } from '../../services/product'
+import { getProductByCod, putProduct } from '../../services/product'
 import { ThemeProvider } from 'styled-components';
-import CopyrightDevHub from '../../components/CopyrightDevHub';
 import { useSnack } from '../../hooks/useSnack';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Edit } from '@mui/icons-material';
+import { Close, Edit } from '@mui/icons-material';
 import FilterInput from '../../components/FilterInput';
 import { getAllRestrictions } from '../../services/restriction';
+import { deleteProductRestriction, postProductRestriction } from '../../services/produtoRestricao';
+import React from 'react';
+
 
 
 const EditProduct = () => {
@@ -21,7 +21,28 @@ const EditProduct = () => {
     const params = useParams();
     const navigate = useNavigate();
     const theme = createTheme();
-    const { snack, handleSnackState } = useSnack();
+    const { snack, handleSnackState, handleSnackOpen } = useSnack();
+
+    const getAction = (cod_produto) => {
+        if (!cod_produto) return
+        return <React.Fragment>
+          <Button
+            color="secondary"
+            size="small"
+            onClick={() => { navigate(`/product/${params.cod}`) }}
+          >
+            Ver Produto
+          </Button>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="secondary"
+            onClick={handleSnackOpen}
+          >
+            <Close fontSize="small" />
+          </IconButton>
+        </React.Fragment>
+      }
 
     useEffect(() => {
         try {
@@ -38,6 +59,31 @@ const EditProduct = () => {
         }
     }, [navigate, params.cod]);
 
+    const getRestrictionCodeByName = useCallback(async (name) => {
+        if(!name) return null;
+        const allRestrictions = await getAllRestrictions();
+        let foundRestriction = allRestrictions.data.find(res => res.nome_restricao === name)
+        return foundRestriction.cod_restricao;
+    }, []);
+
+    const handleUpdateRestrictionsSelectedRequest = async () => {
+        const product = await getProductByCod(params.cod);
+        const restrictionList = product.data.restrictions.map(res => res.nome_restricao);
+        restrictionList.forEach(async (res) => {
+            if(!restrictionsSelected.includes(res)){
+                const codeRestriction = await getRestrictionCodeByName(res);
+                await deleteProductRestriction(params.cod, codeRestriction);
+            }
+        })
+        restrictionsSelected.forEach(async (res) => {
+            if(!restrictionList.includes(res)){
+                const codeRestriction = await getRestrictionCodeByName(res);
+                await postProductRestriction(params.cod, codeRestriction);
+            }   
+        })
+
+    }
+
     const handleSubmit = async (event) => {
         try {
             event.preventDefault();
@@ -51,20 +97,22 @@ const EditProduct = () => {
                 product.user.cod_usuario,
             );
 
-            if (response.status === 200) {
-                handleSnackState(
-                    {
-                        ...snack,
-                        open: true,
-                        message: response.data
-                    }
-                )
-            }
-
             if (!product.productInfo.cod_produto) {
                 return;
             }
-            navigate(`/product/${product.productInfo.cod_produto}`);
+
+            await handleUpdateRestrictionsSelectedRequest();
+
+            if (response.status === 200) {
+                handleSnackState(
+                  {
+                    ...snack,
+                    action: getAction(params.cod),
+                    open: true,
+                    message: "Produto atualizado com sucesso!",
+                  }
+                )
+              }
 
         } catch (e) {
             handleSnackState(
@@ -88,6 +136,9 @@ const EditProduct = () => {
             const getProduct = await getProductByCod(params.cod);
             if (!getProduct || !getProduct.data) navigate('/notfound');
             const product = getProduct.data;
+            let res = getProduct.data.restrictions;
+            
+            setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
             setProduct(product)
         })()
     }
