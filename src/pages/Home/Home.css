@@ -2,14 +2,14 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    margin-bottom: 45px;
+    margin-bottom: 24px;
 }
 
 .product__list {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     margin: 1rem;
 

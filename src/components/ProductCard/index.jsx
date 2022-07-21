@@ -43,18 +43,18 @@ function ProductCard(props) {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 258, minWidth: 200, minHeight: 200 }}>
+    <Card sx={{ maxWidth: 258, maxHeight: 258, minWidth: 258, minHeight: 150 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar sx={{ bgcolor: "secondary.light" }} aria-label="recipe">
             <RestaurantIcon />
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
         title={productInfo.nome}
         subheader={productInfo.marca}
 
@@ -71,8 +71,9 @@ function ProductCard(props) {
             {productInfo.ingredientes}
           </Typography>
         </div> */}
-        <Typography gutterBottom variant="h7" component="div">
-          Restrições
+        <Typography
+          fontWeight={500} fontSize={14} gutterBottom variant="h7" component="div" color="primary.dark">
+          Contém:
         </Typography>
         <div className="restriction__chip">
 
@@ -87,8 +88,11 @@ function ProductCard(props) {
           })}
         </div>
       </CardContent>
-      <CardActions>
-        <Button onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
+      <CardActions
+            
+      >
+        <Button 
+        onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
           Ver mais
         </Button>
       </CardActions>
