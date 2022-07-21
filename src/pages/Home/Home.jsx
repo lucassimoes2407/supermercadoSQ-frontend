@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts, postProductFiltered } from "../../services/product";
+import { postProductFiltered } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
 import { useNavigate } from "react-router-dom";
 import FilterInput from "../../components/FilterInput";
@@ -26,14 +26,28 @@ const Home = () => {
     console.log("Submit");
   }
 
-  const fetchProducts = async () => {
-    let getProductResponse = await getAllProducts();
-    setProductsDisplayed(getProductResponse.data.productList);
+  const sortProdutoByNome = (productList1, productList2) => {
+    if (productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
+    if (productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
+    if (productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
+  }
+
+  const handleNomeProdutoChange = async (event) => {
+    try {
+      if (!event.target.value) {
+        return
+      }
+      setProductName(event.target.value);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   useEffect(() => {
     (async () => {
       let getProductResponse = await postProductFiltered('', [], []);
+
+      console.log(getProductResponse);
       setProductsDisplayed(getProductResponse.data.productList);
     })();
   }, []);
@@ -46,32 +60,12 @@ const Home = () => {
     })();
   }, []);
 
-  const sortProdutoByNome = (productList1, productList2) => {
-    if (productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
-    if (productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
-    if (productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
-  }
-  const handleNomeProdutoChange = async (event) => {
-    try {
-      if (!event.target.value) {
-        fetchProducts();
-        return
-      }
-      const responseProductByName = await postProductFiltered(event.target.value, [ingredientIncluded], [ingredientExcluded]);
-      console.log(responseProductByName.data.productList);
-      setProductName(event.target.value);
-      setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   useEffect(() => {
     (async () => {
       const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
       setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
     })()
-  }, [ingredientIncluded, ingredientExcluded]);
+  }, [ingredientIncluded, ingredientExcluded, productName]);
 
   return (
     <div className="home__div">
@@ -99,22 +93,25 @@ const Home = () => {
 
           <div className="home-filter__div">
             <FilterInput
-              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
-              title={'Não contém'}
-              acordeonTitle={'Restrições selecionadas'}
-              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
-            />
-            <FilterInput
               items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
               title={'Contém'}
               acordeonTitle={'Restrições incluídas'}
               updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
             />
+
+            <FilterInput
+              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
+              title={'Não contém'}
+              acordeonTitle={'Restrições selecionadas'}
+              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
+            />
+            
             <FilterInputText
               title={'Incluir ingredientes'}
               acordeonTitle={'ingredientes incluídos'}
               updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
             />
+            
             <FilterInputText
               title={'Excluir ingredientes'}
               acordeonTitle={'Ingredientes excluir'}
@@ -137,7 +134,7 @@ const Home = () => {
             if (conditionRemove || conditionInclude2) return <></>;
             return (
               <ProductCard
-                key={`${product.productInfo.cod_produto}`}
+                key={`${product.productInfo.cod_produto}_productCard`}
                 product={product}
               />
             )

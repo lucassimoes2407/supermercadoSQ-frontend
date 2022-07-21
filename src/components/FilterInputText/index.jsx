@@ -87,7 +87,7 @@ const FilterInputText = (props) => {
               {items.map((element) => {
                 return (
                   <Chip
-                    key={element}
+                    key={element + `filterInputTextChip`}
                     onDelete={() => handleElementDelete(element)}
                     label={element}
                     color="primary"

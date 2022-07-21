@@ -22,6 +22,24 @@ const User = () => {
 	const theme = createTheme();
 	const params = useParams();
 
+	const handleChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		console.log(value);
+		setRestrictionsSelected(
+			typeof value === 'string' ? value.split(',') : value,
+		);
+	};
+	const MenuProps = {
+		PaperProps: {
+			style: {
+				maxHeight: 48 * 4.5 + 8,
+				width: 250,
+			},
+		},
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log("Submit");//TODO - SAVE CHANGES ON PROFILE
@@ -131,7 +149,6 @@ const User = () => {
 									updateSelecteds={(selected) => {
 										setRestrictionsSelected(selected);
 									}} />
-
 							</Grid>
 
 						</Grid>
