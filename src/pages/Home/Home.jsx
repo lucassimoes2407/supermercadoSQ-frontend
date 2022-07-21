@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Fab, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
@@ -75,49 +75,105 @@ const Home = () => {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <Box sx={{ width: '90%' }}>
-          <h1>Home </h1>
-          <TextField
-            onChange={handleNomeProdutoChange}
-            fullWidth
-            required
-            id="product_name"
-            label="Qual produto está procurando?"
-            name="product_name"
-            autoComplete="product_name"
-            autoFocus
-            hiddenLabel
-            variant="outlined"
-            sx={{ margin: 1 }}
-          />
+        <Box flexDirection="column" alignItems="center">
+          <Typography
+            mt={6}
+            mb={6}
+            fontWeight={500}
+            variant="h1"
+            fontSize={65}
+            color="primary"
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            🤔 O que está procurando? 🤔
+          </Typography>
+
+          <Typography
+            mt={6}
+            mb={6}
+            fontWeight={500}
+            variant="h1"
+            fontSize={40}
+            color="primary"
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+            }}
+          >
+            O que está procurando? <br /> 🤔
+          </Typography>
+        </Box>
+
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box flexDirection="column" alignItems="center">
+            <TextField
+              onChange={handleNomeProdutoChange}
+              id="product_name"
+              label="Qual produto está procurando?"
+              name="product_name"
+              autoComplete="product_name"
+              autoFocus
+              hiddenLabel
+              sx={{
+                width: 550,
+                margin: 1,
+                display: { xs: 'flex', md: 'none' },
+              }}
+            />
+
+            <TextField
+              onChange={handleNomeProdutoChange}
+              id="product_name"
+              label="Qual produto está procurando?"
+              name="product_name"
+              autoComplete="product_name"
+              autoFocus
+              hiddenLabel
+              sx={{
+                width: 1100,
+                margin: 1,
+                display: { xs: 'none', md: 'flex' },
+              }}
+            />
+          </Box>
 
           <div className="home-filter__div">
-            <FilterInput
-              items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
-              title={'Contém'}
-              acordeonTitle={'Restrições incluídas'}
-              updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
-            />
+            <div className="home-filter__div--child">
 
-            <FilterInput
-              items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
-              title={'Não contém'}
-              acordeonTitle={'Restrições selecionadas'}
-              updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
-            />
-            
-            <FilterInputText
-              title={'Incluir ingredientes'}
-              acordeonTitle={'ingredientes incluídos'}
-              updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
-            />
-            
-            <FilterInputText
-              title={'Excluir ingredientes'}
-              acordeonTitle={'Ingredientes excluir'}
-              updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
-            />
+              <FilterInput
+                items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
+                title={'Contém'}
+                acordeonTitle={'Restrições incluídas'}
+                updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
+              />
+              <FilterInputText
+                title={'Incluir ingredientes'}
+                acordeonTitle={'ingredientes incluídos'}
+                updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
+              />
 
+            </div>
+            <div className="home-filter__div--child">
+
+              <FilterInput
+                items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
+                title={'Não contém'}
+                acordeonTitle={'Restrições selecionadas'}
+                updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
+              />
+              <FilterInputText
+                title={'Excluir ingredientes'}
+                acordeonTitle={'Ingredientes excluir'}
+                updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
+              />
+
+            </div>
           </div>
         </Box>
 
@@ -145,18 +201,18 @@ const Home = () => {
       </Box>
       <Box
         position="fixed"
-        bottom={40}
-        right={0}
+        bottom={50}
+        right={10}
         zIndex={1}
       >
-        <Button
-          variant="contained"
-          endIcon={<AddIcon />}
+        <Fab
+          variant="extended"
           onClick={() => navigate('/create-product')}
           color="secondary"
         >
+          <AddIcon sx={{ mr: 1 }} />
           Adicionar Produto
-        </Button>
+        </Fab>
       </Box>
     </div>
   )
