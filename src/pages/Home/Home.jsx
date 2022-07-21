@@ -130,7 +130,7 @@ const Home = () => {
             if (conditionRemove || conditionInclude2) return <></>;
             return (
               <ProductCard
-                key={`${product.productInfo.cod_produto}`}
+                key={`${product.productInfo.cod_produto}_productCard`}
                 product={product}
               />
             )

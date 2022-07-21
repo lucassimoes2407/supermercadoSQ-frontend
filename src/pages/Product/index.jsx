@@ -6,7 +6,7 @@ import "./index.css"
 import { ThemeProvider } from "styled-components";
 import { Box, Button, Chip, Container, createTheme, CssBaseline, Modal, Typography } from "@mui/material";
 import { useSnack } from '../../hooks/useSnack';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -75,6 +75,8 @@ const Product = () => {
     }
   }
 
+  
+
   return (<>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -129,9 +131,11 @@ const Product = () => {
           </Typography>
 
           <Box
+            mt={1}
             sx={{
               display: 'flex',
               gap: 1,
+              flexWrap: 'wrap',
             }}
             variant="body1"
             color="primary"
@@ -139,7 +143,7 @@ const Product = () => {
             {product.restrictions.map((restriction) => {
               return (
                 <Chip
-                  key={restriction.nome_restricao}
+                  key={restriction.nome_restricao + `productPage`}
                   label={restriction.nome_restricao}
                   color="primary"
                 />)

@@ -9,10 +9,14 @@ import CopyrightDevHub from '../../components/CopyrightDevHub';
 import { useSnack } from '../../hooks/useSnack';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Edit } from '@mui/icons-material';
+import FilterInput from '../../components/FilterInput';
+import { getAllRestrictions } from '../../services/restriction';
 
 
 const EditProduct = () => {
     const [product, setProduct] = useState({ productInfo: {}, user: {}, restrictions: [] });
+    const [restrictions, setRestrictions] = useState([]);
+    const [restrictionsSelected, setRestrictionsSelected] = useState([]);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -25,6 +29,8 @@ const EditProduct = () => {
                 const getProduct = await getProductByCod(params.cod);
                 if (!getProduct || !getProduct.data) navigate('/notfound');
                 const product = getProduct.data;
+                let res = getProduct.data.restrictions
+                setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
                 setProduct(product)
             })();
         } catch (e) {
@@ -55,13 +61,12 @@ const EditProduct = () => {
                 )
             }
 
-            if(!product.productInfo.cod_produto){
+            if (!product.productInfo.cod_produto) {
                 return;
             }
             navigate(`/product/${product.productInfo.cod_produto}`);
 
         } catch (e) {
-            console.log(e);
             handleSnackState(
                 {
                     ...snack,
@@ -86,6 +91,19 @@ const EditProduct = () => {
             setProduct(product)
         })()
     }
+
+    const handleUpdateRestrictionsSelected = (selected) => {
+        setRestrictionsSelected(selected)
+    }
+
+    const getRestrictions = async () => {
+        const { data } = await getAllRestrictions();
+        setRestrictions(data);
+    }
+
+    useEffect(() => {
+        getRestrictions();
+    }, []);
 
     return (
 
@@ -150,6 +168,15 @@ const EditProduct = () => {
                                     multiline
                                     minRows={3}
                                     maxRows={6}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FilterInput
+                                    selectedItems={restrictionsSelected || []}
+                                    items={restrictions.map(restriction => restriction.nome_restricao) || []}
+                                    title={'Restrições'}
+                                    acordeonTitle={'Restrições incluídas'}
+                                    updateSelecteds={handleUpdateRestrictionsSelected}
                                 />
                             </Grid>
                             <Grid item xs={12} container justifyContent="flex-start">

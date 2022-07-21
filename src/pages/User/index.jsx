@@ -153,7 +153,7 @@ const User = () => {
 										MenuProps={MenuProps}
 									>
 										{restrictions.length > 0 && restrictions.map((nome_restricao) => (
-											<MenuItem key={nome_restricao} value={nome_restricao}>
+											<MenuItem key={nome_restricao + `userPage`} value={nome_restricao}>
 												<Checkbox checked={restrictionsSelected.indexOf(nome_restricao) > -1} />
 												<ListItemText primary={nome_restricao} />
 											</MenuItem>

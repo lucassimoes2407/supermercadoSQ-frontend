@@ -37,7 +37,7 @@ const ExpandMore = styled((props) => {
  * @returns Card component with data displayed.
  */
 
-export default function ProductCard(props) {
+function ProductCard(props) {
   const { productInfo } = props.product;
 
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ export default function ProductCard(props) {
           {props.product && props.product.restrictions.map((element) => {
             return (
               <Chip
-                key={element.nome_restricao}
+                key={element.nome_restricao + `productCardChip`}
                 label={element.nome_restricao}
                 color="primary"
               />
@@ -95,3 +95,5 @@ export default function ProductCard(props) {
     </Card>
   );
 }
+
+export default React.memo(ProductCard)

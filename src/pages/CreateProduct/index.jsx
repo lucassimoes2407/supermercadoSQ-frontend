@@ -6,8 +6,11 @@ import { postProduct } from '../../services/product'
 import { ThemeProvider } from 'styled-components';
 import { useSnack } from '../../hooks/useSnack';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Close } from '@mui/icons-material';
+import FilterInput from "../../components/FilterInput";
+import { getAllRestrictions } from "../../services/restriction";
+import { postProductRestriction } from "../../services/produtoRestricao";
 
 
 
@@ -16,9 +19,11 @@ const CreateProduct = () => {
   const navigate = useNavigate();
   const theme = createTheme();
   const { snack, handleSnackOpen, handleSnackState } = useSnack();
+  const [restrictions, setRestrictions] = useState([]);
+  const [restrictionsSelected, setRestrictionsSelected] = useState([]);
 
   const getAction = (cod_produto) => {
-    if(!cod_produto) return
+    if (!cod_produto) return
     return <React.Fragment>
       <Button
         color="secondary"
@@ -52,9 +57,14 @@ const CreateProduct = () => {
       const response = await postProduct(product, brand, ingredients, img, codUser);
       console.log(response);
 
+      for(let restriction in restrictionsSelected){
+        let selected = restrictions.find(res => restrictionsSelected[restriction] === res.nome_restricao);
+        await postProductRestriction(response.data.cod_produto, selected.cod_restricao);
+      }
+
       if (response.status === 200) {
         handleSnackState(
-          { 
+          {
             ...snack,
             action: getAction(response.data.cod_produto),
             open: true,
@@ -75,6 +85,18 @@ const CreateProduct = () => {
       );
     }
   };
+
+  const handleUpdateRestrictionsSelected = (selected) => {
+    setRestrictionsSelected(selected)
+  }
+
+  const getRestrictions = async () => {
+    const {data} = await getAllRestrictions();
+    setRestrictions(data);
+  }
+  useEffect(() => {
+    console.log(getRestrictions())
+  }, [])
 
   return (
 
@@ -133,6 +155,14 @@ const CreateProduct = () => {
                   multiline
                   minRows={3}
                   maxRows={6}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FilterInput
+                  items={restrictions.map(restriction => restriction.nome_restricao) || []}
+                  title={'Restrições'}
+                  acordeonTitle={'Restrições incluídas'}
+                  updateSelecteds={handleUpdateRestrictionsSelected}
                 />
               </Grid>
               <Grid item xs={12} container justifyContent="flex-start">
