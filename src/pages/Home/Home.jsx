@@ -102,13 +102,13 @@ const Home = () => {
           <div className="home-filter__div">
             <FilterInput
               items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
-              title={'Remover Restrições'}
-              acordeonTitle={'Restrições removidas'}
+              title={'Não contém'}
+              acordeonTitle={'Restrições selecionadas'}
               updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
             />
             <FilterInput
               items={restrictions.filter(restriction => !restrictionsSelected.includes(restriction)) || []}
-              title={'Incluir restrições'}
+              title={'Contém'}
               acordeonTitle={'Restrições incluídas'}
               updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
             />
