@@ -38,7 +38,7 @@ const About = () => {
                 <br></br>
                 <br></br>
                 <p>
-                    Cadastre um produto apertando no botão de <Button size="small" variant="contained" href="./signup">Adicionar Produtos</Button> e insira o nome, a marca, os ingredientes e uma imagem do produto.
+                    Cadastre um produto apertando no botão de <Button size="small" variant="contained" href="./create-product">Adicionar Produtos</Button> e insira o nome, a marca, os ingredientes e uma imagem do produto.
                 </p>
                 <br></br>
                 <br></br>
@@ -50,7 +50,7 @@ const About = () => {
                 <br></br>
                 <br></br>
                 <p>
-                    Na nossa <Button size="small" variant="contained" href="./signup">página inicial</Button> você pode pesquisar o produto pelo nome ou marca. Além disso, é possível escolher quais restrições alimentares e ingredientes você quer incluir ou excluir na pesquisa.
+                    Na nossa <Button size="small" variant="contained" href="./">página inicial</Button> você pode pesquisar o produto pelo nome ou marca. Além disso, é possível escolher quais restrições alimentares e ingredientes você quer incluir ou excluir na pesquisa.
                 </p>
                 <br></br>
                 <p>
