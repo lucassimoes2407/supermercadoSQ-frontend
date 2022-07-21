@@ -18,7 +18,7 @@ const CopyrightDevHub = (props) => {
       height={50}
     >
       <img width={80} src={imagemDevHub} alt="DevHub" />
-      
+
       <Typography
         mt="auto"
         mb="auto"
@@ -28,11 +28,18 @@ const CopyrightDevHub = (props) => {
         fontWeight={500}
       >
         {"Atlântico Academy Bootcamp - "}
-        <Typography variant="a" href="https://github.com/lucassimoes2407/supermercadoSQ-frontend" target="_ablank">
-          {"Equipe DevHub"}
-        </Typography>{' © '}
-        {new Date().getFullYear()}
-        {'.'}
+
+        <Link
+          href="https://github.com/lucassimoes2407/supermercadoSQ-frontend"
+          target="_ablank"
+          draggable="false"
+          color="inherit"
+          style={{ textDecoration: "none" }}
+        >
+
+          {"Equipe DevHub © "}{new Date().getFullYear()}.
+
+        </Link>
       </Typography>
     </Box>
   );
