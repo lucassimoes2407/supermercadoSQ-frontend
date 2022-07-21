@@ -16,8 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
 
 const pages = [
-  { name: 'Home', path: '' },
-  { name: 'Sobre', path: 'about'},
+  { name: 'Pesquisar', path: './' },
+  { name: 'Sobre', path: 'about' },
 ];
 const settings = ['Profile', 'Logout'];
 
@@ -63,7 +63,9 @@ const ResponsiveAppBar = () => {
           </IconButton>
           <Typography
             variant="h6"
-            noWrap            
+            noWrap
+            component="a"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -74,14 +76,9 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <img
-              src={Logo}
-              alt="Logo"
-              draggable="false"
-              height={50}
-              onClick={() => {navigate(-1)}}
-              />
+            <img src={Logo} alt="Logo" height={50} draggable="false" />
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -125,7 +122,7 @@ const ResponsiveAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -137,8 +134,9 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={Logo} alt="Logo" draggable="false" height={50} />
+            <img src={Logo} alt="Logo" height={50} draggable="false" />
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
