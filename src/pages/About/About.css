@@ -8,12 +8,18 @@
 }
 
 .div2 {
-    background-color: #3D828D;
+    background-color: var(--primary-main);
     padding: 20px 20px 20px 20px;
     color: white;
     border-radius: 25px;
+    font-weight: 800;
 }
 
 .div3 {
     font-size: 14pt;
+}
+.main{
+    color: var(--primary-main);
+    margin-top: 10px;
+    margin-bottom: 50px;
 }

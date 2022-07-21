@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 const About = () => {
 
     return (
-        <div>
+        <div className="main">
             <br></br>
             <h1>
                 Controle de restrições alimentícias SQ
