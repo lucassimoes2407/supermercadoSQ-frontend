@@ -1,0 +1,19 @@
+.container {
+    width: 350px;
+    text-align: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial;
+}
+
+.div2 {
+    background-color: #3D828D;
+    padding: 20px 20px 20px 20px;
+    color: white;
+    border-radius: 25px;
+}
+
+.div3 {
+    font-size: 14pt;
+}
