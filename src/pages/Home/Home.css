@@ -1,6 +1,7 @@
 .home__div {
     display: flex;
     justify-content: center;
+    margin-bottom: 45px;
 }
 
 .product__list {
@@ -16,12 +17,6 @@
 
 .product__list > * {
     margin: 1rem;
-}
-
-.add-product__div {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
 }
 
 .home-filter__div {

@@ -1,4 +1,4 @@
-import {Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
@@ -38,22 +38,22 @@ const Home = () => {
     })();
   }, []);
 
-  
+
   useEffect(() => {
     (async () => {
       let getRestrictionResponse = await getAllRestrictions();
       setRestrictions(getRestrictionResponse.data.map(restriction => restriction.nome_restricao));
     })();
   }, []);
-  
+
   const sortProdutoByNome = (productList1, productList2) => {
-    if(productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
-    if(productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
-    if(productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
+    if (productList1.productInfo.nome.toUpperCase() < productList2.productInfo.nome.toUpperCase()) return -1;
+    if (productList1.productInfo.nome.toUpperCase() === productList2.productInfo.nome.toUpperCase()) return 0;
+    if (productList1.productInfo.nome.toUpperCase() > productList2.productInfo.nome.toUpperCase()) return 1;
   }
   const handleNomeProdutoChange = async (event) => {
-    try{
-      if(!event.target.value) {
+    try {
+      if (!event.target.value) {
         fetchProducts();
         return
       }
@@ -61,16 +61,16 @@ const Home = () => {
       console.log(responseProductByName.data.productList);
       setProductName(event.target.value);
       setProductsDisplayed(responseProductByName.data.productList.sort(sortProdutoByNome))
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
 
   useEffect(() => {
-      (async () => {
-        const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
-        setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
-      })()
+    (async () => {
+      const responseFilter = await postProductFiltered(productName, ingredientIncluded, ingredientExcluded);
+      setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
+    })()
   }, [ingredientIncluded, ingredientExcluded]);
 
   return (
@@ -82,7 +82,7 @@ const Home = () => {
         alignItems: 'center',
       }}>
         <Box sx={{ width: '90%' }}>
-          <h1>Home</h1>
+          <h1>Home </h1>
           <TextField
             onChange={handleNomeProdutoChange}
             fullWidth
@@ -110,12 +110,12 @@ const Home = () => {
               acordeonTitle={'Restrições incluídas'}
               updateSelecteds={(selected) => { setRestrictionsIncluded(selected) }}
             />
-            <FilterInputText 
+            <FilterInputText
               title={'Incluir ingredientes'}
               acordeonTitle={'ingredientes incluídos'}
               updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
             />
-            <FilterInputText 
+            <FilterInputText
               title={'Excluir ingredientes'}
               acordeonTitle={'Ingredientes excluir'}
               updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
@@ -146,7 +146,12 @@ const Home = () => {
         </div>
 
       </Box>
-      <div className="add-product__div">
+      <Box
+        position="fixed"
+        bottom={40}
+        right={0}
+        zIndex={1}
+      >
         <Button
           variant="contained"
           endIcon={<AddIcon />}
@@ -155,7 +160,7 @@ const Home = () => {
         >
           Adicionar Produto
         </Button>
-      </div>
+      </Box>
     </div>
   )
 };
