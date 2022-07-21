@@ -29,9 +29,7 @@ export default function SignUp() {
       let email = data.get('email');
       let password = data.get('password');
       let userName = data.get('firstName');
-      console.log(process.env);
       const { response } = await createUser(userName, email, password, userType);
-      console.log(response);
     } catch (e) {
       console.log(e);
     }

@@ -17,7 +17,6 @@ const NotFound = () => {
 				<b>Erro 404</b>
 			</Typography>
 			<img src={NotFoundImg} alt="404" width={400} />
-			<CopyrightDevHub mt={20}/>
 		</ThemeProvider>
 	</>
 	)
