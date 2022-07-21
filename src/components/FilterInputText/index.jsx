@@ -47,12 +47,12 @@ const FilterInputText = (props) => {
 
   return (
     <Box
-      maxWidth={280}
+      maxWidth={250}
       flexDirection='column'
       alignItems={'center'}
       justifyContent={'center'}
     >
-      <FormControl xs={12} sx={{ minWidth: 280, marginBottom: 1, flexDirection: 'row' }} size="small">
+      <FormControl xs={12} sx={{ minWidth: 250, marginBottom: 1, flexDirection: 'row' }} size="small">
         <TextField 
             id="outlined-basic"
             label={props.title}

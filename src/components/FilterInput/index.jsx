@@ -61,12 +61,12 @@ const FilterInput = (props) => {
 
   return (
     <Box
-      maxWidth={280}
+      maxWidth={250}
       flexDirection='column'
       alignItems={'center'}
       justifyContent={'center'}
     >
-      <FormControl xs={12} sx={{ minWidth: 280, marginBottom: 1 }} size="small">
+      <FormControl xs={12} sx={{ minWidth: 250, marginBottom: 1 }} size="small">
         <InputLabel id={`demo-multiple-checkbox-label`}>{props?.title}</InputLabel>
         <Select
           labelId={`demo-multiple-checkbox-label`}
@@ -77,7 +77,7 @@ const FilterInput = (props) => {
           input={<OutlinedInput label={props.title} />}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
-          sx={{ width: '280px' }}
+          sx={{ width: '250px' }}
         >
           {items.length > 0 && items.map((item) => (
             <MenuItem key={item + `${props.title}`} value={item}>
