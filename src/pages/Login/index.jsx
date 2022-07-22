@@ -53,6 +53,13 @@ export default function LogIn() {
           }
         })();
         navigate('/')
+        handleSnackState(
+          {
+            ...snack,
+            open: true,
+            message: "Você está logado!",
+          }
+        )
 
       }
     } catch (e) {

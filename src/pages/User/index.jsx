@@ -111,7 +111,7 @@ const User = () => {
 					...snack,
 					action: getAction(params.cod_usuario),
 					open: true,
-					message: "Usuario atualizado com sucesso!",
+					message: "Usuário atualizado com sucesso!",
 				}
 			)
 			navigate('/');
