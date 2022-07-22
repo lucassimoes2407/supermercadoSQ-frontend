@@ -1,14 +1,17 @@
-import { ManageAccountsRounded } from "@mui/icons-material";
-import { Avatar, Box, Button, Checkbox, Chip, Container, createTheme, CssBaseline, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography, } from "@mui/material";
+import { ManageAccountsRounded, Close } from "@mui/icons-material";
+import { Avatar, Box, Button, IconButton, Checkbox, Chip, Container, createTheme, CssBaseline, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField, Typography, } from "@mui/material";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import RestoreIcon from '@mui/icons-material/Restore';
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import FilterInputForEdit from "../../components/FilterInputForEdit";
 import { getProductByUserCod } from "../../services/product";
 import { getAllRestrictions } from "../../services/restriction";
-import { getUserByUserId } from "../../services/users";
+import { getUserByUserId, updateUser } from "../../services/users";
+import { postUserRestriction, deleteUserRestriction } from "../../services/userRestriction";
+import { useSnack } from '../../hooks/useSnack';
+import React from 'react';
 
 const User = () => {
 	const [user, setUser] = useState({
@@ -18,12 +21,36 @@ const User = () => {
 	});
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
+	const [pass, setPass] = useState("");
 	const [restrictions, setRestrictions] = useState([]);
 	const [restrictionsSelected, setRestrictionsSelected] = useState([]);
+	const { snack, handleSnackState, handleSnackOpen } = useSnack();
 
 	const theme = createTheme();
 	const params = useParams();
-
+	const navigate = useNavigate();
+	
+	const getAction = (cod_usuario) => {
+		if (!cod_usuario) return
+		return <React.Fragment>
+			<Button
+				color="secondary"
+				size="small"
+				onClick={() => { navigate(`/user/${params.cod_usuario}`) }}
+			>
+				Ver Usuario
+			</Button>
+			<IconButton
+				size="small"
+				aria-label="close"
+				color="secondary"
+				onClick={handleSnackOpen}
+			>
+				<Close fontSize="small" />
+			</IconButton>
+		</React.Fragment>
+	}
+	
 	const handleChange = (event) => {
 		const {
 			target: { value },
@@ -42,8 +69,53 @@ const User = () => {
 		},
 	};
 
-	const handleSubmit = (event) => {
+	const getRestrictionCodeByName = useCallback(async (name) => {
+		if (!name) return null;
+		const allRestrictions = await getAllRestrictions();
+		let foundRestriction = allRestrictions.data.find(res => res.nome_restricao === name)
+		console.log(foundRestriction);
+		return foundRestriction.cod_restricao;
+	}, []);
+
+	const handleUpdateRestrictionsSelectedRequest = async () => {
+		const getUser = await getUserByUserId(params.cod_usuario)
+		const restrictionList = getUser.data.userRestrictions.map(res => res.nome_restricao);
+		restrictionList.forEach(async (res) => {
+			if (!restrictionsSelected.includes(res)) {
+				const codeRestriction = await getRestrictionCodeByName(res);
+				await deleteUserRestriction(params.cod_usuario, codeRestriction);
+			}
+		})
+		restrictionsSelected.forEach(async (res) => {
+			if (!restrictionList.includes(res)) {
+				const codeRestriction = await getRestrictionCodeByName(res);
+				await postUserRestriction(params.cod_usuario, codeRestriction);
+			}
+		})
+
+	}
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
+		console.log(user);
+		const response = await updateUser(
+			user.cod_usuario,
+			user.username,
+			user.email,
+			user.senha
+		)
+		await handleUpdateRestrictionsSelectedRequest();
+		if (response.status === 200) {
+			handleSnackState(
+				{
+					...snack,
+					action: getAction(params.cod_usuario),
+					open: true,
+					message: "Usuario atualizado com sucesso!",
+				}
+			)
+			navigate('/');
+		}
 		console.log("Submit");//TODO - SAVE CHANGES ON PROFILE
 	}
 
@@ -66,14 +138,12 @@ const User = () => {
 
 				setEmail(userData.email);
 				setUsername(userData.username);
-				setUser({ ...userData, restrictions, products });
-
-				console.log("WWWWWWWWWW")
-				console.log(restrictions)
-				console.log(restrictionsSelected)
+				setPass(userData.senha)
+				
 				setRestrictionsSelected(
 					restrictions.map((restriction) => restriction.nome_restricao));
-
+					
+				setUser({ ...userData, restrictions, products });
 
 
 			})();
@@ -82,16 +152,26 @@ const User = () => {
 		}
 	}, [params]);
 
-	const handleClear = () => {
-		// (async () => {
-		// 	const getProduct = await getProductByCod(params.cod);
-		// 	if (!getProduct || !getProduct.data) navigate('/notfound');
-		// 	const product = getProduct.data;
-		// 	let res = getProduct.data.restrictions;
+	const handleUserInfoChange = (event, attribute) => {
+		const editedUser = structuredClone(user)
+		console.log(editedUser);
+		editedUser[`${attribute}`] = event.target.value
+		setUser(editedUser);
+	}
 
-		// 	setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
-		// 	setProduct(product)
-		// })()
+	const handleClear = () => {
+		(async () => {
+			const getUser = await getUserByUserId(params.cod_usuario);
+			if(!getUser || !getUser.data) navigate('/notfound');
+			const userData = getUser.data.user;
+			let res = getUser.data.userRestrictions;
+			setEmail(userData.email);
+			setUsername(userData.username);
+			setPass(userData.senha)
+			setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
+			setUser({ ...userData, restrictions });
+
+		})()
 		console.log("DESCARTAR ALTERAÇÕES")//TODO - DISCARD CHANGES ON PROFILE
 	}
 
@@ -107,12 +187,8 @@ const User = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(user);
-	}, [user])
-	useEffect(() => {
-		console.log(restrictionsSelected);
-	}, [restrictionsSelected])
-
+		getRestrictions();
+	}, [])
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -120,7 +196,8 @@ const User = () => {
 				<CssBaseline />
 				<Box
 					sx={{
-						marginTop: 12,
+						marginTop: 8,
+						marginBottom:8,
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
@@ -148,9 +225,9 @@ const User = () => {
 									id="username"
 									label="Username"
 									fullWidth
-									value={username}
+									value={user && user.username || ''}
 									onChange={(e) => {
-										setUsername(e.target.value);
+										handleUserInfoChange(e, 'username');
 									}}
 								/>
 							</Grid>
@@ -161,9 +238,23 @@ const User = () => {
 									id="email"
 									label="E-mail"
 									fullWidth
-									value={email}
+									value={user && user.email || ''}
 									onChange={(e) => {
-										setEmail(e.target.value);
+										handleUserInfoChange(e, 'email');
+									}}
+								/>
+							</Grid>
+
+							<Grid item xs={12}>
+								<TextField
+									name="senha"
+									id="standard-password-input"
+									type="password"
+									label="Senha"
+									fullWidth
+									value={user && user.senha || ''}
+									onChange={(e) => {
+										handleUserInfoChange(e, 'senha');
 									}}
 								/>
 							</Grid>
@@ -192,7 +283,7 @@ const User = () => {
 									type="submit"
 									variant="contained"
 									sx={{ mt: 3, mb: 2, width: 150 }}
-									endIcon={<SaveAsIcon />}
+									endIcon={<SaveAsIcon/>}
 								>
 									Salvar
 								</Button>
