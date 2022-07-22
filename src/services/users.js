@@ -71,7 +71,7 @@ const getUsersInactive = async() => {
     }
 }
 
-const updateUser = async(username,email,id, pass) => {
+const updateUser = async(id,username,email, pass) => {
     try {
         const responseUpdateUser = await backend_connection.put(`/users/${id}`, {username, email, pass});
         return responseUpdateUser;
