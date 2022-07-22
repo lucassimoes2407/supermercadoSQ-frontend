@@ -18,7 +18,27 @@ const getRestrictionByCod = async (cod_restriction) => {
     }
 }
 
+const createRestriction = async (nome_restricao) => {
+    try {
+        const response = await backend_connection.post(`/restriction/`, {nome_restricao:nome_restricao})
+        return response;
+    } catch(e) {
+        console.log(e.message);
+    }
+}
+
+const deleteRestriction = async (cod_restricao) => {
+    try {
+        const response = await backend_connection.delete(`/restriction/${cod_restricao}`)
+        return response;
+    } catch(e) {
+        console.log(e.message);
+    }
+}
+
 export {
     getAllRestrictions,
     getRestrictionByCod,
+    createRestriction,
+    deleteRestriction,
 }
