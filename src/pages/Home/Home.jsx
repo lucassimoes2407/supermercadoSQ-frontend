@@ -154,7 +154,7 @@ const Home = () => {
               />
               <FilterInputText
                 title={'Incluir ingredientes'}
-                acordeonTitle={'ingredientes incluídos'}
+                acordeonTitle={'Ingredientes incluídos'}
                 updateSelecteds={(selected) => { setIngredientIncluded(selected) }}
               />
 
@@ -164,12 +164,12 @@ const Home = () => {
               <FilterInput
                 items={restrictions.filter(restriction => !restrictionsIncluded.includes(restriction)) || []}
                 title={'Não contém'}
-                acordeonTitle={'Restrições selecionadas'}
+                acordeonTitle={'Restrições excluídas'}
                 updateSelecteds={(selected) => { setRestrictionsSelected(selected) }}
               />
               <FilterInputText
                 title={'Excluir ingredientes'}
-                acordeonTitle={'Ingredientes excluir'}
+                acordeonTitle={'Ingredientes excluídos'}
                 updateSelecteds={(selected) => { setIngredientExcluded(selected) }}
               />
 

@@ -264,7 +264,7 @@ const User = () => {
 							<FilterInputForEdit
 									selectedItems={restrictionsSelected || []}
 									items={restrictions.map(restriction => restriction.nome_restricao) || []}
-									title={'Contém'}
+									title={'Suas Restrições'}
 									updateSelecteds={handleUpdateRestrictionsSelected}
 								/>
 							</Grid>
