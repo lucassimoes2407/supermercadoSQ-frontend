@@ -8,10 +8,18 @@ const createUser = async (username, email, pass, typeUser) => {
         throw err;
     }
 }
+const getUserLogged = async () => { //users/getlogged
+    try{
+        const responseGetLogged = await backend_connection.get('/users/getlogged');
+        return responseGetLogged;
+    }catch(err){
+        throw err;
+    }
+}
 
-const login = async (username, senha) => {
+const login = async (username, pass) => {
     try {
-        const responseLogin = await backend_connection.post('/users/login', {username, senha});
+        const responseLogin = await backend_connection.post('/users/login', {username, pass});
         return responseLogin;
     }catch(err){
         throw err;
@@ -54,6 +62,7 @@ const getUserByUserId = async(id) => {
     }
 }
 
+
 const getUsersActive = async() => {
     try {
         const responseGetUsersActive = await backend_connection.get('/users/findUsersActive');
@@ -71,7 +80,7 @@ const getUsersInactive = async() => {
     }
 }
 
-const updateUser = async(username,email,id, pass) => {
+const updateUser = async(id,username,email, pass) => {
     try {
         const responseUpdateUser = await backend_connection.put(`/users/${id}`, {username, email, pass});
         return responseUpdateUser;
@@ -108,6 +117,7 @@ const deleteUserById = async(cod_usuario) => {
 
 export {
     createUser,
+    getUserLogged,
     login,
     logout,
     getAllUsers,

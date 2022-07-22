@@ -10,7 +10,7 @@ const NotFound = () => {
 	const theme = createTheme();
 	return (<>
 		<ThemeProvider theme={theme}>
-			<Typography component="h1" variant="h4" color="primary" mt={8}>
+			<Typography component="h1" variant="h4" color="primary" mt={14}>
 				<b>Ops! A página não existe!</b>
 			</Typography>
 			<Typography component="h1" variant="h1" color="primary">

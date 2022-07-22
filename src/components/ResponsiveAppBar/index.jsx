@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,14 +15,23 @@ import MenuItem from '@mui/material/MenuItem';
 import Logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
+import { getUserLogged } from '../../services/users';
+import { isAuthenticated } from '../../services/auth';
 
-const pages = [
-  { name: 'Pesquisar', path: './' },
-  { name: 'Sobre', path: 'about' },
-];
-const settings = ['Profile', 'Logout'];
 
 const ResponsiveAppBar = () => {
+
+  const [settingsMenu, setSettingsMenu] = useState([
+    { name: 'Login', path: 'login' },
+    { name: 'Cadastrar', path: 'signup' },
+  ])
+
+  let pages = [
+    { name: 'Pesquisar', path: './' },
+    { name: 'Sobre', path: 'about' },
+  ];
+  let settings = settingsMenu;
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -32,6 +42,7 @@ const ResponsiveAppBar = () => {
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+
   };
 
   const handleCloseNavMenu = () => {
@@ -46,6 +57,29 @@ const ResponsiveAppBar = () => {
     navigate(`/${path}`);
     handleCloseNavMenu();
   }
+
+  useEffect(() => {
+    try {
+      if (isAuthenticated()) {
+        (async () => {
+          let getUserLoggedResponse = await getUserLogged();
+          const { cod_usuario } = getUserLoggedResponse.data.user;
+
+          setSettingsMenu([
+            { name: 'Perfil', path: `user/${cod_usuario}` },
+            { name: 'Logout', path: 'logout' },
+          ])
+        })();
+      } else {
+        setSettingsMenu([
+          { name: 'Login', path: 'login' },
+          { name: 'Cadastrar', path: 'signup' },
+        ])
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   return (
     <AppBar position="fixed">
@@ -149,7 +183,7 @@ const ResponsiveAppBar = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Configuração de Usuário">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar />
               </IconButton>
@@ -171,8 +205,8 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.name} onClick={() => handlePageButtonAction(setting.path)}>
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -182,4 +216,5 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
+
 export default ResponsiveAppBar;

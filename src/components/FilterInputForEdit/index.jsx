@@ -20,7 +20,6 @@ const MenuProps = {
   },
 };
 const FilterInputForEdit = (props) => {
-  console.log(props)
   const [itemsSelected, setItemsSelected] = useState(props?.selectedItems || []);
   const [items, setItems] = useState(props?.items || []);
 
@@ -34,14 +33,12 @@ const FilterInputForEdit = (props) => {
     } = event;
     const newValue = typeof value === 'string' ? value.split(',') : value;
     setItemsSelected(newValue);
-    console.log("WWWWWW");
     updateSelecteds(newValue);
   };
 
   const handleElementDelete = (element) => {
     setItemsSelected((previousValue) => {
       let newValue = previousValue.filter(item => (item !== element));
-      console.log("MMMMM")
       updateSelecteds(newValue);
       return newValue;
     });
@@ -60,6 +57,7 @@ const FilterInputForEdit = (props) => {
       flexDirection='column'
       alignItems={'center'}
       justifyContent={'center'}
+      maxWidth={400}
     >
       <FormControl fullWidth xs={12} sx={{ minWidth: 280, marginBottom: 1 }} size="small">
         <InputLabel id={`demo-multiple-checkbox-label`}>{props?.title}</InputLabel>
@@ -81,7 +79,7 @@ const FilterInputForEdit = (props) => {
           ))}
         </Select>
       </FormControl>
-          <Box sx={{ flexWrap: true }}>
+          <Box sx={{ flexWrap: true}}>
 
             <div className="restriction__chip">
               {itemsSelected && itemsSelected.map((element) => {

@@ -43,7 +43,7 @@ function ProductCard(props) {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 258, maxHeight: 258, minWidth: 258, minHeight: 150 }}>
+    <Card sx={{ maxWidth: 258, maxHeight: 258, minWidth: 258, minHeight: 258 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "secondary.light" }} aria-label="recipe">

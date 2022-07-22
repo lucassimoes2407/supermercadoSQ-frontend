@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Grid, IconButton, TextField, Typography } from "@mui/material";
 import "./index.css";
 import UploadIcon from '@mui/icons-material/Upload';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import AddIcon from '@mui/icons-material/Add';
 import { postProduct } from '../../services/product'
 import { ThemeProvider } from 'styled-components';
@@ -8,9 +9,9 @@ import { useSnack } from '../../hooks/useSnack';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Close } from '@mui/icons-material';
-import FilterInput from "../../components/FilterInput";
 import { getAllRestrictions } from "../../services/restriction";
 import { postProductRestriction } from "../../services/produtoRestricao";
+import FilterInputForEdit from "../../components/FilterInputForEdit";
 
 
 
@@ -57,7 +58,7 @@ const CreateProduct = () => {
       const response = await postProduct(product, brand, ingredients, img, codUser);
       console.log(response);
 
-      for(let restriction in restrictionsSelected){
+      for (let restriction in restrictionsSelected) {
         let selected = restrictions.find(res => restrictionsSelected[restriction] === res.nome_restricao);
         await postProductRestriction(response.data.cod_produto, selected.cod_restricao);
       }
@@ -91,7 +92,7 @@ const CreateProduct = () => {
   }
 
   const getRestrictions = async () => {
-    const {data} = await getAllRestrictions();
+    const { data } = await getAllRestrictions();
     setRestrictions(data);
   }
   useEffect(() => {
@@ -105,7 +106,7 @@ const CreateProduct = () => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 12,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -157,19 +158,12 @@ const CreateProduct = () => {
                   maxRows={6}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FilterInput
+              <Grid item xs={12} >
+                <FilterInputForEdit
                   items={restrictions.map(restriction => restriction.nome_restricao) || []}
                   title={'Restrições'}
-                  acordeonTitle={'Restrições incluídas'}
                   updateSelecteds={handleUpdateRestrictionsSelected}
                 />
-              </Grid>
-              <Grid item xs={12} container justifyContent="flex-start">
-                <Button component="label">
-                  <UploadIcon /> Enviar Foto
-                  <input name='img' id='img' hidden accept="image/*" multiple type="file" />
-                </Button>
               </Grid>
             </Grid>
 
@@ -177,6 +171,7 @@ const CreateProduct = () => {
               type="submit"
               fullWidth
               variant="contained"
+              endIcon={<SaveAsIcon/>}
               sx={{ mt: 3, mb: 2 }}
             >
               Cadastrar
