@@ -8,6 +8,14 @@ const createUser = async (username, email, pass, typeUser) => {
         throw err;
     }
 }
+const getUserLogged = async () => { //users/getlogged
+    try{
+        const responseGetLogged = await backend_connection.get('/users/getlogged');
+        return responseGetLogged;
+    }catch(err){
+        throw err;
+    }
+}
 
 const login = async (username, pass) => {
     try {
@@ -53,6 +61,7 @@ const getUserByUserId = async(id) => {
         throw err;
     }
 }
+
 
 const getUsersActive = async() => {
     try {
@@ -108,6 +117,7 @@ const deleteUserById = async(cod_usuario) => {
 
 export {
     createUser,
+    getUserLogged,
     login,
     logout,
     getAllUsers,
