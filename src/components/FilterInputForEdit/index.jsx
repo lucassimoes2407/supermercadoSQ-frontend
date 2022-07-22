@@ -60,6 +60,7 @@ const FilterInputForEdit = (props) => {
       flexDirection='column'
       alignItems={'center'}
       justifyContent={'center'}
+      maxWidth={400}
     >
       <FormControl fullWidth xs={12} sx={{ minWidth: 280, marginBottom: 1 }} size="small">
         <InputLabel id={`demo-multiple-checkbox-label`}>{props?.title}</InputLabel>
@@ -81,7 +82,7 @@ const FilterInputForEdit = (props) => {
           ))}
         </Select>
       </FormControl>
-          <Box sx={{ flexWrap: true }}>
+          <Box sx={{ flexWrap: true}}>
 
             <div className="restriction__chip">
               {itemsSelected && itemsSelected.map((element) => {
