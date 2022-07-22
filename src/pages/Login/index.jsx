@@ -12,27 +12,52 @@ import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from "styled-components";
 import { login } from '../../services/users';
-import CopyrightDevHub from '../../components/CopyrightDevHub';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { loginJWT } from "../../services/auth";
+import { getUserLogged } from '../../services/users';
+import { useSnack } from '../../hooks/useSnack';
 
-const theme = createTheme();
+
+
 
 export default function LogIn() {
 
+
+  const theme = createTheme();
   const navigate = useNavigate();
+  const { snack, handleSnackState, handleSnackOpen } = useSnack();
+
+  const loginErrMessage = (message) => {
+
+    handleSnackState(
+      {
+        ...snack,
+        open: true,
+        message: message,
+      }
+    )
+  }
+
   const handleLogin = async (username, senha) => {
     try {
       const response = await login(username, senha);
 
-      
-      if(response.status === 200){
+
+      if (response.status === 200) {
         loginJWT(response.data.token);
+
+        (async () => {
+          let getUserLoggedResponse = await getUserLogged();
+          if (getUserLoggedResponse.data.user.acesso === 3) {
+            navigate('/admin');
+          }
+        })();
         navigate('/')
+
       }
-    }catch(e){
-      console.log(e);
-      console.log("Algo deu errado no login");
+    } catch (e) {
+      console.log(e.response.data.message);
+      loginErrMessage(e.response.data.message);
     }
   }
 
@@ -42,11 +67,10 @@ export default function LogIn() {
 
     let username = data.get('username');
     let senha = data.get('senha');
-    try{
+    try {
       const responseLogin = await handleLogin(username, senha);
-
-    }catch(e){
-
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -76,7 +100,7 @@ export default function LogIn() {
               required
               fullWidth
               id="username"
-              label="Digite seu nome"
+              label="Username"
               name="username"
               autoComplete="username"
               autoFocus
@@ -99,13 +123,8 @@ export default function LogIn() {
             >
               Entrar
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2" underline='hover'>
-                  Esqueceu a senha?
-                </Link>
-              </Grid>
-              <Grid item>
+            <Grid container justifyContent="flex-end">
+              <Grid>
                 <Link href="/signup" variant="body2" underline='hover'>
                   {"Não tem conta? Cadastre-se"}
                 </Link>
