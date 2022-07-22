@@ -22,8 +22,8 @@ import { isAuthenticated } from '../../services/auth';
 const ResponsiveAppBar = () => {
 
   const [settingsMenu, setSettingsMenu] = useState([
-    { name: 'Login', path: 'login' },
-    { name: 'Cadastrar', path: 'signup' },
+    { name: 'Entrar', path: 'login' },
+    { name: 'Cadastre-se', path: 'signup' },
   ])
 
   let pages = [
@@ -67,13 +67,13 @@ const ResponsiveAppBar = () => {
 
           setSettingsMenu([
             { name: 'Perfil', path: `user/${cod_usuario}` },
-            { name: 'Logout', path: 'logout' },
+            { name: 'Sair', path: 'logout' },
           ])
         })();
       } else {
         setSettingsMenu([
-          { name: 'Login', path: 'login' },
-          { name: 'Cadastrar', path: 'signup' },
+          { name: 'Entrar', path: 'login' },
+          { name: 'Cadastre-se', path: 'signup' },
         ])
       }
     } catch (e) {
