@@ -12,7 +12,6 @@ const getAllProducts = async () => {
 const getProductByCod = async (cod_produto) => {
     try{
         const allProducts = await backend_connection.get(`/products/${cod_produto}`);
-        console.log(allProducts)
         return allProducts;
     }catch(e){
         console.log(e.message);

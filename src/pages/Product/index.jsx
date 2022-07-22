@@ -5,8 +5,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import "./index.css"
 import { ThemeProvider } from "styled-components";
 import { Box, Button, Chip, Container, createTheme, CssBaseline, Modal, Typography } from "@mui/material";
-import {useSnack} from '../../hooks/useSnack';
-import {useNavigate} from 'react-router-dom'
+import { useSnack } from '../../hooks/useSnack';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -29,14 +29,14 @@ const Product = () => {
   const [modalDelete, setModalDelete] = useState(false);
 
   const params = useParams();
-  const {snack, handleSnackState} = useSnack();
   const navigate = useNavigate();
-  
+  const { snack, handleSnackState } = useSnack();
+
   useEffect(() => {
     try {
       (async () => {
         const getProduct = await getProductByCod(params.cod);
-        if(!getProduct || !getProduct.data) navigate('/notfound');
+        if (!getProduct || !getProduct.data || !getProduct.data.productInfo) navigate('/notfound');
         const product = getProduct.data;
         setProduct(product)
       })();
@@ -49,33 +49,33 @@ const Product = () => {
     setModalDelete(previousState => !previousState);
   }
 
-  const handleDelete = async() => {
-    try{
+  const handleDelete = async () => {
+    try {
       handleModal();
       const responseDelete = await deleteProduct(params.cod);
       console.log(responseDelete);
-      // if(responseDelete.status === 200){
-			// 	handleSnackState(
-			// 		{...snack,
-			// 			open: true,
-			// 			message: responseDelete.data
-			// 		}
-			// 	)
-			// }
+      if (responseDelete.status === 200) {
+        handleSnackState(
+          {
+            ...snack,
+            open: true,
+            message: responseDelete.data
+          }
+        )
+      }
       navigate('/');
-    }catch(e){
-      // handleSnackState(
-      //   {...snack,
-      //     open: true,
-      //     message: 'Não foi possível deletar'
-      //   }
-      // )
+    } catch (e) {
+      handleSnackState(
+        {
+          ...snack,
+          open: true,
+          message: 'Não foi possível deletar'
+        }
+      )
     }
   }
 
-  useEffect(() => {
-    console.log("#test", product);
-  }, [product]);
+  
 
   return (<>
     <ThemeProvider theme={theme}>
@@ -89,24 +89,8 @@ const Product = () => {
             textAlign: 'left'
           }}
         >
-
-          <div className="product__div">
-            {(product.img_produto && <img className="product__img" src={product.img_produto} alt="" />)
-              || <div className="image__div--not-found">
-                <ImageIcon color="primary" sx={{ fontSize: 120 }} />
-                <Typography
-                  variant="h1"
-                  fontSize={30}
-                  color="primary"
-                >
-                  Imagem não encontrada
-                </Typography>
-              </div>
-            }
-          </div>
-
           <Typography
-            mt={2}
+            mt={6}
             variant="h1"
             fontSize={30}
             color="primary"
@@ -131,9 +115,11 @@ const Product = () => {
           </Typography>
 
           <Box
+            mt={1}
             sx={{
               display: 'flex',
               gap: 1,
+              flexWrap: 'wrap',
             }}
             variant="body1"
             color="primary"
@@ -141,7 +127,7 @@ const Product = () => {
             {product.restrictions.map((restriction) => {
               return (
                 <Chip
-                  key={restriction.nome_restricao}
+                  key={restriction.nome_restricao + `productPage`}
                   label={restriction.nome_restricao}
                   color="primary"
                 />)
@@ -206,7 +192,7 @@ const Product = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={handleModal}>
+        onClick={() => navigate(`/product/${params.cod}/edit`)}>
         Editar produto
       </Button>
       <Modal
@@ -216,7 +202,7 @@ const Product = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, width: 400 }}>
-          <h2 id="parent-modal-title">Deseja deletar o produto</h2>
+          <h2 id="parent-modal-title">Deseja deletar o produto?</h2>
           <p id="parent-modal-description">
             Essa ação não pode ser desfeita
           </p>

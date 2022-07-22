@@ -12,10 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../../assets/logo.png';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { ArrowBack, ArrowBackIos } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { ArrowBackIos } from '@mui/icons-material';
 
-const pages = [{ name: 'Sobre', path: 'about' }];
+const pages = [
+  { name: 'Pesquisar', path: './' },
+  { name: 'Sobre', path: 'about' },
+];
 const settings = ['Profile', 'Logout'];
 
 const ResponsiveAppBar = () => {
@@ -45,7 +48,7 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton
@@ -73,8 +76,9 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={Logo} alt="Logo" draggable="false" height={50} />
+            <img src={Logo} alt="Logo" height={50} draggable="false" />
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -118,7 +122,7 @@ const ResponsiveAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -130,8 +134,9 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={Logo} alt="Logo" draggable="false" height={50} />
+            <img src={Logo} alt="Logo" height={50} draggable="false" />
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

@@ -8,6 +8,7 @@ import Product from "../pages/Product";
 import CreateProduct from "../pages/CreateProduct";
 import User from "../pages/User";
 import Admin from "../pages/Admin";
+import EditProduct from "../pages/EditProduct";
 
 const RouterConfig = () => {
     return (
@@ -20,6 +21,7 @@ const RouterConfig = () => {
             <Route path="signup" element={<SignUp/>} />
             <Route path="*" element={<NotFound/>}/>
             <Route path="product/:cod" element={<Product/>}/>
+            <Route path="product/:cod/edit" element={<EditProduct/>}/>
             <Route path="create-product" element={<CreateProduct/>}/>
             <Route path="admin" element={<Admin/>}/>
         </Routes>

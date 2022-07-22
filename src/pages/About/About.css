@@ -1,0 +1,25 @@
+.container {
+    width: 350px;
+    text-align: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial;
+}
+
+.div2 {
+    background-color: var(--primary-main);
+    padding: 20px 20px 20px 20px;
+    color: white;
+    border-radius: 25px;
+    font-weight: 800;
+}
+
+.div3 {
+    font-size: 14pt;
+}
+.main{
+    color: var(--primary-main);
+    margin-top: 10px;
+    margin-bottom: 50px;
+}

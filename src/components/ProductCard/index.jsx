@@ -37,24 +37,24 @@ const ExpandMore = styled((props) => {
  * @returns Card component with data displayed.
  */
 
-export default function ProductCard(props) {
+function ProductCard(props) {
   const { productInfo } = props.product;
 
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 258, minWidth: 200, minHeight: 200 }}>
+    <Card sx={{ maxWidth: 258, maxHeight: 258, minWidth: 258, minHeight: 258 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar sx={{ bgcolor: "secondary.light" }} aria-label="recipe">
             <RestaurantIcon />
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
         title={productInfo.nome}
         subheader={productInfo.marca}
 
@@ -66,20 +66,21 @@ export default function ProductCard(props) {
         alt="Paella dish"
       /> */}
       <CardContent>
-        <div className='product-ingredients__div'>
+        {/* <div className='product-ingredients__div'>
           <Typography variant="body2" color="text.secondary">
             {productInfo.ingredientes}
           </Typography>
-        </div>
-        <Typography gutterBottom variant="h7" component="div">
-          Restrições
+        </div> */}
+        <Typography
+          fontWeight={500} fontSize={14} gutterBottom variant="h7" component="div" color="primary.dark">
+          Contém:
         </Typography>
         <div className="restriction__chip">
 
           {props.product && props.product.restrictions.map((element) => {
             return (
               <Chip
-                key={element.nome_restricao}
+                key={element.nome_restricao + `productCardChip`}
                 label={element.nome_restricao}
                 color="primary"
               />
@@ -87,11 +88,16 @@ export default function ProductCard(props) {
           })}
         </div>
       </CardContent>
-      <CardActions>
-        <Button onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
+      <CardActions
+            
+      >
+        <Button 
+        onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
           Ver mais
         </Button>
       </CardActions>
     </Card>
   );
 }
+
+export default React.memo(ProductCard)

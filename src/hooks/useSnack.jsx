@@ -16,7 +16,11 @@ export function SnackProvider({ children }) {
 
     const handleSnackOpen = useCallback(() => {
         setSnack((prevSnack) => {
-            return { ...prevSnack, open: !prevSnack.open }
+            return { 
+                ...prevSnack,
+                open: !prevSnack.open,
+                action: undefined
+            }
         })
     }, []);
 
