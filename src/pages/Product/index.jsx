@@ -90,7 +90,7 @@ const Product = () => {
           }}
         >
           <Typography
-            mt={6}
+            mt={10}
             variant="h1"
             fontSize={30}
             color="primary"
