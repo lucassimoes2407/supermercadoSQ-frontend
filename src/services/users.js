@@ -9,9 +9,9 @@ const createUser = async (username, email, pass, typeUser) => {
     }
 }
 
-const login = async (username, senha) => {
+const login = async (username, pass) => {
     try {
-        const responseLogin = await backend_connection.post('/users/login', {username, senha});
+        const responseLogin = await backend_connection.post('/users/login', {username, pass});
         return responseLogin;
     }catch(err){
         throw err;
