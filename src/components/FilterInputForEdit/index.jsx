@@ -20,7 +20,6 @@ const MenuProps = {
   },
 };
 const FilterInputForEdit = (props) => {
-  console.log(props)
   const [itemsSelected, setItemsSelected] = useState(props?.selectedItems || []);
   const [items, setItems] = useState(props?.items || []);
 
@@ -34,14 +33,12 @@ const FilterInputForEdit = (props) => {
     } = event;
     const newValue = typeof value === 'string' ? value.split(',') : value;
     setItemsSelected(newValue);
-    console.log("WWWWWW");
     updateSelecteds(newValue);
   };
 
   const handleElementDelete = (element) => {
     setItemsSelected((previousValue) => {
       let newValue = previousValue.filter(item => (item !== element));
-      console.log("MMMMM")
       updateSelecteds(newValue);
       return newValue;
     });
