@@ -14,6 +14,7 @@ import { ThemeProvider } from "styled-components";
 import { login } from '../../services/users';
 import CopyrightDevHub from '../../components/CopyrightDevHub';
 import {useNavigate} from 'react-router-dom'
+import { loginJWT } from "../../services/auth";
 
 const theme = createTheme();
 
@@ -23,8 +24,10 @@ export default function LogIn() {
   const handleLogin = async (username, senha) => {
     try {
       const response = await login(username, senha);
-      console.log(response);
+
+      
       if(response.status === 200){
+        loginJWT(response.data.token);
         navigate('/')
       }
     }catch(e){

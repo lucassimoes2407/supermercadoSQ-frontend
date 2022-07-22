@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { deleteProduct, getProductByCod } from "../../services/product";
-import ImageIcon from '@mui/icons-material/Image';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import "./index.css"
 import { ThemeProvider } from "styled-components";
 import { Box, Button, Chip, Container, createTheme, CssBaseline, Modal, Typography } from "@mui/material";
@@ -75,7 +76,7 @@ const Product = () => {
     }
   }
 
-  
+
 
   return (<>
     <ThemeProvider theme={theme}>
@@ -83,6 +84,7 @@ const Product = () => {
         <CssBaseline />
         <Box
           sx={{
+            mt: 6,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
@@ -186,12 +188,15 @@ const Product = () => {
       <Button
         variant="outlined"
         color="secondary"
-        onClick={handleModal}>
+        onClick={handleModal}
+        endIcon={<DeleteIcon/>}
+        >
         Deletar produto
       </Button>
       <Button
         variant="contained"
         color="primary"
+        endIcon={<EditIcon/>}
         onClick={() => navigate(`/product/${params.cod}/edit`)}>
         Editar produto
       </Button>

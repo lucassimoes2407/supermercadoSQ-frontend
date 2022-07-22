@@ -9,6 +9,7 @@ import CreateProduct from "../pages/CreateProduct";
 import User from "../pages/User";
 import Admin from "../pages/Admin";
 import EditProduct from "../pages/EditProduct";
+import Logout from "../pages/Logout"
 
 const RouterConfig = () => {
     return (
@@ -24,6 +25,7 @@ const RouterConfig = () => {
             <Route path="product/:cod/edit" element={<EditProduct/>}/>
             <Route path="create-product" element={<CreateProduct/>}/>
             <Route path="admin" element={<Admin/>}/>
+            <Route path="logout" element={<Logout/>}/>
         </Routes>
     )
 };
