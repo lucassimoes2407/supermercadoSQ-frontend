@@ -178,11 +178,13 @@ const User = () => {
 	const handleUpdateRestrictionsSelected = (selected) => {
 		setRestrictionsSelected(selected)
 	}
-
 	const getRestrictions = async () => {
 		const { data } = await getAllRestrictions();
 		setRestrictions(data);
 	}
+	useEffect(() => {
+		getRestrictions();
+	}, []);
 
 	useEffect(() => {
 		getRestrictions();
@@ -258,10 +260,11 @@ const User = () => {
 							</Grid>
 
 							<Grid item xs={12} >
-								<FilterInputForEdit
+							{console.log("antes do FilterInputForEdit")}
+							<FilterInputForEdit
 									selectedItems={restrictionsSelected || []}
 									items={restrictions.map(restriction => restriction.nome_restricao) || []}
-									title={'Suas Restrições'}
+									title={'Contém'}
 									updateSelecteds={handleUpdateRestrictionsSelected}
 								/>
 							</Grid>
