@@ -52,7 +52,7 @@ npm run start
 
 * React
 * Material UI
-
+* Axios
 
 # <a id="arquitetura"></a> Arquitetura
 
