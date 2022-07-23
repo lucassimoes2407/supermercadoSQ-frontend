@@ -1,86 +1,130 @@
 import React from "react";
 import './About.css';
-import Button from '@mui/material/Button';
+import { ThemeProvider } from "styled-components";
+import { Box, Button, Chip, Container, createTheme, CssBaseline, Modal, Typography } from "@mui/material";
 
 const About = () => {
 
-    return (
-        <div className="main">
-            <br></br>
-            <h1>
-                Controle de restrições alimentícias SQ
-            </h1>
-            <br></br>
-            <br></br>
-            <div className="container">
-                <p>
-                    Sistema de gerenciamento de alimentos e composições alimentares para auxiliar nossos clientes a saber os componentes alergênicos de diversos produtos.
-                </p>
-                <br></br>
-                <br></br>
-                <div className="div2">
-                    <p>
-                        Qualquer pessoa pode fazer parte do nosso projeto!
-                    </p>
-                </div>
-                <br></br>
-                <br></br>
-                <p>
-                    Visite nossa página de <Button size="small" variant="contained" href="./signup">cadastro</Button> e insira seu nome, email, senha e o tipo de usuário e logo você terá permissão para adicionar e editar produtos você mesmo.
-                </p>
-                <br></br>
-                <br></br>
-                <div className="div2">
-                    <p>
-                        Você tem toda a liberdade de cadastrar seu próprio produto!
-                    </p>
-                </div>
-                <br></br>
-                <br></br>
-                <p>
-                    Cadastre um produto apertando no botão de <Button size="small" variant="contained" href="./create-product">Adicionar Produtos</Button> e insira o nome, a marca, os ingredientes e uma imagem do produto.
-                </p>
-                <br></br>
-                <br></br>
-                <div className="div2">
-                    <p>
-                        Diversas formas de pesquisar seus itens!
-                    </p>
-                </div>
-                <br></br>
-                <br></br>
-                <p>
-                    Na nossa <Button size="small" variant="contained" href="./">página inicial</Button> você pode pesquisar o produto pelo nome ou marca. Além disso, é possível escolher quais restrições alimentares e ingredientes você quer incluir ou excluir na pesquisa.
-                </p>
-                <br></br>
-                <p>
-                    Deseja encontrar apenas alimentos que contém glúten? Deseja excluir os alimentos com lactose? Você é quem decide!
-                </p>
-                <br></br>
-                <br></br>
-                <div className="div2">
-                    <p>
-                        Está faltando alguma restrição? Alguma restrição está com o nome errado? Nos ajude a corrigir!
-                    </p>
-                </div>
-                <br></br>
-                <br></br>
-                <p>
-                    Na página de restrições você pode cadastrar uma nova restrição ou editar alguma existente. Não apenas isso como também pode indicar qual alimento contém essa restrição.
-                </p>
-                <br></br>
-                <br></br>
-                <div className="div3">
-                    <div className="div2">
-                        <p>
-                            Cadastre-se agora para ajudar outros clientes e venha fazer parte da família SQ!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+	const theme = createTheme();
 
-    )
+	return (
+		<ThemeProvider theme={theme}>
+			<Container component="main" maxWidth="sm">
+				<CssBaseline />
+				<Box sx={{
+					mt: 8,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'flex-start',
+					textAlign: 'justify'
+				}}
+				>
+					<Typography
+						mt={3}
+						variant="h1"
+						fontSize={80}
+						fontWeight={800}
+						color="primary"
+					>
+						QUEM
+					</Typography>
+
+					<Typography
+						variant="h1"
+						fontSize={40}
+						fontWeight={800}
+						color="primary"
+					>
+						SOMOS?
+					</Typography>
+
+					<Typography
+						mb={2}
+						variant="subtitle1"
+						color="text.prymary"
+					>
+						Uma plataforma de consulta e cadastro de produtos que tem como principal objetivo ajudar você a escolher os produtos que que se encaixam nas suas restrições alimentares.
+					</Typography>
+				</Box>
+
+
+				<Box sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'flex-end',
+					textAlign: 'justify'
+				}}
+				>
+					<Typography
+						mt={3}
+						variant="h1"
+						fontSize={80}
+						fontWeight={800}
+						color="primary"
+					>
+						O QUE
+					</Typography>
+					<Typography
+						variant="h1"
+						fontSize={40}
+						fontWeight={800}
+						color="primary"
+					>
+						FAZEMOS?
+					</Typography>
+					<Typography
+						mb={2}
+						variant="subtitle1"
+						color="text.prymary"
+					>
+						Fornecemos uma plataforma de consulta de produtos que é nutrida constatemente pela comunidade, outros indivíduos que assim como você também tem restrições alimentares e se preocupam com o que ingerem.
+						Nosso sistema permite uma pesquisa refinada de produtos por nome, ingrediente contido ou não e a opção de filtrar por restrições alimentares, tudo isso pra vc ter mais segurança e confiança na hora das compras.
+					</Typography>
+					<Button href="/">Pesquise Produtos</Button>
+				</Box>
+
+
+				<Box sx={{
+					mb: 12,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'flex-start',
+					textAlign: 'justify'
+				}}>
+					<Typography
+						mt={3}
+						variant="h1"
+						fontSize={80}
+						fontWeight={800}
+						color="primary"
+					>
+						COMO
+					</Typography>
+
+					<Typography
+						variant="h1"
+						fontSize={40}
+						fontWeight={800}
+						color="primary"
+					>
+						FUNCIONA?
+					</Typography>
+
+					<Typography
+						mb={2}
+						variant="subtitle1"
+						color="text.prymary"
+					>
+						Basta acessar e pesquisar! Simples assim!
+						Nosso mecanismo de busca permite que qualquer um possa pesquisar produtos, filtrar ingredientes e restrições facilmente sem necessidade de cadastro.
+						Não encontrou o que procura? que tal criar uma conta e colaborar cadastrando produtos que mais tarde ajudarão milhares de pessoas?
+					</Typography>
+					<Button href="/signup">Cadastre-se</Button>
+				</Box>
+
+			</Container>
+		</ThemeProvider>
+	)
 }
 
 export default About;
