@@ -231,7 +231,7 @@ const EditProduct = () => {
 									updateSelecteds={handleUpdateRestrictionsSelected}
 								/>
 							</Grid>
-							<Grid item xs={12} container justifyContent="space-around">
+							<Grid item sx={{mb:8}} xs={12} container justifyContent="space-around">
 								<Button
 									variant="outlined"
 									color="secondary"

@@ -165,14 +165,17 @@ const User = () => {
 		try{
 			(async () => {
 				const getUser = await getUserByUserId(params.cod_usuario);
+				const getProducts = await getProductByUserCod(params.cod_usuario);
+
 				if (!getUser || !getUser.data) navigate('/notfound');
 				const userData = getUser.data.user;
 				let res = getUser.data.userRestrictions;
 				setEmail(userData.email);
 				setUsername(userData.username);
 				setPass(userData.senha)
+				const products = getProducts.data.productList;
 				setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
-				setUser({ ...userData, restrictions });
+				setUser({ ...userData, restrictions, products });
 				
 			})()
 		}catch(error){
