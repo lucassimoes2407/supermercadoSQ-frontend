@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { deleteProduct, getProductByCod } from "../../services/product";
+import { getUserLogged } from "../../services/users";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import "./index.css"
@@ -8,6 +9,7 @@ import { ThemeProvider } from "styled-components";
 import { Box, Button, Chip, Container, createTheme, CssBaseline, Modal, Typography } from "@mui/material";
 import { useSnack } from '../../hooks/useSnack';
 import { useNavigate } from 'react-router-dom';
+import { isAuthenticated } from "../../services/auth";
 
 const style = {
   position: 'absolute',
@@ -75,10 +77,87 @@ const Product = () => {
       )
     }
   }
+ 
+  
+  const [botoesBoolean, setBotoesBoolean] = useState(false)
 
+  const validateUser = (async () => {
+    if ( !isAuthenticated() ) return false;
+      var user = (await getUserLogged()).data.user;
+      console.log(user);
+      console.log(product);
+      if(user.cod_usuario !== product.user.cod_usuario && user.acesso !== 3)
+        return false;
 
+      console.log('ok')
+    setBotoesBoolean(true);    
+    return true;
+  })
 
-  return (<>
+  const botoes = () => {
+      return (
+        <div className="action-buttons__div">
+
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleModal}
+          endIcon={<DeleteIcon/>}
+          >
+          Deletar produto
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<EditIcon/>}
+          onClick={() => navigate(`/product/${params.cod}/edit`)}>
+          Editar produto
+        </Button>
+        <Modal
+          open={modalDelete}
+          onClose={handleModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={{ ...style, width: 400 }}>
+            <h2 id="parent-modal-title">Deseja deletar o produto?</h2>
+            <p id="parent-modal-description">
+              Essa ação não pode ser desfeita
+            </p>
+            <div className="modal__buttons">
+              <div>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleModal}>
+                  Cancelar
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleDelete}>
+                  Deletar
+                </Button>
+              </div>
+            </div>
+          </Box>
+        </Modal>
+        </div>
+    )
+  }
+
+  useEffect(() => {
+    validateUser();
+  }, [product])
+  
+  useEffect(() => {
+    console.log(botoesBoolean);
+    
+  }, [botoesBoolean])
+
+return (<>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -182,56 +261,7 @@ const Product = () => {
       </Container>
 
     </ThemeProvider>
-    <div className="action-buttons__div">
-
-
-      <Button
-        variant="outlined"
-        color="secondary"
-        onClick={handleModal}
-        endIcon={<DeleteIcon/>}
-        >
-        Deletar produto
-      </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        endIcon={<EditIcon/>}
-        onClick={() => navigate(`/product/${params.cod}/edit`)}>
-        Editar produto
-      </Button>
-      <Modal
-        open={modalDelete}
-        onClose={handleModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 400 }}>
-          <h2 id="parent-modal-title">Deseja deletar o produto?</h2>
-          <p id="parent-modal-description">
-            Essa ação não pode ser desfeita
-          </p>
-          <div className="modal__buttons">
-            <div>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handleModal}>
-                Cancelar
-              </Button>
-            </div>
-            <div>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleDelete}>
-                Deletar
-              </Button>
-            </div>
-          </div>
-        </Box>
-      </Modal>
-    </div>
+    {botoesBoolean && botoes()}
   </>
   )
 }

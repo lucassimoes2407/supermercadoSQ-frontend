@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import FilterInput from "../../components/FilterInput";
 import FilterInputText from "../../components/FilterInputText";
 import './Home.css';
+import { isAuthenticated } from "../../services/auth";
 
 
 const Home = () => {
@@ -67,6 +68,27 @@ const Home = () => {
       setProductsDisplayed(responseFilter.data.productList.sort(sortProdutoByNome));
     })()
   }, [ingredientIncluded, ingredientExcluded, productName]);
+
+  const renderAdicionarProdutoButton = (() => {
+    if(isAuthenticated())
+    {
+      return <Box
+      position="fixed"
+      bottom={50}
+      right={10}
+      zIndex={1}
+    >
+      <Fab
+        variant="extended"
+        onClick={() => navigate('/create-product')}
+        color="secondary"
+      >
+        <AddIcon sx={{ mr: 1 }} />
+        Adicionar Produto
+      </Fab>
+    </Box>
+    }
+  });
 
   return (
     <div className="home__div">
@@ -198,23 +220,9 @@ const Home = () => {
           })
           }
         </div>
-
       </Box>
-      <Box
-        position="fixed"
-        bottom={50}
-        right={10}
-        zIndex={1}
-      >
-        <Fab
-          variant="extended"
-          onClick={() => navigate('/create-product')}
-          color="secondary"
-        >
-          <AddIcon sx={{ mr: 1 }} />
-          Adicionar Produto
-        </Fab>
-      </Box>
+        {renderAdicionarProdutoButton()}
+      
     </div>
   )
 };
