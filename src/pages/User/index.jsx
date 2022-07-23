@@ -57,7 +57,6 @@ const User = () => {
 		const {
 			target: { value },
 		} = event;
-		console.log(value);
 		setRestrictionsSelected(
 			typeof value === 'string' ? value.split(',') : value,
 		);
@@ -99,7 +98,6 @@ const User = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log(user);
 		const response = await updateUser(
 			user.cod_usuario,
 			user.username,
@@ -118,7 +116,6 @@ const User = () => {
 			)
 			navigate('/');
 		}
-		console.log("Submit");//TODO - SAVE CHANGES ON PROFILE
 	}
 
 	useEffect(() => {
@@ -156,7 +153,6 @@ const User = () => {
 
 	const handleUserInfoChange = (event, attribute) => {
 		const editedUser = structuredClone(user)
-		console.log(editedUser);
 		editedUser[`${attribute}`] = event.target.value
 		setUser(editedUser);
 	}
