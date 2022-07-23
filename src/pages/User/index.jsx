@@ -162,18 +162,22 @@ const User = () => {
 	}
 
 	const handleClear = () => {
-		(async () => {
-			const getUser = await getUserByUserId(params.cod_usuario);
-			if (!getUser || !getUser.data) navigate('/notfound');
-			const userData = getUser.data.user;
-			let res = getUser.data.userRestrictions;
-			setEmail(userData.email);
-			setUsername(userData.username);
-			setPass(userData.senha)
-			setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
-			setUser({ ...userData, restrictions });
-
-		})()
+		try{
+			(async () => {
+				const getUser = await getUserByUserId(params.cod_usuario);
+				if (!getUser || !getUser.data) navigate('/notfound');
+				const userData = getUser.data.user;
+				let res = getUser.data.userRestrictions;
+				setEmail(userData.email);
+				setUsername(userData.username);
+				setPass(userData.senha)
+				setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
+				setUser({ ...userData, restrictions });
+				
+			})()
+		}catch(error){
+			console.log(error)
+		}
 		console.log("DESCARTAR ALTERAÇÕES")//TODO - DISCARD CHANGES ON PROFILE
 	}
 
