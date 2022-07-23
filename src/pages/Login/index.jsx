@@ -47,12 +47,6 @@ export default function LogIn() {
         loginJWT(response.data.token);
         setIsAuth(true);
 
-        (async () => {
-          let getUserLoggedResponse = await getUserLogged();
-          if (getUserLoggedResponse.data.user.acesso === 3) {
-            navigate('/admin');
-          }
-        })();
         navigate('/');
         handleSnackState(
           {
