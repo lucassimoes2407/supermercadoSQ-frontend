@@ -17,12 +17,15 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
 import { getUserLogged } from '../../services/users';
 import { isAuthenticated } from '../../services/auth';
+import { useSnack } from '../../hooks/useSnack';
 
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = (props) => {
 
 
   const [username, setUsername] = useState('');
+  const [isAuthe, setIsAuth] = useState(false);
+  const {isAuth} = useSnack();
 
   const [settingsMenu, setSettingsMenu] = useState([
     { name: 'Entrar', path: 'login' },
@@ -44,17 +47,19 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
+    setIsAuth(isAuthenticated());
     setAnchorElUser(event.currentTarget);
 
+  };
+  const handleCloseUserMenu = () => {
+    setIsAuth(isAuthenticated());
+    setAnchorElUser(null);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   const handlePageButtonAction = (path) => {
     navigate(`/${path}`);
@@ -63,7 +68,7 @@ const ResponsiveAppBar = () => {
 
   useEffect(() => {
     try {
-      if (isAuthenticated()) {
+      if (isAuth) {
         (async () => {
           let getUserLoggedResponse = await getUserLogged();
           const { cod_usuario, username } = getUserLoggedResponse.data.user;
@@ -84,7 +89,7 @@ const ResponsiveAppBar = () => {
     } catch (e) {
       console.log(e);
     }
-  });
+  }, [isAuth]);
 
   return (
     <AppBar position="fixed">

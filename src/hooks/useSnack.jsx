@@ -14,6 +14,8 @@ export function SnackProvider({ children }) {
         }
     });
 
+    const [isAuth, setIsAuth] = useState(false);
+
     const handleSnackOpen = useCallback(() => {
         setSnack((prevSnack) => {
             return { 
@@ -30,7 +32,7 @@ export function SnackProvider({ children }) {
 
     return (
         <SnackContext.Provider
-            value={{ snack, handleSnackOpen, handleSnackState }}
+            value={{ snack, handleSnackOpen, handleSnackState, isAuth, setIsAuth }}
         >
             {children}
         </SnackContext.Provider>

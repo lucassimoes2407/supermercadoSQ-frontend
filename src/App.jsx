@@ -10,7 +10,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar'
 import { ThemeProvider } from "styled-components";
 
 function App() {
-  const { snack, handleSnackOpen } = useSnack();
+  const { snack, handleSnackOpen, isAuth } = useSnack();
   const theme = createTheme();
   const navigate = useNavigate();
 
@@ -38,7 +38,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <ResponsiveAppBar />
+        <ResponsiveAppBar
+          isAuth={isAuth}
+        />
 
         <hr />
         <RouterConfig />
