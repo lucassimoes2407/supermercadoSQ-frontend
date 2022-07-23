@@ -68,7 +68,6 @@ export default function SignUp() {
       }
       navigate('/');
     } catch (e) {
-      console.log(e.response.data)
       handleSnackState(
         {
           ...snack,
@@ -77,7 +76,6 @@ export default function SignUp() {
           message: e.response.data
         }
       )
-      console.log(e);
     }
     
   }; 

@@ -12,3 +12,7 @@
     border-radius: 4px;
     overflow: auto;
 }
+
+.product__card{
+    cursor:pointer;
+}

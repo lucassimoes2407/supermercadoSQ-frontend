@@ -24,7 +24,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    console.log("Submit");
   }
 
   const sortProdutoByNome = (productList1, productList2) => {
@@ -49,7 +48,6 @@ const Home = () => {
     (async () => {
       let getProductResponse = await postProductFiltered('', [], []);
 
-      console.log(getProductResponse);
       setProductsDisplayed(getProductResponse.data.productList);
     })();
   }, []);

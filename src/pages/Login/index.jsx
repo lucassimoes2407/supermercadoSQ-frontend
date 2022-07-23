@@ -58,7 +58,6 @@ export default function LogIn() {
 
       }
     } catch (e) {
-      console.log(e.response.data.message);
       setIsAuth(true);
       loginErrMessage(e.response.data.message);
     }

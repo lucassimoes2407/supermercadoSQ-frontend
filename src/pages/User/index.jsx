@@ -57,7 +57,6 @@ const User = () => {
 		const {
 			target: { value },
 		} = event;
-		console.log(value);
 		setRestrictionsSelected(
 			typeof value === 'string' ? value.split(',') : value,
 		);
@@ -99,7 +98,6 @@ const User = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log(user);
 		const response = await updateUser(
 			user.cod_usuario,
 			user.username,
@@ -118,7 +116,6 @@ const User = () => {
 			)
 			navigate('/');
 		}
-		console.log("Submit");//TODO - SAVE CHANGES ON PROFILE
 	}
 
 	useEffect(() => {
@@ -156,7 +153,6 @@ const User = () => {
 
 	const handleUserInfoChange = (event, attribute) => {
 		const editedUser = structuredClone(user)
-		console.log(editedUser);
 		editedUser[`${attribute}`] = event.target.value
 		setUser(editedUser);
 	}
@@ -165,14 +161,17 @@ const User = () => {
 		try{
 			(async () => {
 				const getUser = await getUserByUserId(params.cod_usuario);
+				const getProducts = await getProductByUserCod(params.cod_usuario);
+
 				if (!getUser || !getUser.data) navigate('/notfound');
 				const userData = getUser.data.user;
 				let res = getUser.data.userRestrictions;
 				setEmail(userData.email);
 				setUsername(userData.username);
 				setPass(userData.senha)
+				const products = getProducts.data.productList;
 				setRestrictionsSelected(res.map(restriction => restriction.nome_restricao))
-				setUser({ ...userData, restrictions });
+				setUser({ ...userData, restrictions, products });
 				
 			})()
 		}catch(error){

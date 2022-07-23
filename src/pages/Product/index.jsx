@@ -56,7 +56,6 @@ const Product = () => {
     try {
       handleModal();
       const responseDelete = await deleteProduct(params.cod);
-      console.log(responseDelete);
       if (responseDelete.status === 200) {
         handleSnackState(
           {
@@ -84,12 +83,9 @@ const Product = () => {
   const validateUser = (async () => {
     if ( !isAuthenticated() ) return false;
       var user = (await getUserLogged()).data.user;
-      console.log(user);
-      console.log(product);
       if(user.cod_usuario !== product.user.cod_usuario && user.acesso !== 3)
         return false;
 
-      console.log('ok')
     setBotoesBoolean(true);    
     return true;
   })
@@ -164,6 +160,7 @@ return (<>
         <Box
           sx={{
             mt: 6,
+            mb: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
