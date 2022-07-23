@@ -25,7 +25,7 @@ export default function LogIn() {
 
   const theme = createTheme();
   const navigate = useNavigate();
-  const { snack, handleSnackState, handleSnackOpen } = useSnack();
+  const { snack, handleSnackState, handleSnackOpen, setIsAuth } = useSnack();
 
   const loginErrMessage = (message) => {
 
@@ -45,6 +45,7 @@ export default function LogIn() {
 
       if (response.status === 200) {
         loginJWT(response.data.token);
+        setIsAuth(true);
 
         (async () => {
           let getUserLoggedResponse = await getUserLogged();
@@ -52,7 +53,7 @@ export default function LogIn() {
             navigate('/admin');
           }
         })();
-        navigate('/')
+        navigate('/');
         handleSnackState(
           {
             ...snack,
@@ -64,6 +65,7 @@ export default function LogIn() {
       }
     } catch (e) {
       console.log(e.response.data.message);
+      setIsAuth(true);
       loginErrMessage(e.response.data.message);
     }
   }

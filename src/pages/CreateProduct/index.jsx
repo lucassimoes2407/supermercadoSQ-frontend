@@ -49,15 +49,15 @@ const CreateProduct = () => {
     try {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-
       let product = data.get('product');
       let brand = data.get('brand');
       let ingredients = data.get('ingredients');
       let img = data.get('img');
       var loggedUser = await getUserLogged();
       let codUser = loggedUser.data.user.cod_usuario; //FIXME[epic=login] adicionar cod_usuario logado
-
+      
       const response = await postProduct(product, brand, ingredients, img, codUser);
+      console.log(loggedUser, response);
 
       for (let restriction in restrictionsSelected) {
         let selected = restrictions.find(res => restrictionsSelected[restriction] === res.nome_restricao);

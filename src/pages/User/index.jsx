@@ -12,6 +12,7 @@ import { getUserByUserId, updateUser } from "../../services/users";
 import { postUserRestriction, deleteUserRestriction } from "../../services/userRestriction";
 import { useSnack } from '../../hooks/useSnack';
 import React from 'react';
+import ProductCard from "../../components/ProductCard";
 
 const User = () => {
 	const [user, setUser] = useState({
@@ -24,12 +25,13 @@ const User = () => {
 	const [pass, setPass] = useState("");
 	const [restrictions, setRestrictions] = useState([]);
 	const [restrictionsSelected, setRestrictionsSelected] = useState([]);
+	const [productsDisplayed, setProductsDisplayed] = useState([]);
 	const { snack, handleSnackState, handleSnackOpen } = useSnack();
 
 	const theme = createTheme();
 	const params = useParams();
 	const navigate = useNavigate();
-	
+
 	const getAction = (cod_usuario) => {
 		if (!cod_usuario) return
 		return <React.Fragment>
@@ -50,7 +52,7 @@ const User = () => {
 			</IconButton>
 		</React.Fragment>
 	}
-	
+
 	const handleChange = (event) => {
 		const {
 			target: { value },
@@ -139,10 +141,10 @@ const User = () => {
 				setEmail(userData.email);
 				setUsername(userData.username);
 				setPass(userData.senha)
-				
+
 				setRestrictionsSelected(
 					restrictions.map((restriction) => restriction.nome_restricao));
-					
+
 				setUser({ ...userData, restrictions, products });
 
 
@@ -162,7 +164,7 @@ const User = () => {
 	const handleClear = () => {
 		(async () => {
 			const getUser = await getUserByUserId(params.cod_usuario);
-			if(!getUser || !getUser.data) navigate('/notfound');
+			if (!getUser || !getUser.data) navigate('/notfound');
 			const userData = getUser.data.user;
 			let res = getUser.data.userRestrictions;
 			setEmail(userData.email);
@@ -190,14 +192,15 @@ const User = () => {
 		getRestrictions();
 	}, [])
 
-	return (
+	return (<>
+
 		<ThemeProvider theme={theme}>
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
 				<Box
 					sx={{
 						marginTop: 8,
-						marginBottom:8,
+						marginBottom: 8,
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
@@ -207,7 +210,7 @@ const User = () => {
 					<Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
 						<ManageAccountsRounded />
 					</Avatar>
-					<Typography component="h1" variant="h5">Olá <b>{user.username}</b>, <br/> gerencie seu perfil
+					<Typography component="h1" variant="h5">Olá <b>{user.username}</b>, <br /> gerencie seu perfil
 					</Typography>
 
 					<Box
@@ -260,8 +263,8 @@ const User = () => {
 							</Grid>
 
 							<Grid item xs={12} >
-							{console.log("antes do FilterInputForEdit")}
-							<FilterInputForEdit
+								{console.log("antes do FilterInputForEdit")}
+								<FilterInputForEdit
 									selectedItems={restrictionsSelected || []}
 									items={restrictions.map(restriction => restriction.nome_restricao) || []}
 									title={'Suas Restrições'}
@@ -283,7 +286,7 @@ const User = () => {
 									type="submit"
 									variant="contained"
 									sx={{ mt: 3, mb: 2, width: 150 }}
-									endIcon={<SaveAsIcon/>}
+									endIcon={<SaveAsIcon />}
 								>
 									Salvar
 								</Button>
@@ -293,9 +296,37 @@ const User = () => {
 					</Box>
 				</Box>
 
+
+
 			</Container>
 		</ThemeProvider>
+		<Box
+			mb={2}
+		>
+			<div className="product__list">
+				{user.products.length > 0 &&
+					<h2>
 
+						<Typography
+							color='primary.contrastText'
+							alignItems="center"
+						>
+							Meus produtos
+						</Typography>
+					</h2>
+				}
+				{user.products.length > 0 && user.products.map((product) => {
+					return (
+						<ProductCard
+							key={`${product.productInfo.cod_produto}_productCard`}
+							product={product}
+						/>
+					)
+				})
+				}
+			</div>
+		</Box>
+	</>
 	)
 }
 

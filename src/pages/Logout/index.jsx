@@ -9,10 +9,11 @@ import { useSnack } from '../../hooks/useSnack';
 
 const Logout = () => {
 	const navigate = useNavigate();
-	const { snack, handleSnackState, handleSnackOpen } = useSnack();
+	const { snack, handleSnackState, handleSnackOpen, setIsAuth } = useSnack();
 
 	logoutUser();
 	useEffect(() => {
+		setIsAuth(false);
 		navigate('/');
 		handleSnackState(
 			{

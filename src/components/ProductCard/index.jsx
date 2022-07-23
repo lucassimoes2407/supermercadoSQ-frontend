@@ -77,7 +77,8 @@ function ProductCard(props) {
         </Typography>
         <div className="restriction__chip">
 
-          {props.product && props.product.restrictions.map((element) => {
+          {props.product && props.product.restrictions.map((element, index) => {
+            if(index > 2) return '';
             return (
               <Chip
                 key={element.nome_restricao + `productCardChip`}
@@ -86,6 +87,11 @@ function ProductCard(props) {
               />
             )
           })}
+          <Chip
+                key={`dot_productCardChip`}
+                label={'...'}
+                color="primary"
+              />
         </div>
       </CardContent>
       <CardActions
