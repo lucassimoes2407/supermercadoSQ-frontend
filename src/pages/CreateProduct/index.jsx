@@ -96,6 +96,7 @@ const CreateProduct = () => {
     setRestrictions(data);
   }
   useEffect(() => {
+    console.log(getRestrictions())
   }, [])
 
   return (
