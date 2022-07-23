@@ -78,7 +78,7 @@ function ProductCard(props) {
         <div className="restriction__chip">
 
           {props.product && props.product.restrictions.map((element, index) => {
-            if(index > 2) return '';
+            if (index > 2) return '';
             return (
               <Chip
                 key={element.nome_restricao + `productCardChip`}
@@ -87,18 +87,20 @@ function ProductCard(props) {
               />
             )
           })}
-          <Chip
-                key={`dot_productCardChip`}
-                label={'...'}
-                color="primary"
-              />
+          {props.product && props.product.length > 2 &&
+            <Chip
+              key={`dot_productCardChip`}
+              label={'...'}
+              color="primary"
+            />
+          }
         </div>
       </CardContent>
       <CardActions
-            
+
       >
-        <Button 
-        onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
+        <Button
+          onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
           Ver mais
         </Button>
       </CardActions>
