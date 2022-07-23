@@ -4,9 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { Box, Button, Chip, Container, createTheme, CssBaseline, Modal, Typography } from "@mui/material";
 
 const About = () => {
-
 	const theme = createTheme();
-
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component="main" maxWidth="sm">
