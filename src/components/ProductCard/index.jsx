@@ -87,7 +87,7 @@ function ProductCard(props) {
               />
             )
           })}
-          {props.product && props.product.length > 2 &&
+          {props.product && props.product.restrictions.length > 2 &&
             <Chip
               key={`dot_productCardChip`}
               label={'...'}
@@ -99,12 +99,21 @@ function ProductCard(props) {
       <CardActions
 
       >
-        <Button
-          onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
-          Ver mais
-        </Button>
+        <div style={{position: 'relative'}}>
+
+          <Button
+            sx={{
+              display: 'flex',
+              position: 'absolute',
+              bottom: 0.5,
+              left: 0.5
+            }}
+            onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
+            Ver mais
+          </Button>
+      </div>
       </CardActions>
-    </Card>
+    </Card >
   );
 }
 
