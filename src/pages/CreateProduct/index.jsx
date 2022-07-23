@@ -57,7 +57,6 @@ const CreateProduct = () => {
       let codUser = loggedUser.data.user.cod_usuario; //FIXME[epic=login] adicionar cod_usuario logado
       
       const response = await postProduct(product, brand, ingredients, img, codUser);
-      console.log(loggedUser, response);
 
       for (let restriction in restrictionsSelected) {
         let selected = restrictions.find(res => restrictionsSelected[restriction] === res.nome_restricao);
@@ -97,7 +96,6 @@ const CreateProduct = () => {
     setRestrictions(data);
   }
   useEffect(() => {
-    console.log(getRestrictions())
   }, [])
 
   return (
