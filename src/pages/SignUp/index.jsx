@@ -15,11 +15,37 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 import { createUser } from '../../services/users';
 import CopyrightDevHub from '../../components/CopyrightDevHub';
-
+import { useSnack } from '../../hooks/useSnack';
+import { useNavigate } from 'react-router-dom'
+import { Close } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 const theme = createTheme();
 
 export default function SignUp() {
   const [userType, setUserType] = useState(1);
+  const navigate = useNavigate();
+  const { snack, handleSnackState, handleSnackOpen } = useSnack();
+  const getAction = (cod_usuario) => {
+    if (!cod_usuario) return
+    return <React.Fragment>
+      <Button
+        color="secondary"
+        size="small"
+        onClick={() => { navigate(`/login`) }}
+      >
+        Entre agora
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="secondary"
+        onClick={handleSnackOpen}
+      >
+        <Close fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  }
+
   const handleSubmit = async (event) => {
     try {
 
@@ -29,10 +55,31 @@ export default function SignUp() {
       let email = data.get('email');
       let password = data.get('password');
       let userName = data.get('firstName');
-      const { response } = await createUser(userName, email, password, userType);
+      const  response  = await createUser(userName, email, password, userType);
+      if (response.status === 200) {
+        handleSnackState(
+          {
+            ...snack,
+            action: getAction(response.data.cod_usuario),
+            open: true,
+            message: "Usuário Cadastrado com Sucesso!",
+          }
+        )
+      }
+      navigate('/');
     } catch (e) {
+      console.log(e.response.data)
+      handleSnackState(
+        {
+          ...snack,
+          
+          open: true, 
+          message: e.response.data
+        }
+      )
       console.log(e);
     }
+    
   }; 
 
   const handleUserType = (event) => {

@@ -5,13 +5,23 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useSnack } from '../../hooks/useSnack';
 
 const Logout = () => {
 	const navigate = useNavigate();
+	const { snack, handleSnackState, handleSnackOpen, setIsAuth } = useSnack();
 
 	logoutUser();
 	useEffect(() => {
+		setIsAuth(false);
 		navigate('/');
+		handleSnackState(
+			{
+			  ...snack,
+			  open: true,
+			  message: "Você foi deslogado com sucesso!",
+			}
+		  )
 	});
 
 	return (

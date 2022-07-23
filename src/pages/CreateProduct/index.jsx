@@ -4,6 +4,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import AddIcon from '@mui/icons-material/Add';
 import { postProduct } from '../../services/product'
+import { getUserLogged } from '../../services/users'
 import { ThemeProvider } from 'styled-components';
 import { useSnack } from '../../hooks/useSnack';
 import { useNavigate } from 'react-router-dom';
@@ -48,15 +49,15 @@ const CreateProduct = () => {
     try {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-
       let product = data.get('product');
       let brand = data.get('brand');
       let ingredients = data.get('ingredients');
       let img = data.get('img');
-      let codUser = 5; //FIXME[epic=login] adicionar cod_usuario logado
-
+      var loggedUser = await getUserLogged();
+      let codUser = loggedUser.data.user.cod_usuario; //FIXME[epic=login] adicionar cod_usuario logado
+      
       const response = await postProduct(product, brand, ingredients, img, codUser);
-      console.log(response);
+      console.log(loggedUser, response);
 
       for (let restriction in restrictionsSelected) {
         let selected = restrictions.find(res => restrictionsSelected[restriction] === res.nome_restricao);

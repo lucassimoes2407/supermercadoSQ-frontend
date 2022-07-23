@@ -17,13 +17,19 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
 import { getUserLogged } from '../../services/users';
 import { isAuthenticated } from '../../services/auth';
+import { useSnack } from '../../hooks/useSnack';
 
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = (props) => {
+
+
+  const [username, setUsername] = useState('');
+  const [isAuthe, setIsAuthe] = useState(false);
+  const {isAuth, setIsAuth } = useSnack();
 
   const [settingsMenu, setSettingsMenu] = useState([
-    { name: 'Login', path: 'login' },
-    { name: 'Cadastrar', path: 'signup' },
+    { name: 'Entrar', path: 'login' },
+    { name: 'Cadastre-se', path: 'signup' },
   ])
 
   let pages = [
@@ -41,17 +47,19 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
+    setIsAuthe(isAuthenticated());
     setAnchorElUser(event.currentTarget);
 
+  };
+  const handleCloseUserMenu = () => {
+    setIsAuthe(isAuthenticated());
+    setAnchorElUser(null);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   const handlePageButtonAction = (path) => {
     navigate(`/${path}`);
@@ -60,26 +68,32 @@ const ResponsiveAppBar = () => {
 
   useEffect(() => {
     try {
-      if (isAuthenticated()) {
+      if (isAuth) {
         (async () => {
           let getUserLoggedResponse = await getUserLogged();
-          const { cod_usuario } = getUserLoggedResponse.data.user;
+          const { cod_usuario, username } = getUserLoggedResponse.data.user;
+          setUsername(username)
 
           setSettingsMenu([
             { name: 'Perfil', path: `user/${cod_usuario}` },
-            { name: 'Logout', path: 'logout' },
+            { name: 'Sair', path: 'logout' },
           ])
         })();
       } else {
+        setUsername('')
         setSettingsMenu([
-          { name: 'Login', path: 'login' },
-          { name: 'Cadastrar', path: 'signup' },
+          { name: 'Entrar', path: 'login' },
+          { name: 'Cadastre-se', path: 'signup' },
         ])
       }
     } catch (e) {
       console.log(e);
     }
-  });
+  }, [isAuth]);
+
+  useEffect(() => {
+    setIsAuth(isAuthenticated());
+  }, [])
 
   return (
     <AppBar position="fixed">
@@ -185,6 +199,10 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Configuração de Usuário">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Typography
+                m={1}
+                color={'primary-light'} 
+                textAlign="center">{!username ? '' : username}</Typography>
                 <Avatar />
               </IconButton>
             </Tooltip>
