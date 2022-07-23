@@ -25,7 +25,6 @@ const FilterInputText = (props) => {
   const [acordeonBoolean, setAcordeonBoolean] = useState(true);
 
   const handleElementDelete = (element) => {
-    console.log(element);
     setItems((previousValue) => previousValue.filter(item => (item !== element)));
   }
 
