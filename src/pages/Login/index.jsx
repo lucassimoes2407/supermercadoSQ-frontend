@@ -118,7 +118,7 @@ export default function LogIn() {
               fullWidth
               name="senha"
               label="Senha"
-              type="senha"
+              type="password"
               id="senha"
               autoComplete="current-senha"
             />
