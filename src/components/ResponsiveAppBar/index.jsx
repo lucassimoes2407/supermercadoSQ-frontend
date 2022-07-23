@@ -24,8 +24,8 @@ const ResponsiveAppBar = (props) => {
 
 
   const [username, setUsername] = useState('');
-  const [isAuthe, setIsAuth] = useState(false);
-  const {isAuth} = useSnack();
+  const [isAuthe, setIsAuthe] = useState(false);
+  const {isAuth, setIsAuth } = useSnack();
 
   const [settingsMenu, setSettingsMenu] = useState([
     { name: 'Entrar', path: 'login' },
@@ -47,12 +47,12 @@ const ResponsiveAppBar = (props) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setIsAuth(isAuthenticated());
+    setIsAuthe(isAuthenticated());
     setAnchorElUser(event.currentTarget);
 
   };
   const handleCloseUserMenu = () => {
-    setIsAuth(isAuthenticated());
+    setIsAuthe(isAuthenticated());
     setAnchorElUser(null);
   };
 
@@ -90,6 +90,10 @@ const ResponsiveAppBar = (props) => {
       console.log(e);
     }
   }, [isAuth]);
+
+  useEffect(() => {
+    setIsAuth(isAuthenticated());
+  }, [])
 
   return (
     <AppBar position="fixed">
