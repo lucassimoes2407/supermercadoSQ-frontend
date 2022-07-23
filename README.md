@@ -13,6 +13,7 @@
 * [Arquitetura](#arquitetura)
 * [Entidades do Sistema](#entidades)
 * [Rotas](#rotas)
+* [Equipe DevHub](#equipe)
 
 <h2 id="pre-requisitos">Pre-requisitos</h2>
 
@@ -98,9 +99,7 @@ RF-09| O sistema deve permitir a busca por alimentos que contenham certos ingred
 ---
 <!-- Tabela com Integrantes do Grupo -->
 <div align=center>
-<a id="equipe-devhub"></a>
-
-![Logo DevHub](./planejamento/logo-devhub-darkmode.png)
+<a id="equipe"></a>
 
 | | | | |
 |:---|:---|:---|:---|
