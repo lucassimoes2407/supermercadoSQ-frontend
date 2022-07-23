@@ -21,6 +21,9 @@ import { isAuthenticated } from '../../services/auth';
 
 const ResponsiveAppBar = () => {
 
+
+  const [username, setUsername] = useState('');
+
   const [settingsMenu, setSettingsMenu] = useState([
     { name: 'Entrar', path: 'login' },
     { name: 'Cadastre-se', path: 'signup' },
@@ -63,7 +66,8 @@ const ResponsiveAppBar = () => {
       if (isAuthenticated()) {
         (async () => {
           let getUserLoggedResponse = await getUserLogged();
-          const { cod_usuario } = getUserLoggedResponse.data.user;
+          const { cod_usuario, username } = getUserLoggedResponse.data.user;
+          setUsername(username)
 
           setSettingsMenu([
             { name: 'Perfil', path: `user/${cod_usuario}` },
@@ -71,6 +75,7 @@ const ResponsiveAppBar = () => {
           ])
         })();
       } else {
+        setUsername('')
         setSettingsMenu([
           { name: 'Entrar', path: 'login' },
           { name: 'Cadastre-se', path: 'signup' },
@@ -185,6 +190,10 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Configuração de Usuário">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Typography
+                m={1}
+                color={'primary-light'} 
+                textAlign="center">{!username ? '' : username}</Typography>
                 <Avatar />
               </IconButton>
             </Tooltip>

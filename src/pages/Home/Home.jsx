@@ -35,7 +35,8 @@ const Home = () => {
   const handleNomeProdutoChange = async (event) => {
     try {
       if (!event.target.value) {
-        return
+        setProductName('');
+        return;
       }
       setProductName(event.target.value);
     } catch (e) {

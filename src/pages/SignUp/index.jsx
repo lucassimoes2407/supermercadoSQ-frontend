@@ -66,7 +66,7 @@ export default function SignUp() {
           }
         )
       }
-      navigate('/');
+      // navigate('/');
     } catch (e) {
       console.log(e.response.data)
       handleSnackState(
