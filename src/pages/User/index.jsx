@@ -196,6 +196,20 @@ const User = () => {
 		getRestrictions();
 	}, [])
 
+const notHaveProduct = ()=>{
+	if(user.products.length === 0)
+	return(
+		<Typography
+			color='primary.contrastText'
+			alignItems="center"
+			fontWeight={600}
+			fontSize={24}
+		>
+			Você ainda não tem Produtos Cadastrados
+		</Typography>
+)
+}
+
 	return (<>
 
 		<ThemeProvider theme={theme}>
@@ -296,39 +310,45 @@ const User = () => {
 								</Button>
 							</Grid>
 						</Grid>
-
 					</Box>
 				</Box>
 
-
-
+				<Typography
+					color='primary.dark'
+					alignItems="center"
+					fontWeight={600}
+					fontSize={24}
+				>
+					Meus produtos
+				</Typography>
 			</Container>
 		</ThemeProvider>
 		<Box
-			mb={2}
-		>
-			<div className="product__list">
-				{user.products && user.products.length > 0 &&
-					<h2>
+			mt={3}
+			mb={5}
+			padding={5}
+			display="flex"
+			flexWrap="wrap"
+			justifyContent="center"
+			gap="1rem"
+			sx={{
+				backgroundColor: 'primary.dark',
 
-						<Typography
-							color='primary.contrastText'
-							alignItems="center"
-						>
-							Meus produtos
-						</Typography>
-					</h2>
-				}
-				{user.products && user.products.length > 0 && user.products.map((product) => {
-					return (
-						<ProductCard
-							key={`${product.productInfo.cod_produto}_productCard`}
-							product={product}
-						/>
-					)
-				})
-				}
-			</div>
+			}}
+		>
+			{notHaveProduct()}
+
+
+			{user.products.length > 0 && user.products.map((product) => {
+				return (
+					<ProductCard
+						key={`${product.productInfo.cod_produto}_productCard`}
+						product={product}
+					/>
+				)
+			})
+			}
+
 		</Box>
 	</>
 	)
