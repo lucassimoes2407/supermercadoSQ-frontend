@@ -2,20 +2,14 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import { Button, Chip } from '@mui/material';
+import { Chip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './index.css';
 
@@ -43,37 +37,26 @@ function ProductCard(props) {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 258, maxHeight: 258, minWidth: 258, minHeight: 258 }}>
+    <Card sx={{ maxWidth: 258, maxHeight: 258, minWidth: 258, minHeight: 258 }}
+      className="product__card"
+      onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }}
+
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "secondary.light" }} aria-label="recipe">
             <RestaurantIcon />
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
         title={productInfo.nome}
         subheader={productInfo.marca}
-
       />
-      {/* <CardMedia
-        component="img"
-        height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
-      /> */}
+
       <CardContent>
-        {/* <div className='product-ingredients__div'>
-          <Typography variant="body2" color="text.secondary">
-            {productInfo.ingredientes}
-          </Typography>
-        </div> */}
+ 
         <Typography
           fontWeight={500} fontSize={14} gutterBottom variant="h7" component="div" color="primary.dark">
-          Contém:
+          Restrições:
         </Typography>
         <div className="restriction__chip">
 
@@ -96,24 +79,10 @@ function ProductCard(props) {
           }
         </div>
       </CardContent>
-      <CardActions
+      <CardActions>
 
-      >
-        <div style={{position: 'relative'}}>
-
-          <Button
-            sx={{
-              display: 'flex',
-              position: 'absolute',
-              bottom: 0.5,
-              left: 0.5
-            }}
-            onClick={() => { navigate(`/product/${productInfo.cod_produto}`) }} size="small" color="primary">
-            Ver mais
-          </Button>
-      </div>
       </CardActions>
-    </Card >
+    </Card>
   );
 }
 
