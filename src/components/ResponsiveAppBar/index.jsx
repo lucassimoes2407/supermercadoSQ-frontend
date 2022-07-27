@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../../assets/logo.png';
+import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
 import { getUserLogged } from '../../services/users';
@@ -25,7 +26,7 @@ const ResponsiveAppBar = (props) => {
 
   const [username, setUsername] = useState('');
   const [isAuthe, setIsAuthe] = useState(false);
-  const {isAuth, setIsAuth } = useSnack();
+  const { isAuth, setIsAuth } = useSnack();
 
   const [settingsMenu, setSettingsMenu] = useState([
     { name: 'Entrar', path: 'login' },
@@ -94,6 +95,40 @@ const ResponsiveAppBar = (props) => {
   useEffect(() => {
     setIsAuth(isAuthenticated());
   }, [])
+
+  const profileIcon = () => {
+    if (!isAuth) {
+      return (
+        <Tooltip title="Configuração de Usuário">
+          <IconButton
+            onClick={handleOpenUserMenu}
+            sx={{ my: 2, color: 'white' }}
+          >
+            <Avatar />
+          </IconButton>
+        </Tooltip>
+      )
+    } else {
+      return (
+        <Tooltip title="Configuração de Usuário">
+          <Button
+            onClick={handleOpenUserMenu}
+            sx={{ my: 2, color: 'white' }}
+            endIcon={<Avatar />}
+          >
+            <Typography
+              fontWeight={500}
+              m={1}
+              color={'primary.contrastText'}
+            >
+              {!username ? '' : username}
+            </Typography>
+          </Button>
+        </Tooltip>
+      )
+    }
+  }
+
 
   return (
     <AppBar position="fixed">
@@ -197,15 +232,7 @@ const ResponsiveAppBar = (props) => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Configuração de Usuário">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Typography
-                m={1}
-                color={'primary-light'} 
-                textAlign="center">{!username ? '' : username}</Typography>
-                <Avatar />
-              </IconButton>
-            </Tooltip>
+            {profileIcon()}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -223,7 +250,9 @@ const ResponsiveAppBar = (props) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting.name} onClick={() => handlePageButtonAction(setting.path)}>
+                <MenuItem key={setting.name} onClick={() => {
+                handleCloseUserMenu();
+                handlePageButtonAction(setting.path);}}>
                   <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
