@@ -99,10 +99,14 @@ const ResponsiveAppBar = (props) => {
   const profileIcon = () => {
     if (!isAuth) {
       return (
-        <Button
-          onClick={handleOpenUserMenu}
-          sx={{ my: 2, color: 'white' }}
-          endIcon={<Avatar />} />
+        <Tooltip title="Configuração de Usuário">
+          <IconButton
+            onClick={handleOpenUserMenu}
+            sx={{ my: 2, color: 'white' }}
+          >
+            <Avatar />
+          </IconButton>
+        </Tooltip>
       )
     } else {
       return (
@@ -110,8 +114,10 @@ const ResponsiveAppBar = (props) => {
           <Button
             onClick={handleOpenUserMenu}
             sx={{ my: 2, color: 'white' }}
-            endIcon={<Avatar />}>
+            endIcon={<Avatar />}
+          >
             <Typography
+              fontWeight={500}
               m={1}
               color={'primary.contrastText'}
             >
@@ -227,9 +233,6 @@ const ResponsiveAppBar = (props) => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             {profileIcon()}
-
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
